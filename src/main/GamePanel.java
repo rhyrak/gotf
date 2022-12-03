@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
 
-    Game game;
+    private Game game;
     private Image buffer;
 
     public GamePanel(Game game) {

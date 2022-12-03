@@ -2,7 +2,7 @@ package entities;
 
 import java.awt.*;
 
-public class Entity {
+public abstract class Entity {
     protected Rectangle hitbox;
 
     public Rectangle getHitbox() {
