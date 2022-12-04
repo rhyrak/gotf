@@ -1,5 +1,8 @@
 package main;
 
+import listeners.KeyboardListener;
+import listeners.MouseListener;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,6 +16,8 @@ public class GamePanel extends JPanel {
         setFocusable(true);
         requestFocus();
         requestFocusInWindow();
+        addKeyListener(new KeyboardListener(game));
+        addMouseListener(new MouseListener(game));
     }
 
 
@@ -32,8 +37,10 @@ public class GamePanel extends JPanel {
             // initialize the buffer
             buffer = createImage(size.width, size.height);
 
-            // FIXME
-            // option2: make sure the player doesn't spawn close to the level's border
+            Graphics temp = buffer.getGraphics();
+            temp.setColor(Color.GRAY);
+            temp.fillRect(0,0,size.width,size.height);
+            temp.dispose();
 
         }
 

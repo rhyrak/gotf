@@ -19,6 +19,7 @@ public class Game implements Runnable {
 
     private void startGame() {
         this.gameThread = new Thread(this, "Game Thread");
+        this.gameThread.start();
     }
 
     @Override
@@ -37,7 +38,7 @@ public class Game implements Runnable {
     }
 
     private void update() {
-
+        gameState.update();
     }
 
     private void draw() {
