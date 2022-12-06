@@ -22,16 +22,16 @@ public class Menu extends State {
         buttons = new MenuButton[3];
 
         buttons[0] = new MenuButton(
-                new Rectangle(Game.gameWidth / 2 - 100, Game.gameHeight / 2 - 160, 200, 80),
+                new Rectangle(Game.gameWidth / 2 - 171, Game.gameHeight / 2 - 350, 342, 168),
                 AssetManager.PLAY_BTN
         );
         buttons[0].setAction(() -> game.changeGameState(GameState.PLAYING));
         buttons[1] = new MenuButton(
-                new Rectangle(Game.gameWidth / 2 - 100, Game.gameHeight / 2 - 40, 200, 80),
+                new Rectangle(Game.gameWidth / 2 - 171, Game.gameHeight / 2 - 120, 342, 168),
                 AssetManager.SETTINGS_BTN
         );
         buttons[2] = new MenuButton(
-                new Rectangle(Game.gameWidth / 2 - 100, Game.gameHeight / 2 + 80, 200, 80),
+                new Rectangle(Game.gameWidth / 2 - 171, Game.gameHeight / 2 + 130, 342, 168),
                 AssetManager.EXIT_BTN
         );
         buttons[2].setAction(() -> game.changeGameState(GameState.EXIT));

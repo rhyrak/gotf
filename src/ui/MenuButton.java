@@ -22,9 +22,9 @@ public class MenuButton {
     private void loadImages(String imagePath) {
         BufferedImage sprite = AssetManager.getSprite(imagePath);
         images = new BufferedImage[3];
-        images[0] = sprite.getSubimage(177,202,362,178);
-        images[1] = sprite.getSubimage(0,0,100,80);
-        images[2] = sprite.getSubimage(0,0,100,80);
+        images[0] = sprite.getSubimage(352,274,342,168);
+        images[1] = sprite.getSubimage(352,625,342,168);
+        images[2] = sprite.getSubimage(352,875,342,168);
     }
 
 
