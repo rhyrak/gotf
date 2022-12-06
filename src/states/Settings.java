@@ -29,4 +29,9 @@ public class Settings extends State {
     public void mouseMoved(MouseEvent e) {
 
     }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
 }

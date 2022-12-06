@@ -1,6 +1,7 @@
 package states;
 
 import entities.Player;
+import main.Game;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -16,6 +17,9 @@ public class Playing extends State {
 
     @Override
     public void draw(Graphics g) {
+        g.setColor(Color.lightGray);
+        g.fillRect(0,0, Game.gameWidth, Game.gameHeight);
+        g.setColor(Color.black);
         g.drawString("PLAYING",100,100);
         player.draw(g);
     }
@@ -47,6 +51,11 @@ public class Playing extends State {
 
     @Override
     public void mouseMoved(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
 
     }
 }

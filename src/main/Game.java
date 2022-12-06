@@ -1,8 +1,6 @@
 package main;
 
-import states.Menu;
-import states.Playing;
-import states.State;
+import states.*;
 
 public class Game implements Runnable {
 
@@ -18,7 +16,7 @@ public class Game implements Runnable {
     public Game() {
         this.gamePanel = new GamePanel(this);
         this.gameWindow = new GameWindow(gamePanel);
-        this.gameState = new Menu();
+        this.gameState = new Menu(this);
         startGame();
     }
 
@@ -58,5 +56,14 @@ public class Game implements Runnable {
         Game.gameWidth = gameWidth;
         Game.gameHeight = gameHeight;
         System.out.println("Width: " + Game.gameWidth + ", Height: " + Game.gameHeight);
+    }
+
+    public void changeGameState(GameState newState) {
+        switch (newState) {
+            case PLAYING -> this.gameState = new Playing();
+            case MENU -> this.gameState = new Menu(this);
+            case SETTINGS -> this.gameState = new Settings();
+            case EXIT -> System.exit(0);
+        }
     }
 }

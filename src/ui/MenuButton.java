@@ -8,6 +8,7 @@ public class MenuButton {
 
     private Rectangle hitbox;
     private boolean mouseOver;
+    private Action action;
 
     public MenuButton(Rectangle hitbox) {
         this.hitbox = hitbox;
@@ -33,5 +34,17 @@ public class MenuButton {
 
     public void setMouseOver(boolean mouseOver) {
         this.mouseOver = mouseOver;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
+    }
+
+    public boolean isMouseOver() {
+        return mouseOver;
+    }
+
+    public void runAction() {
+        action.action();
     }
 }
