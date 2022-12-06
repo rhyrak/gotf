@@ -18,6 +18,7 @@ public class Game implements Runnable {
         this.gameWindow = new GameWindow(gamePanel);
         this.gameState = new Menu(this);
         startGame();
+        this.gamePanel.initListeners();
     }
 
     private void startGame() {
@@ -55,7 +56,6 @@ public class Game implements Runnable {
     public static void updateWidthHeight(int gameWidth, int gameHeight) {
         Game.gameWidth = gameWidth;
         Game.gameHeight = gameHeight;
-        System.out.println("Width: " + Game.gameWidth + ", Height: " + Game.gameHeight);
     }
 
     public void changeGameState(GameState newState) {

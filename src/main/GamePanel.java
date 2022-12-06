@@ -16,10 +16,9 @@ public class GamePanel extends JPanel {
         setFocusable(true);
         requestFocus();
         requestFocusInWindow();
-        initListeners();
     }
 
-    private void initListeners() {
+    public void initListeners() {
         addKeyListener(new KeyboardListener(game));
         MouseListener mouseListener = new MouseListener(game);
         addMouseListener(mouseListener);
@@ -69,7 +68,10 @@ public class GamePanel extends JPanel {
     }
 
     private void paintGame(Graphics g) {
-        game.getGameState().draw(g);
+        if (game.getGameState() != null)
+            game.getGameState().draw(g);
+        else
+            g.drawString("LOADING",250,250);
     }
 
     public Game getGame() {
