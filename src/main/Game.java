@@ -28,15 +28,63 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
+
+        final int FPS = 144;
+        final int UPS = 200;
+        final long NANOSECS_IN_A_SEC = 1_000_000_000L;
+
+        // the game will update itself 128 times per second (collision check, animations, player pos etc.)
+        double updatePeriod = NANOSECS_IN_A_SEC * 1.0 / UPS;
+        // the game will render 200 frames per second
+        double renderPeriod = NANOSECS_IN_A_SEC * 1.0 / FPS;
+
+        // for tracking fps/ups
+        long fpsLastCheck = System.currentTimeMillis();
+        int renderCount = 0, updateCount = 0;
+
+        // for the actual game loop
+        long lastUpdateTime = System.nanoTime();
+        double timeSinceLastUpdate = 0;
+        double timeSinceLastRender = 0;
+
+        //noinspection InfiniteLoopStatement
         while (true) {
 
-            update();
-            draw();
+            long fpsNow = System.currentTimeMillis();
 
-            try {
-                Thread.sleep(12);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            long now = System.nanoTime();
+
+            // detect how many nanoseconds have passed since the last run of loop
+            timeSinceLastUpdate += now - lastUpdateTime;
+            timeSinceLastRender += now - lastUpdateTime;
+
+            // if at least "updatePeriod" amount of time have passed, update the game
+            if (timeSinceLastUpdate >= updatePeriod) {
+                timeSinceLastUpdate -= updatePeriod;
+                updateCount++;
+                update();
+            }
+
+            // if at least "renderPeriod" amount of time have passed, render the next frame
+            if (timeSinceLastRender >= renderPeriod) {
+                timeSinceLastRender -= renderPeriod;
+                renderCount++;
+                draw();
+            }
+
+            // for the next iteration of loop, "now" is "lastUpdateTime"
+            lastUpdateTime = now;
+
+            // calculate fps/ups
+            if (DEBUG_MODE) {
+                if (fpsNow - fpsLastCheck >= 1000) {
+                    fpsLastCheck = fpsNow;
+                    System.out.println("1 second passed");
+                    System.out.println("Update count: " + updateCount);
+                    System.out.println("Generated frame count: " + renderCount);
+                    updateCount = 0;
+                    renderCount = 0;
+                }
             }
         }
     }
