@@ -4,8 +4,9 @@ import main.Game;
 
 import javax.swing.event.MouseInputListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
-public class MouseListener implements MouseInputListener {
+public class MouseListener implements MouseInputListener, MouseMotionListener {
 
     private Game game;
 
@@ -15,7 +16,7 @@ public class MouseListener implements MouseInputListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        System.out.println("Mouse Clicked");
     }
 
     @Override
@@ -45,6 +46,6 @@ public class MouseListener implements MouseInputListener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        game.getGameState().mouseMoved(e);
     }
 }

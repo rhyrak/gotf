@@ -1,5 +1,6 @@
 package main;
 
+import states.Menu;
 import states.Playing;
 import states.State;
 
@@ -10,10 +11,14 @@ public class Game implements Runnable {
     private State gameState;
     private Thread gameThread;
 
+    public static int gameWidth;
+    public static int gameHeight;
+    public static final boolean DEBUG_MODE = true;
+
     public Game() {
         this.gamePanel = new GamePanel(this);
         this.gameWindow = new GameWindow(gamePanel);
-        this.gameState = new Playing();
+        this.gameState = new Menu();
         startGame();
     }
 
@@ -47,5 +52,11 @@ public class Game implements Runnable {
 
     public State getGameState() {
         return gameState;
+    }
+
+    public static void updateWidthHeight(int gameWidth, int gameHeight) {
+        Game.gameWidth = gameWidth;
+        Game.gameHeight = gameHeight;
+        System.out.println("Width: " + Game.gameWidth + ", Height: " + Game.gameHeight);
     }
 }

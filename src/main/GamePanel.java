@@ -16,8 +16,14 @@ public class GamePanel extends JPanel {
         setFocusable(true);
         requestFocus();
         requestFocusInWindow();
+        initListeners();
+    }
+
+    private void initListeners() {
         addKeyListener(new KeyboardListener(game));
-        addMouseListener(new MouseListener(game));
+        MouseListener mouseListener = new MouseListener(game);
+        addMouseListener(mouseListener);
+        addMouseMotionListener(mouseListener);
     }
 
 

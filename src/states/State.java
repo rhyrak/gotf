@@ -2,6 +2,7 @@ package states;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 public abstract class State {
 
@@ -11,4 +12,6 @@ public abstract class State {
     public abstract void keyPressed(KeyEvent e);
 
     public abstract void keyReleased(KeyEvent e);
+
+    public abstract void mouseMoved(MouseEvent e);
 }

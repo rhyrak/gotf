@@ -2,6 +2,7 @@ package states;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 public class Settings extends State {
     @Override
@@ -21,6 +22,11 @@ public class Settings extends State {
 
     @Override
     public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
 
     }
 }

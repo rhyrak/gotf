@@ -4,6 +4,7 @@ import entities.Player;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 public class Playing extends State {
 
@@ -42,5 +43,10 @@ public class Playing extends State {
             case KeyEvent.VK_D -> player.setMoveRight(false);
             case KeyEvent.VK_A -> player.setMoveLeft(false);
         }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
     }
 }
