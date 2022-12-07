@@ -10,9 +10,9 @@ public abstract class AssetManager {
     public static final String BUTTONS = "/assets/buttons.png";
     public static final String WINDOWS = "/assets/windows.png";
 
-    public static final String PLAY_BTN = "/ui/Menu/START.png";
-    public static final String SETTINGS_BTN = "/ui/Menu/SETTING.png";
-    public static final String EXIT_BTN = "/ui/Menu/QUIT.png";
+    public static final String PLAY_BTN = "/ui/menu/start_btn.png";
+    public static final String SETTINGS_BTN = "/ui/menu/settings_btn.png";
+    public static final String EXIT_BTN = "/ui/menu/quit_btn.png";
 
     public static BufferedImage getSprite(String filePath) {
         BufferedImage image = null;

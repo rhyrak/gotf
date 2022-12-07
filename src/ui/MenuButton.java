@@ -12,6 +12,7 @@ public class MenuButton {
     private boolean mouseOver, clicked;
     private Action action;
     private BufferedImage[] images;
+    private int timer = 0;
     private static final int NORMAL = 0, HOVER = 1, CLICKED = 2;
 
     public MenuButton(Rectangle hitbox, String imagePath) {
@@ -22,14 +23,18 @@ public class MenuButton {
     private void loadImages(String imagePath) {
         BufferedImage sprite = AssetManager.getSprite(imagePath);
         images = new BufferedImage[3];
-        images[0] = sprite.getSubimage(352,274,342,168);
-        images[1] = sprite.getSubimage(352,625,342,168);
-        images[2] = sprite.getSubimage(352,875,342,168);
+        images[0] = sprite.getSubimage(350,270,348,170);
+        images[1] = sprite.getSubimage(350,445,348,170);
+        images[2] = sprite.getSubimage(350,624,348,170);
     }
 
 
     public void update() {
-
+        if (clicked)
+            if (timer>100)
+                runAction();
+            else
+                timer++;
     }
 
     public void draw(Graphics g) {
@@ -67,5 +72,9 @@ public class MenuButton {
 
     public void runAction() {
         action.action();
+    }
+
+    public void setClicked(boolean clicked) {
+        this.clicked = clicked;
     }
 }

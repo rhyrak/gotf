@@ -22,16 +22,17 @@ public class Menu extends State {
         buttons = new MenuButton[3];
 
         buttons[0] = new MenuButton(
-                new Rectangle(Game.gameWidth / 2 - 171, Game.gameHeight / 2 - 350, 342, 168),
+                new Rectangle(Game.gameWidth / 2 - 348/4, Game.gameHeight / 2 + 20, 348/2, 170/2),
                 AssetManager.PLAY_BTN
         );
         buttons[0].setAction(() -> game.changeGameState(GameState.PLAYING));
         buttons[1] = new MenuButton(
-                new Rectangle(Game.gameWidth / 2 - 171, Game.gameHeight / 2 - 120, 342, 168),
+                new Rectangle(Game.gameWidth / 2 - 348/4, Game.gameHeight / 2 + 120, 348/2, 170/2),
                 AssetManager.SETTINGS_BTN
         );
+        buttons[1].setAction(() -> game.changeGameState(GameState.SETTINGS));
         buttons[2] = new MenuButton(
-                new Rectangle(Game.gameWidth / 2 - 171, Game.gameHeight / 2 + 130, 342, 168),
+                new Rectangle(Game.gameWidth / 2 - 348/4, Game.gameHeight / 2 + 220, 348/2, 170/2),
                 AssetManager.EXIT_BTN
         );
         buttons[2].setAction(() -> game.changeGameState(GameState.EXIT));
@@ -75,6 +76,6 @@ public class Menu extends State {
     public void mouseClicked(MouseEvent e) {
         for (MenuButton mb : buttons)
             if (mb.isMouseOver())
-                mb.runAction();
+                mb.setClicked(true);
     }
 }
