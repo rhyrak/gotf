@@ -16,4 +16,8 @@ public abstract class State {
     public abstract void mouseMoved(MouseEvent e);
 
     public abstract void mouseClicked(MouseEvent e);
+
+    public abstract void mousePressed(MouseEvent e);
+
+    public abstract void mouseReleased(MouseEvent e);
 }

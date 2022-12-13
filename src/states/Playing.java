@@ -58,4 +58,14 @@ public class Playing extends State {
     public void mouseClicked(MouseEvent e) {
 
     }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        player.setAttacking(true);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        player.setAttacking(false);
+    }
 }

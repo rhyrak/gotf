@@ -21,12 +21,12 @@ public class MouseListener implements MouseInputListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        game.getGameState().mousePressed(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        game.getGameState().mouseReleased(e);
     }
 
     @Override

@@ -78,4 +78,14 @@ public class Menu extends State {
             if (mb.isMouseOver())
                 mb.setClicked(true);
     }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
 }

@@ -38,4 +38,14 @@ public class Settings extends State {
     public void mouseClicked(MouseEvent e) {
 
     }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
 }
