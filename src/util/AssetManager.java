@@ -15,6 +15,8 @@ public abstract class AssetManager {
     public static final String EXIT_BTN = "/assets/ui/menu/quit_btn.png";
 
     public static final String PLAYER_SPRITE = "/assets/player/player-sprite.png";
+    public static final String BIG_SWORD_V = "/assets/player/big-sword-v.png";
+    public static final String BIG_SWORD_H = "/assets/player/big-sword-h.png";
 
     public static BufferedImage getSprite(String filePath) {
         BufferedImage image = null;

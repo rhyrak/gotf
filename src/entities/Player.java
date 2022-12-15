@@ -39,7 +39,7 @@ public class Player extends Entity {
         if (animTick >= 50) {
             animTick = 0;
             animIndex++;
-            if (animIndex>=4)
+            if (animIndex >= 4)
                 animIndex = 0;
         }
     }
@@ -84,26 +84,33 @@ public class Player extends Entity {
         drawHitbox(g);
         switch (direction) {
             case DOWN -> {
-                if (attacking)
+                if (attacking) {
                     g.drawImage(sprite[4][0], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
-                else
+                    g.drawImage(sprite[8][0], attackHitbox.x + attackHitbox.width / 4, attackHitbox.y, attackHitbox.width / 2, attackHitbox.height / 2, null);
+                } else
                     g.drawImage(sprite[0][animIndex], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
             }
             case UP -> {
-                if (attacking)
+                if (attacking){
                     g.drawImage(sprite[4][1], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[8][0], attackHitbox.x + (int)(attackHitbox.width / 1.75), attackHitbox.y + attackHitbox.height, -attackHitbox.width / 2, -attackHitbox.height / 2, null);
+                }
                 else
                     g.drawImage(sprite[1][animIndex], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
             }
             case LEFT -> {
-                if (attacking)
+                if (attacking){
                     g.drawImage(sprite[4][2], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[8][1], attackHitbox.x + attackHitbox.width, attackHitbox.y + attackHitbox.height / 2, -attackHitbox.width / 2, attackHitbox.height / 2, null);
+                }
                 else
                     g.drawImage(sprite[2][animIndex], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
             }
             case RIGHT -> {
-                if (attacking)
+                if (attacking) {
                     g.drawImage(sprite[4][3], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[8][1], attackHitbox.x, attackHitbox.y + attackHitbox.height / 2, attackHitbox.width / 2, attackHitbox.height / 2, null);
+                }
                 else
                     g.drawImage(sprite[3][animIndex], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
             }
@@ -112,17 +119,19 @@ public class Player extends Entity {
 
     private void loadSprite() {
         BufferedImage temp = AssetManager.getSprite(AssetManager.PLAYER_SPRITE);
-        sprite = new BufferedImage[8][4];
+        sprite = new BufferedImage[9][4];
         for (int i = 0; i < 4; i++) {
             sprite[0][i] = temp.getSubimage(0, i * 16, 16, 16); // down
             sprite[1][i] = temp.getSubimage(16, i * 16, 16, 16); // up
             sprite[2][i] = temp.getSubimage(32, i * 16, 16, 16); // left
             sprite[3][i] = temp.getSubimage(48, i * 16, 16, 16); // right
         }
-        sprite[4][0] = temp.getSubimage(0,64,16,16); // attack down
-        sprite[4][1] = temp.getSubimage(16,64,16,16); // attack up
-        sprite[4][2] = temp.getSubimage(32,64,16,16); // attack left
-        sprite[4][3] = temp.getSubimage(48,64,16,16); // attack right
+        sprite[4][0] = temp.getSubimage(0, 64, 16, 16); // attack down
+        sprite[4][1] = temp.getSubimage(16, 64, 16, 16); // attack up
+        sprite[4][2] = temp.getSubimage(32, 64, 16, 16); // attack left
+        sprite[4][3] = temp.getSubimage(48, 64, 16, 16); // attack right
+        sprite[8][0] = AssetManager.getSprite(AssetManager.BIG_SWORD_V);
+        sprite[8][1] = AssetManager.getSprite(AssetManager.BIG_SWORD_H);
     }
 
     private void drawHitbox(Graphics g) {
