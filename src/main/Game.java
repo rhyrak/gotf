@@ -4,7 +4,6 @@ import states.*;
 import util.SaveData;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -85,7 +84,6 @@ public class Game implements Runnable {
             if (DEBUG_MODE) {
                 if (fpsNow - fpsLastCheck >= 1000) {
                     fpsLastCheck = fpsNow;
-                    System.out.println("1 second passed");
                     System.out.println("Update count: " + updateCount);
                     System.out.println("Generated frame count: " + renderCount);
                     updateCount = 0;
@@ -121,7 +119,7 @@ public class Game implements Runnable {
         }
     }
 
-    private SaveData loadGame(int x) {
+    private SaveData loadGame(int id) {
         SaveData saveData = null;
         try {
             FileInputStream fis = new FileInputStream("save1.dat");

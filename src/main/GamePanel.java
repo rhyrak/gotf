@@ -5,11 +5,12 @@ import listeners.MouseListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class GamePanel extends JPanel {
 
     private Game game;
-    private Image buffer;
+    private BufferedImage buffer;
 
     public GamePanel(Game game) {
         this.game = game;
@@ -40,7 +41,7 @@ public class GamePanel extends JPanel {
                         buffer.getHeight(this) != size.height
         ) {
             // initialize the buffer
-            buffer = createImage(size.width, size.height);
+            buffer = (BufferedImage) createImage(size.width, size.height);
 
             Graphics temp = buffer.getGraphics();
             temp.setColor(Color.GRAY);

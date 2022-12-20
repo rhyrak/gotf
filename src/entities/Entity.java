@@ -4,6 +4,7 @@ import java.awt.*;
 
 public abstract class Entity {
     protected Rectangle hitbox;
+    protected int hitpoints;
 
     public Rectangle getHitbox() {
         return hitbox;
