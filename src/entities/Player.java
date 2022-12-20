@@ -12,7 +12,6 @@ import static util.Directions.*;
 public class Player extends Entity {
 
     private boolean moveUp, moveDown, moveRight, moveLeft;
-    private int playerSpeed = 2;
     private Rectangle attackHitbox;
     private boolean attacking;
     private Directions direction;
@@ -46,6 +45,7 @@ public class Player extends Entity {
 
     private void move() {
         int xSpeed = 0, ySpeed = 0;
+        int playerSpeed = 2;
         if (moveUp)
             ySpeed -= playerSpeed;
         if (moveDown)
@@ -57,6 +57,14 @@ public class Player extends Entity {
 
         hitbox.x += xSpeed;
         hitbox.y += ySpeed;
+        if (ySpeed>0)
+            direction = DOWN;
+        else if (ySpeed<0)
+            direction = UP;
+        else if (xSpeed<0)
+            direction = LEFT;
+        else if (xSpeed>0)
+            direction = RIGHT;
     }
 
     private void updateAttackHitbox() {
@@ -147,22 +155,18 @@ public class Player extends Entity {
 
     public void setMoveUp(boolean moveUp) {
         this.moveUp = moveUp;
-        direction = UP;
     }
 
     public void setMoveDown(boolean moveDown) {
         this.moveDown = moveDown;
-        direction = DOWN;
     }
 
     public void setMoveRight(boolean moveRight) {
         this.moveRight = moveRight;
-        direction = RIGHT;
     }
 
     public void setMoveLeft(boolean moveLeft) {
         this.moveLeft = moveLeft;
-        direction = LEFT;
     }
 
     public void setAttacking(boolean attacking) {

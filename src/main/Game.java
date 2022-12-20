@@ -1,6 +1,12 @@
 package main;
 
 import states.*;
+import util.SaveData;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public class Game implements Runnable {
 
@@ -108,10 +114,27 @@ public class Game implements Runnable {
 
     public void changeGameState(GameState newState) {
         switch (newState) {
-            case PLAYING -> this.gameState = new Playing();
+            case PLAYING -> this.gameState = new Playing(loadGame(0));
             case MENU -> this.gameState = new Menu(this);
             case SETTINGS -> this.gameState = new Settings();
             case EXIT -> System.exit(0);
         }
+    }
+
+    private SaveData loadGame(int x) {
+        SaveData saveData = null;
+        try {
+            FileInputStream fis = new FileInputStream("save1.dat");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            saveData = (SaveData) ois.readObject();
+            ois.close();
+        } catch (IOException | ClassNotFoundException e) {
+            saveData = new SaveData();
+            saveData.playerX = 200;
+            saveData.playerY = 200;
+            throw new RuntimeException(e);
+        }
+
+        return saveData;
     }
 }
