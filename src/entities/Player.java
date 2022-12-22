@@ -93,34 +93,34 @@ public class Player extends Entity {
         switch (direction) {
             case DOWN -> {
                 if (attacking) {
-                    g.drawImage(sprite[4][0], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
-                    g.drawImage(sprite[8][0], attackHitbox.x + attackHitbox.width / 4, attackHitbox.y, attackHitbox.width / 2, attackHitbox.height / 2, null);
+                    g.drawImage(sprite[4][0], Game.gameWidth/2-hitbox.width/2, Game.gameHeight/2-hitbox.height/2, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[8][0], Game.gameWidth/2-hitbox.width/2 - hitbox.x+attackHitbox.x + attackHitbox.width / 4, Game.gameHeight/2-hitbox.height/2 - hitbox.y+attackHitbox.y, attackHitbox.width / 2, attackHitbox.height / 2, null);
                 } else
-                    g.drawImage(sprite[0][animIndex], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[0][animIndex], Game.gameWidth/2-hitbox.width/2, Game.gameHeight/2-hitbox.height/2, hitbox.width, hitbox.height, null);
             }
             case UP -> {
                 if (attacking){
-                    g.drawImage(sprite[4][1], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
-                    g.drawImage(sprite[8][0], attackHitbox.x + (int)(attackHitbox.width / 1.75), attackHitbox.y + attackHitbox.height, -attackHitbox.width / 2, -attackHitbox.height / 2, null);
+                    g.drawImage(sprite[4][1], Game.gameWidth/2-hitbox.width/2, Game.gameHeight/2-hitbox.height/2, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[8][0], Game.gameWidth/2-hitbox.width/2 - hitbox.x+attackHitbox.x + (int)(attackHitbox.width / 1.75), Game.gameHeight/2-hitbox.height/2 - hitbox.y+attackHitbox.y + attackHitbox.height, -attackHitbox.width / 2, -attackHitbox.height / 2, null);
                 }
                 else
-                    g.drawImage(sprite[1][animIndex], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[1][animIndex], Game.gameWidth/2-hitbox.width/2, Game.gameHeight/2-hitbox.height/2, hitbox.width, hitbox.height, null);
             }
             case LEFT -> {
                 if (attacking){
-                    g.drawImage(sprite[4][2], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
-                    g.drawImage(sprite[8][1], attackHitbox.x + attackHitbox.width, attackHitbox.y + attackHitbox.height / 2, -attackHitbox.width / 2, attackHitbox.height / 2, null);
+                    g.drawImage(sprite[4][2], Game.gameWidth/2-hitbox.width/2, Game.gameHeight/2-hitbox.height/2, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[8][1], Game.gameWidth/2-hitbox.width/2 - hitbox.x+attackHitbox.x + attackHitbox.width, Game.gameHeight/2-hitbox.height/2 - hitbox.y+attackHitbox.y + attackHitbox.height / 2, -attackHitbox.width / 2, attackHitbox.height / 2, null);
                 }
                 else
-                    g.drawImage(sprite[2][animIndex], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[2][animIndex], Game.gameWidth/2-hitbox.width/2, Game.gameHeight/2-hitbox.height/2, hitbox.width, hitbox.height, null);
             }
             case RIGHT -> {
                 if (attacking) {
-                    g.drawImage(sprite[4][3], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
-                    g.drawImage(sprite[8][1], attackHitbox.x, attackHitbox.y + attackHitbox.height / 2, attackHitbox.width / 2, attackHitbox.height / 2, null);
+                    g.drawImage(sprite[4][3], Game.gameWidth/2-hitbox.width/2, Game.gameHeight/2-hitbox.height/2, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[8][1], Game.gameWidth/2-hitbox.width/2 - hitbox.x+attackHitbox.x, Game.gameHeight/2-hitbox.height/2 - hitbox.y+attackHitbox.y + attackHitbox.height / 2, attackHitbox.width / 2, attackHitbox.height / 2, null);
                 }
                 else
-                    g.drawImage(sprite[3][animIndex], hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[3][animIndex], Game.gameWidth/2-hitbox.width/2, Game.gameHeight/2-hitbox.height/2, hitbox.width, hitbox.height, null);
             }
         }
     }
@@ -144,12 +144,13 @@ public class Player extends Entity {
 
     private void drawHitbox(Graphics g) {
         if (Game.DEBUG_MODE) {
-            g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+            g.setColor(Color.BLUE);
+            g.drawRect(Game.gameWidth/2-hitbox.width/2, Game.gameHeight/2-hitbox.height/2, hitbox.width, hitbox.height);
             if (attacking)
                 g.setColor(Color.RED);
             else
                 g.setColor(Color.GREEN);
-            g.drawRect(attackHitbox.x, attackHitbox.y, attackHitbox.width, attackHitbox.height);
+            g.drawRect(Game.gameWidth/2-hitbox.width/2 - hitbox.x+attackHitbox.x, Game.gameHeight/2-hitbox.height/2 - hitbox.y+attackHitbox.y, attackHitbox.width, attackHitbox.height);
         }
     }
 
@@ -171,5 +172,9 @@ public class Player extends Entity {
 
     public void setAttacking(boolean attacking) {
         this.attacking = attacking;
+    }
+
+    public Rectangle getAttackHitbox() {
+        return attackHitbox;
     }
 }

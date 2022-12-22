@@ -3,6 +3,8 @@ package states;
 import entities.Player;
 import main.Game;
 import util.SaveData;
+import world.Level;
+import world.Overworld;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -11,32 +13,48 @@ import java.io.*;
 
 public class Playing extends State implements Serializable {
 
-    private final Player player;
+    private Player player;
     private boolean paused = false;
     private SaveData saveData;
+    private Level level;
+    private Color overlay = new Color(0,0,0,100);
 
     public Playing(SaveData saveData) {
         if (saveData == null)
             this.saveData = new SaveData();
         else
             this.saveData = saveData;
+        initGame();
+    }
+
+    private void initGame() {
         this.player = new Player(new Rectangle(saveData.playerX,saveData.playerY,64,64));
+        this.level = new Overworld();
     }
 
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.lightGray);
         g.fillRect(0,0, Game.gameWidth, Game.gameHeight);
+        level.draw(g);
         player.draw(g);
         if (paused) {
-            g.setColor(new Color(0,0,0,100));
+            g.setColor(overlay);
             g.fillRect(0,0, Game.gameWidth, Game.gameHeight);
+        }
+        if (Game.DEBUG_MODE) {
+            g.setColor(overlay);
+            g.fillRect(40,40,200,300);
+            g.setColor(Color.green);
+            g.drawString("Player X: " + player.getHitbox().x + " Y: " + player.getHitbox().y, 45,55);
+            g.drawString("AHB X: " + player.getAttackHitbox().x + " Y: " + player.getAttackHitbox().y, 45,75);
         }
     }
 
     @Override
     public void update() {
         if (!paused) {
+            level.update();
             player.update();
         }
     }

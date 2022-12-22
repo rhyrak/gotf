@@ -3,9 +3,9 @@ package world;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Overworld extends Level{
+public class Overworld extends Level {
 
-    private BufferedImage[] tileSet;
+    private BufferedImage tileSet;
 
     public Overworld() {
 
