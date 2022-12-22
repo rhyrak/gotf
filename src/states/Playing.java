@@ -29,7 +29,7 @@ public class Playing extends State implements Serializable {
 
     private void initGame() {
         this.player = new Player(new Rectangle(saveData.playerX,saveData.playerY,64,64));
-        this.level = new Overworld();
+        this.level = new Overworld(player);
     }
 
     @Override
@@ -54,8 +54,8 @@ public class Playing extends State implements Serializable {
     @Override
     public void update() {
         if (!paused) {
-            level.update();
             player.update();
+            level.update();
         }
     }
 
@@ -110,11 +110,15 @@ public class Playing extends State implements Serializable {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        player.setAttacking(true);
+        switch (e.getButton()) {
+            case MouseEvent.BUTTON1 -> player.setAttacking(true);
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        player.setAttacking(false);
+        switch (e.getButton()) {
+            case MouseEvent.BUTTON1 -> player.setAttacking(false);
+        }
     }
 }

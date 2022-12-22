@@ -20,7 +20,10 @@ public class KeyboardListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        game.getGameState().keyPressed(e);
+        if (e.getKeyCode() == KeyEvent.VK_0)
+            Game.toggleDebug();
+        else
+            game.getGameState().keyPressed(e);
     }
 
     @Override

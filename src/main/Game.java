@@ -16,7 +16,7 @@ public class Game implements Runnable {
 
     public static int gameWidth;
     public static int gameHeight;
-    public static final boolean DEBUG_MODE = true;
+    public static boolean DEBUG_MODE = false;
 
     public Game() {
         this.gamePanel = new GamePanel(this);
@@ -134,5 +134,9 @@ public class Game implements Runnable {
         }
 
         return saveData;
+    }
+
+    public static void toggleDebug() {
+        DEBUG_MODE = !DEBUG_MODE;
     }
 }
