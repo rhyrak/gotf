@@ -22,6 +22,8 @@ public abstract class AssetManager {
     public static final String GRASS_P = "/assets/world/particles/grass.png";
     public static final String RAIN_FLOOR = "/assets/world/particles/rain-on-floor.png";
 
+    public static final String FLOOR_TS = "/assets/world/tilesets/floor.png";
+
     public static BufferedImage getSprite(String filePath) {
         BufferedImage image = null;
         InputStream is = AssetManager.class.getResourceAsStream(filePath);

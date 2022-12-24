@@ -35,8 +35,8 @@ public class Playing extends State implements Serializable {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.lightGray);
-        g.fillRect(0,0, Game.gameWidth, Game.gameHeight);
+        //g.setColor(Color.lightGray);
+        //g.fillRect(0,0, Game.gameWidth, Game.gameHeight);
         level.draw(g);
         player.draw(g);
         WeatherTime.draw(g);

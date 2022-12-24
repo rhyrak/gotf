@@ -14,6 +14,7 @@ public class Game implements Runnable {
     private State gameState;
     private Thread gameThread;
 
+    public static final int TILE_SIZE = 64;
     public static int gameWidth;
     public static int gameHeight;
     public static boolean DEBUG_MODE = false;
