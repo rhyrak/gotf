@@ -1,6 +1,7 @@
 package listeners;
 
 import main.Game;
+import util.WeatherTime;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -22,6 +23,8 @@ public class KeyboardListener implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_0)
             Game.toggleDebug();
+        else if (e.getKeyCode() == KeyEvent.VK_9)
+            WeatherTime.raining = !WeatherTime.raining;
         else
             game.getGameState().keyPressed(e);
     }

@@ -3,6 +3,7 @@ package states;
 import entities.Player;
 import main.Game;
 import util.SaveData;
+import util.WeatherTime;
 import world.Level;
 import world.Overworld;
 
@@ -38,6 +39,7 @@ public class Playing extends State implements Serializable {
         g.fillRect(0,0, Game.gameWidth, Game.gameHeight);
         level.draw(g);
         player.draw(g);
+        WeatherTime.draw(g);
         if (paused) {
             g.setColor(overlay);
             g.fillRect(0,0, Game.gameWidth, Game.gameHeight);
@@ -56,6 +58,7 @@ public class Playing extends State implements Serializable {
         if (!paused) {
             player.update();
             level.update();
+            WeatherTime.update();
         }
     }
 

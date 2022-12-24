@@ -18,6 +18,10 @@ public abstract class AssetManager {
     public static final String BIG_SWORD_V = "/assets/player/big-sword-v.png";
     public static final String BIG_SWORD_H = "/assets/player/big-sword-h.png";
 
+    public static final String RAIN_P = "/assets/world/particles/rain.png";
+    public static final String GRASS_P = "/assets/world/particles/grass.png";
+    public static final String RAIN_FLOOR = "/assets/world/particles/rain-on-floor.png";
+
     public static BufferedImage getSprite(String filePath) {
         BufferedImage image = null;
         InputStream is = AssetManager.class.getResourceAsStream(filePath);
