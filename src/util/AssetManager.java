@@ -17,6 +17,10 @@ public abstract class AssetManager {
     public static final String PLAYER_SPRITE = "/assets/player/player-sprite.png";
     public static final String BIG_SWORD_V = "/assets/player/big-sword-v.png";
     public static final String BIG_SWORD_H = "/assets/player/big-sword-h.png";
+    public static final String HEART = "/assets/hud/heart.png";
+    public static final String ITEM_SLOT = "/assets/hud/item-slot.png";
+    public static final String LIFE_POT = "/assets/items/life-pot.png";
+    public static final String MEDIPACK = "/assets/items/medipack.png";
 
     public static final String RAIN_P = "/assets/world/particles/rain.png";
     public static final String GRASS_P = "/assets/world/particles/grass.png";

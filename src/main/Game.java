@@ -1,11 +1,10 @@
 package main;
 
 import states.*;
+import states.Menu;
 import util.SaveData;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 
 public class Game implements Runnable {
 

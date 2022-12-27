@@ -88,6 +88,9 @@ public class Playing extends State implements Serializable {
             case KeyEvent.VK_A -> player.setMoveLeft(true);
             case KeyEvent.VK_ESCAPE -> paused = !paused;
             case KeyEvent.VK_U -> saveAndExit();
+            case KeyEvent.VK_1 -> player.useItem(1);
+            case KeyEvent.VK_2 -> player.useItem(2);
+            case KeyEvent.VK_3 -> player.useItem(3);
         }
     }
 
