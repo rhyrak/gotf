@@ -36,8 +36,8 @@ public class Overworld extends Level {
 
     @Override
     public void draw(Graphics g) {
-        for (int j = 0; j < Game.gameHeight / TILE_SIZE + 2; j++) {
-            for (int i = 0; i < Game.gameWidth / TILE_SIZE + 2; i++) {
+        for (int j = -2; j < Game.gameHeight / TILE_SIZE + 4; j++) {
+            for (int i = -2; i < Game.gameWidth / TILE_SIZE + 4; i++) {
                 g.drawImage(tileSet[269], i * TILE_SIZE + camOffsetX, j * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
             }
         }

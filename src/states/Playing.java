@@ -1,5 +1,6 @@
 package states;
 
+import entities.EntityManager;
 import entities.Player;
 import main.Game;
 import util.SaveData;
@@ -15,6 +16,7 @@ import java.io.*;
 public class Playing extends State implements Serializable {
 
     private Player player;
+    private EntityManager entityManager;
     private boolean paused = false;
     private SaveData saveData;
     private Level level;
@@ -30,6 +32,7 @@ public class Playing extends State implements Serializable {
 
     private void initGame() {
         this.player = new Player(new Rectangle(saveData.playerX,saveData.playerY,64,64));
+        this.entityManager = new EntityManager(this, player);
         this.level = new Overworld(player);
     }
 
@@ -38,6 +41,7 @@ public class Playing extends State implements Serializable {
         //g.setColor(Color.lightGray);
         //g.fillRect(0,0, Game.gameWidth, Game.gameHeight);
         level.draw(g);
+        entityManager.draw(g);
         player.draw(g);
         WeatherTime.draw(g);
         if (paused) {
@@ -57,6 +61,7 @@ public class Playing extends State implements Serializable {
     public void update() {
         if (!paused) {
             player.update();
+            entityManager.update();
             level.update();
             WeatherTime.update();
         }
@@ -123,5 +128,9 @@ public class Playing extends State implements Serializable {
 
     @Override
     public void mouseReleased(MouseEvent e) {
+    }
+
+    public SaveData getSaveData() {
+        return saveData;
     }
 }

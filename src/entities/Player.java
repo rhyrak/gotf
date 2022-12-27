@@ -35,7 +35,7 @@ public class Player extends Entity {
         loadSprite();
     }
 
-
+    @Override
     public void update() {
         animate();
         move();
@@ -106,6 +106,7 @@ public class Player extends Entity {
         }
     }
 
+    @Override
     public void draw(Graphics g) {
         drawHitbox(g);
         drawHUD(g);

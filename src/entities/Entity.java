@@ -6,6 +6,14 @@ public abstract class Entity {
     protected Rectangle hitbox;
     protected int hitpoints;
 
+    public abstract void draw(Graphics g);
+
+    public abstract void update();
+
+    public enum state {
+        IDLE, RETURN, CHASE
+    }
+
     public Rectangle getHitbox() {
         return hitbox;
     }

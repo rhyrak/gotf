@@ -22,6 +22,9 @@ public abstract class AssetManager {
     public static final String LIFE_POT = "/assets/items/life-pot.png";
     public static final String MEDIPACK = "/assets/items/medipack.png";
 
+    public static final String LIZARD = "/assets/monsters/lizard.png";
+    public static final String RED_NINJA = "/assets/monsters/red-ninja.png";
+
     public static final String RAIN_P = "/assets/world/particles/rain.png";
     public static final String GRASS_P = "/assets/world/particles/grass.png";
     public static final String RAIN_FLOOR = "/assets/world/particles/rain-on-floor.png";
