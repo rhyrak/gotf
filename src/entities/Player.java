@@ -17,7 +17,7 @@ public class Player extends Entity {
     private Directions direction;
     private BufferedImage[][] sprite;
     private int animIndex, animTick;
-
+    private int attackCoolDown;
 
     public Player(Rectangle hitbox) {
         this.hitbox = hitbox;
@@ -31,6 +31,15 @@ public class Player extends Entity {
         animate();
         move();
         updateAttackHitbox();
+        updateCooldowns();
+    }
+
+    private void updateCooldowns() {
+        if (attackCoolDown > 0) {
+            attackCoolDown--;
+            if (attackCoolDown <=100)
+                attacking = false;
+        }
     }
 
     private void animate() {
@@ -170,8 +179,11 @@ public class Player extends Entity {
         this.moveLeft = moveLeft;
     }
 
-    public void setAttacking(boolean attacking) {
-        this.attacking = attacking;
+    public void setAttacking() {
+        if (attackCoolDown <= 0) {
+            this.attacking = true;
+            attackCoolDown = 200;
+        }
     }
 
     public Rectangle getAttackHitbox() {

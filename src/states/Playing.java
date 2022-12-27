@@ -114,14 +114,11 @@ public class Playing extends State implements Serializable {
     @Override
     public void mousePressed(MouseEvent e) {
         switch (e.getButton()) {
-            case MouseEvent.BUTTON1 -> player.setAttacking(true);
+            case MouseEvent.BUTTON1 -> player.setAttacking();
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        switch (e.getButton()) {
-            case MouseEvent.BUTTON1 -> player.setAttacking(false);
-        }
     }
 }
