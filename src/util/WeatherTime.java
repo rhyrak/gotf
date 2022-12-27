@@ -10,7 +10,7 @@ public abstract class WeatherTime {
     private static BufferedImage[] rain = new BufferedImage[3];
     private static BufferedImage[] rainOnFloor = new BufferedImage[3];
     private static int animIndx = 0, animTick = 0;
-    private static int rainY = 0, xShift = 0, yShift = 0;
+    private static int rainX = 0, rainY = 0, xShift = 0, yShift = 0;
     public static boolean raining = false;
 
     static {
@@ -28,8 +28,11 @@ public abstract class WeatherTime {
         if (raining) {
             animTick++;
             rainY++;
+            rainX--;
             if (rainY >= 32)
                 rainY = 0;
+            if (rainX <= -64)
+                rainX = 0;
             if (animTick >= 66) {
                 animTick = 0;
                 animIndx++;
@@ -43,11 +46,10 @@ public abstract class WeatherTime {
     }
 
     public static void draw(Graphics g) {
-        if (raining) {
-            for (int i = 0; i < Game.gameWidth / 32; i++)
+        if (raining)
+            for (int i = 0; i < Game.gameWidth / 64; i++)
                 for (int j = 0; j < Game.gameHeight / 32; j++)
-                    g.drawImage(rain[animIndx], i * 32 + xShift, j * 32 + rainY + yShift, 16, 16, null);
-            g.drawImage(rainOnFloor[animIndx], 50, 100, 16, 16, null);
-        }
+                    if (Math.random() < 0.15)
+                        g.drawImage(rain[animIndx], i * 64 + xShift + rainX, j * 32 + rainY + yShift, 16, 16, null);
     }
 }

@@ -105,11 +105,6 @@ public class Game implements Runnable {
         return gameState;
     }
 
-    public static void updateWidthHeight(int gameWidth, int gameHeight) {
-        Game.gameWidth = gameWidth;
-        Game.gameHeight = gameHeight;
-    }
-
     public void changeGameState(GameState newState) {
         switch (newState) {
             case PLAYING -> this.gameState = new Playing(loadGame(0));

@@ -14,7 +14,8 @@ public class GameWindow extends JFrame {
         setUndecorated(true);
         add(gamePanel);
         setVisible(true);
-        Game.updateWidthHeight(getWidth(), getHeight());
+        Game.gameWidth = getWidth();
+        Game.gameHeight = getHeight();
     }
 
 }
