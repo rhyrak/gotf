@@ -36,6 +36,36 @@ public class Overworld extends Level {
                         .getScaledInstance(TILE_SIZE, TILE_SIZE, Image.SCALE_DEFAULT);
             }
         }
+
+        temp = AssetManager.getSprite(AssetManager.FLOOR2_TS);
+        floor2 = new Image[337];
+        iter = 1;
+        for (int j = 0; j < 16; j++) {
+            for (int i = 0; i < 21; i++) {
+                floor2[iter++] = temp.getSubimage(i * 16, j * 16, 16, 16)
+                        .getScaledInstance(TILE_SIZE, TILE_SIZE, Image.SCALE_DEFAULT);
+            }
+        }
+
+        temp = AssetManager.getSprite(AssetManager.FLOOR3_TS);
+        floor3 = new Image[573];
+        iter = 1;
+        for (int j = 0; j < 26; j++) {
+            for (int i = 0; i < 22; i++) {
+                floor3[iter++] = temp.getSubimage(i * 16, j * 16, 16, 16)
+                        .getScaledInstance(TILE_SIZE, TILE_SIZE, Image.SCALE_DEFAULT);
+            }
+        }
+
+        temp = AssetManager.getSprite(AssetManager.FLOOR4_TS);
+        floor4 = new Image[573];
+        iter = 1;
+        for (int j = 0; j < 26; j++) {
+            for (int i = 0; i < 22; i++) {
+                floor4[iter++] = temp.getSubimage(i * 16, j * 16, 16, 16)
+                        .getScaledInstance(TILE_SIZE, TILE_SIZE, Image.SCALE_DEFAULT);
+            }
+        }
     }
 
     @Override
