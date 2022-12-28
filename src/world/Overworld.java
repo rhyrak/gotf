@@ -40,8 +40,8 @@ public class Overworld extends Level {
         temp = AssetManager.getSprite(AssetManager.FLOOR2_TS);
         floor2 = new Image[337];
         iter = 1;
-        for (int j = 0; j < 16; j++) {
-            for (int i = 0; i < 21; i++) {
+        for (int j = 0; j < 21; j++) {
+            for (int i = 0; i < 16; i++) {
                 floor2[iter++] = temp.getSubimage(i * 16, j * 16, 16, 16)
                         .getScaledInstance(TILE_SIZE, TILE_SIZE, Image.SCALE_DEFAULT);
             }
@@ -50,8 +50,8 @@ public class Overworld extends Level {
         temp = AssetManager.getSprite(AssetManager.FLOOR3_TS);
         floor3 = new Image[760];
         iter = 1;
-        for (int j = 0; j < 33; j++) {
-            for (int i = 0; i < 23; i++) {
+        for (int j = 0; j < 23; j++) {
+            for (int i = 0; i < 33; i++) {
                 floor3[iter++] = temp.getSubimage(i * 16, j * 16, 16, 16)
                         .getScaledInstance(TILE_SIZE, TILE_SIZE, Image.SCALE_DEFAULT);
             }
