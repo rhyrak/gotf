@@ -75,10 +75,14 @@ public class Overworld extends Level {
                 for (int x = 0; x < OverworldData.arr[layer][y].length; x++) {
                     if (OverworldData.arr[layer][y][x] > 0)
                         switch (layer) {
-                            case 0 -> g.drawImage(floor1[OverworldData.arr[layer][y][x]], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                            case 1 -> g.drawImage(floor2[OverworldData.arr[layer][y][x]-572], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                            case 2 -> g.drawImage(floor3[OverworldData.arr[layer][y][x]-1052], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                            case 3 -> g.drawImage(floor4[OverworldData.arr[layer][y][x]-908], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                            case 0 ->
+                                    g.drawImage(floor1[OverworldData.arr[layer][y][x]], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                            case 1 ->
+                                    g.drawImage(floor2[OverworldData.arr[layer][y][x] - 572], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                            case 2 ->
+                                    g.drawImage(floor3[OverworldData.arr[layer][y][x] - 1052], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                            case 3 ->
+                                    g.drawImage(floor4[OverworldData.arr[layer][y][x] - 908], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
                         }
                 }
             }
@@ -89,6 +93,24 @@ public class Overworld extends Level {
     public void update() {
         camOffsetX = Game.gameWidth / 2 - player.getHitbox().x - player.getHitbox().width / 2;
         camOffsetY = Game.gameHeight / 2 - player.getHitbox().y - player.getHitbox().height / 2;
+    }
+
+    @Override
+    public boolean canMove(int x, int y) {
+        int xIndex = x / 64, yIndex = y / 64;
+        boolean canMove = true;
+
+        for (int layer = 1; layer < OverworldData.arr.length; layer++)
+            try {
+                if (OverworldData.arr[layer][yIndex][xIndex] > 0) {
+                    canMove = false;
+                    break;
+                }
+            }catch (Exception e) {
+                canMove = false;
+            }
+
+        return canMove;
     }
 }
 

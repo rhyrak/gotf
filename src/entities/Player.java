@@ -3,6 +3,7 @@ package entities;
 import main.Game;
 import util.AssetManager;
 import util.Directions;
+import world.Level;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,6 +14,7 @@ public class Player extends Entity {
 
     private boolean moveUp, moveDown, moveRight, moveLeft;
     private Rectangle attackHitbox;
+    private Rectangle moveHitbox;
     private boolean attacking;
     private Directions direction;
     private BufferedImage[][] sprite;
@@ -25,11 +27,12 @@ public class Player extends Entity {
     private Color cdColor = new Color(222, 222, 222, 200);
     private int animIndex, animTick;
     private int attackCoolDown;
-
+    private Level level;
 
     public Player(Rectangle hitbox) {
         this.hitbox = hitbox;
         this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
+        this.moveHitbox = new Rectangle(hitbox.x + 2, hitbox.y + 32, hitbox.width - 4, hitbox.height - 32);
         this.direction = RIGHT;
         this.hitpoints = 4;
         loadSprite();
@@ -73,8 +76,29 @@ public class Player extends Entity {
         if (moveRight)
             xSpeed += playerSpeed;
 
-        hitbox.x += xSpeed;
-        hitbox.y += ySpeed;
+        if (level != null) {
+            if (xSpeed > 0)
+                if (level.canMove(moveHitbox.x + xSpeed + moveHitbox.width, moveHitbox.y) && level.canMove(moveHitbox.x + xSpeed + moveHitbox.width, moveHitbox.y + moveHitbox.height)) {
+                    hitbox.x += xSpeed;
+                    moveHitbox.x += xSpeed;
+                }
+            if (xSpeed < 0)
+                if (level.canMove(moveHitbox.x + xSpeed, moveHitbox.y) && level.canMove(moveHitbox.x + xSpeed, moveHitbox.y + moveHitbox.height)) {
+                    hitbox.x += xSpeed;
+                    moveHitbox.x += xSpeed;
+                }
+            if (ySpeed > 0)
+                if (level.canMove(moveHitbox.x, moveHitbox.y + ySpeed + moveHitbox.height) && level.canMove(moveHitbox.x + moveHitbox.width, moveHitbox.y + ySpeed + moveHitbox.height)) {
+                    hitbox.y += ySpeed;
+                    moveHitbox.y += ySpeed;
+                }
+            if (ySpeed < 0)
+                if (level.canMove(moveHitbox.x, moveHitbox.y + ySpeed) && level.canMove(moveHitbox.x + moveHitbox.width, moveHitbox.y + ySpeed)) {
+                    hitbox.y += ySpeed;
+                    moveHitbox.y += ySpeed;
+                }
+        }
+
         if (ySpeed > 0)
             direction = DOWN;
         else if (ySpeed < 0)
@@ -153,7 +177,7 @@ public class Player extends Entity {
                 g.drawImage(hudHeart[4], 48 + 36 * i, 48, 32, 32, null);
 
         // items
-        g.setFont(new Font(Font.DIALOG, Font.LAYOUT_RIGHT_TO_LEFT, 20));
+        g.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
         for (int i = 0; i < 3; i++) {
             g.drawImage(itemSlot, 48 + 54 * i, 96, 48, 48, null);
             if (i == 0) {
@@ -163,7 +187,7 @@ public class Player extends Entity {
                     g.fillRect(60, 108, 24, 24);
                 }
                 g.setColor(Color.WHITE);
-                g.drawString(lifePotCount+"", 88,140);
+                g.drawString(lifePotCount + "", 88, 140);
             }
             if (i == 1) {
                 g.drawImage(medipack, 114, 108, 24, 24, null);
@@ -172,7 +196,7 @@ public class Player extends Entity {
                     g.fillRect(114, 108, 24, 24);
                 }
                 g.setColor(Color.WHITE);
-                g.drawString(medipackCount+"", 138,140);
+                g.drawString(medipackCount + "", 138, 140);
             }
         }
     }
@@ -210,6 +234,8 @@ public class Player extends Entity {
             else
                 g.setColor(Color.GREEN);
             g.drawRect(Game.gameWidth / 2 - hitbox.width / 2 - hitbox.x + attackHitbox.x, Game.gameHeight / 2 - hitbox.height / 2 - hitbox.y + attackHitbox.y, attackHitbox.width, attackHitbox.height);
+            g.setColor(Color.MAGENTA);
+            g.drawRect(Game.gameWidth / 2 - hitbox.width / 2 - hitbox.x + moveHitbox.x, Game.gameHeight / 2 - hitbox.height / 2 - hitbox.y + moveHitbox.y, moveHitbox.width, moveHitbox.height);
         }
     }
 
@@ -242,17 +268,17 @@ public class Player extends Entity {
 
     public void useItem(int item) {
         if (item == 1 && hitpoints != 20) {
-            if (lifePotCount>0){
+            if (lifePotCount > 0) {
                 lifePotCount--;
                 hitpoints += 2;
             }
-        }else if (item == 2 && hitpoints != 20) {
-            if (medipackCount>0){
+        } else if (item == 2 && hitpoints != 20) {
+            if (medipackCount > 0) {
                 medipackCount--;
                 hitpoints += 4;
             }
         }
-        if (hitpoints>20)
+        if (hitpoints > 20)
             hitpoints = 20;
     }
 
@@ -272,5 +298,9 @@ public class Player extends Entity {
             }
         }
         return false;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
     }
 }

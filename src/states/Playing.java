@@ -34,12 +34,11 @@ public class Playing extends State implements Serializable {
         this.player = new Player(new Rectangle(saveData.playerX,saveData.playerY,64,64));
         this.entityManager = new EntityManager(this, player);
         this.level = new Overworld(player);
+        player.setLevel(level);
     }
 
     @Override
     public void draw(Graphics g) {
-        //g.setColor(Color.lightGray);
-        //g.fillRect(0,0, Game.gameWidth, Game.gameHeight);
         level.draw(g);
         entityManager.draw(g);
         player.draw(g);

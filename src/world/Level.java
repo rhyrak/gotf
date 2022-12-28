@@ -7,4 +7,6 @@ public abstract class Level {
 
     public abstract void draw(Graphics g);
     public abstract void update();
+
+    public abstract boolean canMove(int x, int y);
 }
