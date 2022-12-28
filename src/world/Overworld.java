@@ -12,7 +12,7 @@ import static main.Game.TILE_SIZE;
 public class Overworld extends Level {
 
 
-    private Image[] tileSet;
+    private Image[] floor1;
     private Rectangle demoTile;
     private int camOffsetX = 0, camOffsetY = 0;
     private Player player;
@@ -24,12 +24,12 @@ public class Overworld extends Level {
     }
 
     private void initTileSet() {
-        BufferedImage temp = AssetManager.getSprite(AssetManager.FLOOR_TS);
-        tileSet = new Image[573];
+        BufferedImage temp = AssetManager.getSprite(AssetManager.FLOOR1_TS);
+        floor1 = new Image[573];
         int iter = 1;
         for (int j = 0; j < 26; j++) {
             for (int i = 0; i < 22; i++) {
-                tileSet[iter++] = temp.getSubimage(i * 16, j * 16, 16, 16)
+                floor1[iter++] = temp.getSubimage(i * 16, j * 16, 16, 16)
                         .getScaledInstance(TILE_SIZE, TILE_SIZE, Image.SCALE_DEFAULT);
             }
         }
@@ -37,9 +37,13 @@ public class Overworld extends Level {
 
     @Override
     public void draw(Graphics g) {
-        for (int j = -2; j < Game.gameHeight / TILE_SIZE + 4; j++) {
-            for (int i = -2; i < Game.gameWidth / TILE_SIZE + 4; i++) {
-                g.drawImage(tileSet[269], i * TILE_SIZE + camOffsetX, j * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+        for (int layer = 0; layer < OverworldData.arr.length; layer++) {
+            for (int y = 0; y < OverworldData.arr[layer].length; y++) {
+                for (int x = 0; x < OverworldData.arr[layer][y].length; x++) {
+                    switch (layer) {
+                        case 0 -> g.drawImage(floor1[OverworldData.arr[layer][y][x]], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                    }
+                }
             }
         }
     }
