@@ -13,6 +13,9 @@ public class Overworld extends Level {
 
 
     private Image[] floor1;
+    private Image[] floor2;
+    private Image[] floor3;
+    private Image[] floor4;
     private Rectangle demoTile;
     private int camOffsetX = 0, camOffsetY = 0;
     private Player player;
