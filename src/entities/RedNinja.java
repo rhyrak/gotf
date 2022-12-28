@@ -22,11 +22,16 @@ public class RedNinja extends Entity{
     private Directions direction;
     private int camOffsetX, camOffsetY;
     public int actionLockCounter = 0;
-    public RedNinja(EntityManager entityManager) {
+    public int startX, startY;
+    public boolean returning = false;
+    // constructor
+    public RedNinja(EntityManager entityManager) { 
     	this.entityManager = entityManager;
         this.hitbox = new Rectangle(0,0,64,64);
         this.direction = LEFT;
         loadSprite();
+        startX = hitbox.x;
+        startY = hitbox.y;
     }
 
     private void loadSprite() {
@@ -46,12 +51,17 @@ public class RedNinja extends Entity{
     
     //checks and sets RedNinja's idle/chase situations
     public void setAction() {
+    	//reset directions
     	moveRight = false;
 		moveLeft = false;
 		moveUp = false;
 		moveDown = false;
+		
         int xDiff = entityManager.getPlayer().getHitbox().x - hitbox.x; // x-axis distance between RedNinja and player
     	int yDiff = entityManager.getPlayer().getHitbox().y - hitbox.y; // y-axis distance between RedNinja and player
+    	
+    	int posDiffX = startX - hitbox.x; // x-axis distance between RedNinja's starting position and initial position
+    	int posDiffY = startY - hitbox.y; // y-axis distance between RedNinja's starting position and initial position
     	
     	if(Math.abs(xDiff) <= 250 && Math.abs(yDiff) <= 250) { // chase the player
 			if(xDiff == 0 && yDiff < 0) 
@@ -71,7 +81,24 @@ public class RedNinja extends Entity{
 			}else if(xDiff > 0 && yDiff > 0) {
 				moveRight = true; moveDown = true;
 			}
-		}else { // idle movements
+		}else if(Math.abs(posDiffX) >= 301 || Math.abs(posDiffY) >= 301 || returning){ // returning to starting position
+			returning = true;
+			actionLockCounter = 0;
+			if(posDiffY != 0)
+				if(posDiffY < 0) 
+					moveUp = true;
+				else 
+					moveDown = true;
+	
+			if(posDiffX != 0)
+				if(posDiffX != 0)
+					if(posDiffX < 0)
+						moveLeft = true;
+					else
+						moveRight = true;
+			if(hitbox.x == startX && hitbox.y == startY)
+				returning = false;
+		}else if(!returning){ // idle movements
 			actionLockCounter++;
 
 			if(actionLockCounter>=0 && actionLockCounter < 300) {
@@ -161,7 +188,7 @@ public class RedNinja extends Entity{
         setAction();
         animate();
         move();
-        
     }
 }
+
 
