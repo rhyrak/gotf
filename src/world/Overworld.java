@@ -73,12 +73,13 @@ public class Overworld extends Level {
         for (int layer = 0; layer < OverworldData.arr.length; layer++) {
             for (int y = 0; y < OverworldData.arr[layer].length; y++) {
                 for (int x = 0; x < OverworldData.arr[layer][y].length; x++) {
-                    switch (layer) {
-                        case 0 -> g.drawImage(floor1[OverworldData.arr[layer][y][x]], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                        case 1 -> g.drawImage(floor2[OverworldData.arr[layer][y][x]], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                        case 2 -> g.drawImage(floor3[OverworldData.arr[layer][y][x]], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                        case 3 -> g.drawImage(floor4[OverworldData.arr[layer][y][x]], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                    }
+                    if (OverworldData.arr[layer][y][x] > 0)
+                        switch (layer) {
+                            case 0 -> g.drawImage(floor1[OverworldData.arr[layer][y][x]], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                            case 1 -> g.drawImage(floor2[OverworldData.arr[layer][y][x]-572], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                            case 2 -> g.drawImage(floor3[OverworldData.arr[layer][y][x]-1052], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                            case 3 -> g.drawImage(floor4[OverworldData.arr[layer][y][x]-908], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                        }
                 }
             }
         }
