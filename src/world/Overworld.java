@@ -11,7 +11,6 @@ import static main.Game.TILE_SIZE;
 
 public class Overworld extends Level {
 
-
     private Image[] floor1;
     private Image[] floor2;
     private Image[] floor3;
