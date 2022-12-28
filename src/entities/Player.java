@@ -19,7 +19,7 @@ public class Player extends Entity {
     private BufferedImage[] hudHeart;
     private BufferedImage itemSlot;
     private BufferedImage lifePot;
-    private int lifePotCount = 2;
+    private int lifePotCount = 5;
     private BufferedImage medipack;
     private int medipackCount = 2;
     private Color cdColor = new Color(222, 222, 222, 200);
@@ -241,12 +241,12 @@ public class Player extends Entity {
     }
 
     public void useItem(int item) {
-        if (item == 1) {
+        if (item == 1 && hitpoints != 20) {
             if (lifePotCount>0){
                 lifePotCount--;
                 hitpoints += 2;
             }
-        }else if (item == 2) {
+        }else if (item == 2 && hitpoints != 20) {
             if (medipackCount>0){
                 medipackCount--;
                 hitpoints += 4;
@@ -254,5 +254,23 @@ public class Player extends Entity {
         }
         if (hitpoints>20)
             hitpoints = 20;
+    }
+
+    public boolean addItem(Item.ItemType type) {
+        switch (type) {
+            case LIFEPOT -> {
+                if (lifePotCount < 5) {
+                    lifePotCount++;
+                    return true;
+                }
+            }
+            case MEDIPACK -> {
+                if (medipackCount < 5) {
+                    medipackCount++;
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
