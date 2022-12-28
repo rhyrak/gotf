@@ -30,7 +30,7 @@ public class Overworld extends Level {
         BufferedImage temp = AssetManager.getSprite(AssetManager.FLOOR1_TS);
         floor1 = new Image[573];
         int iter = 1;
-        for (int j = 0; j < 27; j++) {
+        for (int j = 0; j < 26; j++) {
             for (int i = 0; i < 22; i++) {
                 floor1[iter++] = temp.getSubimage(i * 16, j * 16, 16, 16)
                         .getScaledInstance(TILE_SIZE, TILE_SIZE, Image.SCALE_DEFAULT);
