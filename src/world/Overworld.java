@@ -75,6 +75,9 @@ public class Overworld extends Level {
                 for (int x = 0; x < OverworldData.arr[layer][y].length; x++) {
                     switch (layer) {
                         case 0 -> g.drawImage(floor1[OverworldData.arr[layer][y][x]], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                        case 1 -> g.drawImage(floor2[OverworldData.arr[layer][y][x]], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                        case 2 -> g.drawImage(floor3[OverworldData.arr[layer][y][x]], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                        case 3 -> g.drawImage(floor4[OverworldData.arr[layer][y][x]], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
                     }
                 }
             }
