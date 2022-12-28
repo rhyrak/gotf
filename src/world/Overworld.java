@@ -11,6 +11,7 @@ import static main.Game.TILE_SIZE;
 
 public class Overworld extends Level {
 
+
     private Image[] tileSet;
     private Rectangle demoTile;
     private int camOffsetX = 0, camOffsetY = 0;
@@ -49,3 +50,4 @@ public class Overworld extends Level {
         camOffsetY = Game.gameHeight / 2 - player.getHitbox().y - player.getHitbox().height / 2;
     }
 }
+
