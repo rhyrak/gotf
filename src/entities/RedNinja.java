@@ -24,10 +24,13 @@ public class RedNinja extends Entity{
     public int actionLockCounter = 0;
     public int startX, startY;
     public boolean returning = false;
+    private int attackCoolDown=0;
+    
     // constructor
     public RedNinja(EntityManager entityManager) { 
     	this.entityManager = entityManager;
-        this.hitbox = new Rectangle(0,0,64,64);
+        this.hitbox = new Rectangle(16*64,16*64,64,64);
+        this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
         this.direction = LEFT;
         loadSprite();
         startX = hitbox.x;
@@ -47,15 +50,18 @@ public class RedNinja extends Entity{
         sprite[4][1] = temp.getSubimage(16, 64, 16, 16); // attack up
         sprite[4][2] = temp.getSubimage(32, 64, 16, 16); // attack left
         sprite[4][3] = temp.getSubimage(48, 64, 16, 16); // attack right
+        sprite[8][0] = AssetManager.getSprite(AssetManager.BIG_SWORD_V);
+        sprite[8][1] = AssetManager.getSprite(AssetManager.BIG_SWORD_H);
     }
     
     //checks and sets RedNinja's idle/chase situations
     public void setAction() {
+    	
     	//reset directions
     	moveRight = false;
-		moveLeft = false;
-		moveUp = false;
-		moveDown = false;
+	moveLeft = false;
+	moveUp = false;
+	moveDown = false;
 		
         int xDiff = entityManager.getPlayer().getHitbox().x - hitbox.x; // x-axis distance between RedNinja and player
     	int yDiff = entityManager.getPlayer().getHitbox().y - hitbox.y; // y-axis distance between RedNinja and player
@@ -64,7 +70,16 @@ public class RedNinja extends Entity{
     	int posDiffY = startY - hitbox.y; // y-axis distance between RedNinja's starting position and initial position
     	
     	if(Math.abs(xDiff) <= 250 && Math.abs(yDiff) <= 250) { // chase the player
-			if(xDiff == 0 && yDiff < 0) 
+    		
+    		//set attacking
+    		if(Math.abs(entityManager.getPlayer().getHitbox().getCenterX() - hitbox.getCenterX()) <= 80 &&
+    			Math.abs(Math.abs(entityManager.getPlayer().getHitbox().getCenterY() - hitbox.getCenterY())) <= 80)
+    			attacking = true;
+    		else
+    			attacking = false;
+    		
+    		//chasing
+    		if(xDiff == 0 && yDiff < 0) 
 				moveUp = true;
 			else if(xDiff == 0 && yDiff > 0)
 				moveDown = true;
@@ -73,17 +88,23 @@ public class RedNinja extends Entity{
 			else if(xDiff > 0 && yDiff == 0)
 				moveRight = true;
 			else if(xDiff < 0 && yDiff < 0) {
-				moveLeft = true; moveUp = true;
+				moveLeft = true; 
+				moveUp = true;
 			}else if(xDiff < 0 && yDiff > 0) {
-				moveLeft = true; moveDown = true;
+				moveLeft = true; 
+				moveDown = true;
 			}else if(xDiff > 0 && yDiff < 0) {
-				moveRight = true; moveUp = true;
+				moveRight = true; 
+				moveUp = true;
 			}else if(xDiff > 0 && yDiff > 0) {
-				moveRight = true; moveDown = true;
+				moveRight = true; 
+				moveDown = true;
 			}
 		}else if(Math.abs(posDiffX) >= 301 || Math.abs(posDiffY) >= 301 || returning){ // returning to starting position
+			attacking = false;
 			returning = true;
 			actionLockCounter = 0;
+			
 			if(posDiffY != 0)
 				if(posDiffY < 0) 
 					moveUp = true;
@@ -96,9 +117,12 @@ public class RedNinja extends Entity{
 						moveLeft = true;
 					else
 						moveRight = true;
+			
 			if(hitbox.x == startX && hitbox.y == startY)
 				returning = false;
+			
 		}else if(!returning){ // idle movements
+			attacking = false;
 			actionLockCounter++;
 
 			if(actionLockCounter>=0 && actionLockCounter < 300) {
@@ -147,13 +171,14 @@ public class RedNinja extends Entity{
         else if (xSpeed > 0)
             direction = RIGHT;
     }
+    
     @Override
     public void draw(Graphics g) {
         switch (direction) {
             case DOWN -> {
                 if (attacking) {
                     g.drawImage(sprite[4][0], hitbox.x + camOffsetX, hitbox.y + camOffsetY, hitbox.width, hitbox.height, null);
-                    g.drawImage(sprite[8][0], hitbox.x + camOffsetX - hitbox.x + attackHitbox.x + attackHitbox.width / 4, Game.gameHeight / 2 - hitbox.height / 2 - hitbox.y + attackHitbox.y, attackHitbox.width / 2, attackHitbox.height / 2, null);
+                    g.drawImage(sprite[8][0], hitbox.x + camOffsetX - hitbox.x + attackHitbox.x + attackHitbox.width / 4, hitbox.y + camOffsetY + 64, attackHitbox.width / 2, attackHitbox.height / 2, null);
                 } else
                     g.drawImage(sprite[0][animIndex], hitbox.x + camOffsetX, hitbox.y + camOffsetY, hitbox.width, hitbox.height, null);
             }
@@ -186,9 +211,46 @@ public class RedNinja extends Entity{
         camOffsetX = Game.gameWidth / 2 - entityManager.getPlayer().getHitbox().x - entityManager.getPlayer().getHitbox().width / 2;
         camOffsetY = Game.gameHeight / 2 - entityManager.getPlayer().getHitbox().y - entityManager.getPlayer().getHitbox().height / 2;
         setAction();
+        updateAttackHitbox();
+	updateCooldowns();
         animate();
         move();
     }
+
+    private void updateCooldowns() {
+        //works only if player is always in attack range,
+    	//if player gets in and out of the attack range repeatedly,
+    	//ninja attacks without waiting to reset attack cooldown.
+    	if(attacking) {
+        	if(attackCoolDown<125) //attack
+        		attackCoolDown++;
+        	else if(attackCoolDown>=125 && attackCoolDown<250){ //attack on cooldown
+        		attackCoolDown++;
+        		attacking = false;
+        	}else if(attackCoolDown==250) //reset attack cooldown
+        		attackCoolDown=0;
+        }
+    }
+    
+    private void updateAttackHitbox() {
+        switch (direction) {
+            case UP -> {
+                attackHitbox.y = hitbox.y - hitbox.height;
+                attackHitbox.x = hitbox.x;
+            }
+            case DOWN -> {
+                attackHitbox.y = hitbox.y + hitbox.height;
+                attackHitbox.x = hitbox.x;
+            }
+            case RIGHT -> {
+                attackHitbox.y = hitbox.y;
+                attackHitbox.x = hitbox.x + hitbox.width;
+            }
+            case LEFT -> {
+                attackHitbox.y = hitbox.y;
+                attackHitbox.x = hitbox.x - hitbox.width;
+            }
+        }
+    }
+    
 }
-
-
