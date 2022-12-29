@@ -9,12 +9,12 @@ import java.util.ArrayList;
 public class EntityManager {
 
     private ArrayList<Entity> entities;
-    private Playing state;
+    private Playing playing;
     private Player player;
     private int camOffsetX, camOffsetY;
 
     public EntityManager(Playing playing, Player player) {
-        this.state = playing;
+        this.playing = playing;
         //TODO: Check savedata to find monster count
         //if (playing.getSaveData())
         this.player = player;
@@ -50,5 +50,9 @@ public class EntityManager {
 
     public int getCamOffsetY() {
         return camOffsetY;
+    }
+
+    public void floorChanged() {
+        //entities = new ArrayList<>(0);
     }
 }

@@ -52,4 +52,12 @@ public abstract class WeatherTime {
                     if (Math.random() < 0.15)
                         g.drawImage(rain[animIndx], i * 64 + xShift + rainX, j * 32 + rainY + yShift, 16, 16, null);
     }
+
+    public static void toggleRain() {
+        raining = !raining;
+        if (raining)
+            SoundManager.RainStart();
+        else
+            SoundManager.RainStop();
+    }
 }

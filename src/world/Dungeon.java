@@ -2,6 +2,7 @@ package world;
 
 import entities.Player;
 import main.Game;
+import states.Playing;
 import util.AssetManager;
 
 import java.awt.*;
@@ -16,13 +17,18 @@ public class Dungeon extends Level {
     private Image[] doorLadder;
     private int camOffsetX, camOffsetY;
     private Player player;
+    private Playing playing;
+    private Rectangle prevFloor, nextFloor;
 
-    public Dungeon(Player player) {
+    public Dungeon(Player player, Playing playing) {
         this.player = player;
         this.player.getHitbox().x = 900;
         this.player.getHitbox().y = 2550;
         this.player.getMoveHitbox().x = 902;
         this.player.getMoveHitbox().y = 2582;
+        this.playing = playing;
+        this.prevFloor = new Rectangle(832,2528,192,192);
+        this.nextFloor = new Rectangle(832,448,192,192);
         initTileSet();
     }
 
@@ -70,6 +76,10 @@ public class Dungeon extends Level {
                 }
             }
         }
+        if (Game.DEBUG_MODE) {
+            g.drawRect(prevFloor.x + camOffsetX, prevFloor.y + camOffsetY, prevFloor.width, prevFloor.height);
+            g.drawRect(nextFloor.x + camOffsetX, nextFloor.y + camOffsetY, nextFloor.width, nextFloor.height);
+        }
     }
 
     @Override
@@ -83,5 +93,13 @@ public class Dungeon extends Level {
         if (x<768 || x>2496 || y>2816 || y<448)
             return false;
         return true;
+    }
+
+    @Override
+    public void playerInteract() {
+        if (player.getHitbox().intersects(prevFloor))
+            playing.getSaveData().floor--;
+        else if (player.getHitbox().intersects(nextFloor) && playing.getSaveData().floor < 4)
+            playing.getSaveData().floor++;
     }
 }

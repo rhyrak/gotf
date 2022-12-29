@@ -23,6 +23,8 @@ public class Playing extends State implements Serializable {
     private SaveData saveData;
     private Level level;
     private Color overlay = new Color(0, 0, 0, 100);
+    private int rainTick;
+    private int floorPrev;
 
     public Playing(SaveData saveData) {
         if (saveData == null)
@@ -35,7 +37,8 @@ public class Playing extends State implements Serializable {
     private void initGame() {
         this.player = new Player(new Rectangle(saveData.playerX, saveData.playerY, 64, 64));
         this.entityManager = new EntityManager(this, player);
-        this.level = new Overworld(player);
+        this.level = saveData.floor == 0 ? new Overworld(player, this) : new Dungeon(player, this);
+        this.floorPrev = saveData.floor;
         player.setLevel(level);
     }
 
@@ -53,18 +56,53 @@ public class Playing extends State implements Serializable {
             g.setColor(overlay);
             g.fillRect(40, 40, 200, 300);
             g.setColor(Color.green);
-            g.drawString("Player X: " + player.getHitbox().x + " Y: " + player.getHitbox().y, 45, 55);
-            g.drawString("AHB X: " + player.getAttackHitbox().x + " Y: " + player.getAttackHitbox().y, 45, 75);
+            g.drawString("Plyr X: " + player.getHitbox().x + " Y: " + player.getHitbox().y, 45, 55);
+            g.drawString("AHB X: " + player.getAttackHitbox().x + " Y: " + player.getAttackHitbox().y, 45, 80);
+            g.drawString("Floor: " + saveData.floor, 45, 105);
         }
     }
 
     @Override
     public void update() {
         if (!paused) {
+            checkSave();
             player.update();
             entityManager.update();
             level.update();
+            toggleRain();
             WeatherTime.update();
+        }
+    }
+
+    private void checkSave() {
+        if (saveData.floor != floorPrev) {
+            floorPrev = saveData.floor;
+            if (floorPrev == 0) {
+                this.level = new Overworld(player, this);
+                this.player.getHitbox().x = 1874;
+                this.player.getHitbox().y = 2358;
+                this.player.getMoveHitbox().x = 1876;
+                this.player.getMoveHitbox().y = 2390;
+            }
+            else
+                this.level = new Dungeon(player, this);
+            player.setLevel(level);
+            entityManager.floorChanged();
+        }
+    }
+
+    private void toggleRain() {
+        if (saveData.floor != 0) {
+            WeatherTime.raining = false;
+            SoundManager.RainStop();
+            rainTick = 0;
+            return;
+        }
+        rainTick++;
+        if (rainTick >= 2000) {
+            if (Math.random() < 0.1)
+                WeatherTime.toggleRain();
+            rainTick = 0;
         }
     }
 
@@ -92,10 +130,7 @@ public class Playing extends State implements Serializable {
             case KeyEvent.VK_S -> player.setMoveDown(true);
             case KeyEvent.VK_D -> player.setMoveRight(true);
             case KeyEvent.VK_A -> player.setMoveLeft(true);
-            case KeyEvent.VK_E -> {
-                this.level = new Dungeon(player);
-                player.setLevel(this.level);
-            }
+            case KeyEvent.VK_E -> level.playerInteract();
             case KeyEvent.VK_ESCAPE -> {
                 paused = !paused;
                 if (paused)
@@ -112,8 +147,8 @@ public class Playing extends State implements Serializable {
 
     @Override
     public void keyReleased(KeyEvent e) {
-       // if (e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_D   )
-          //  SoundManager.Stand();
+        // if (e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_D   )
+        //  SoundManager.Stand();
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W -> player.setMoveUp(false);
             case KeyEvent.VK_S -> player.setMoveDown(false);

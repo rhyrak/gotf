@@ -2,6 +2,7 @@ package world;
 
 import entities.Player;
 import main.Game;
+import states.Playing;
 import util.AssetManager;
 
 import java.awt.*;
@@ -17,9 +18,13 @@ public class Overworld extends Level {
     private Image[] floor4;
     private int camOffsetX = 0, camOffsetY = 0;
     private Player player;
+    private Rectangle dungeonEnterance;
+    private Playing playing;
 
-    public Overworld(Player player) {
+    public Overworld(Player player, Playing playing) {
         this.player = player;
+        this.dungeonEnterance = new Rectangle(1792,2240,192,128);
+        this.playing = playing;
         initTileSet();
     }
 
@@ -84,6 +89,9 @@ public class Overworld extends Level {
                 }
             }
         }
+        if (Game.DEBUG_MODE) {
+            g.drawRect(dungeonEnterance.x + camOffsetX, dungeonEnterance.y + camOffsetY, dungeonEnterance.width, dungeonEnterance.height);
+        }
     }
 
     @Override
@@ -108,6 +116,12 @@ public class Overworld extends Level {
             }
 
         return canMove;
+    }
+
+    @Override
+    public void playerInteract() {
+        if (player.getHitbox().intersects(dungeonEnterance))
+            playing.getSaveData().floor = 1;
     }
 }
 

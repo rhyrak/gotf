@@ -9,4 +9,6 @@ public abstract class Level {
     public abstract void update();
 
     public abstract boolean canMove(int x, int y);
+
+    public abstract void playerInteract();
 }

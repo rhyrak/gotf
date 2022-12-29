@@ -130,9 +130,9 @@ public class Game implements Runnable {
             ois.close();
         } catch (IOException | ClassNotFoundException e) {
             saveData = new SaveData();
-            saveData.playerX = 200;
-            saveData.playerY = 200;
-            throw new RuntimeException(e);
+            saveData.playerX = 2310;
+            saveData.playerY = 1664;
+            saveData.floor = 0;
         }
 
         return saveData;
