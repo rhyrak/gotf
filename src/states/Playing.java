@@ -6,6 +6,7 @@ import main.Game;
 import util.SaveData;
 import util.SoundManager;
 import util.WeatherTime;
+import world.Dungeon;
 import world.Level;
 import world.Overworld;
 
@@ -91,6 +92,10 @@ public class Playing extends State implements Serializable {
             case KeyEvent.VK_S -> player.setMoveDown(true);
             case KeyEvent.VK_D -> player.setMoveRight(true);
             case KeyEvent.VK_A -> player.setMoveLeft(true);
+            case KeyEvent.VK_E -> {
+                this.level = new Dungeon(player);
+                player.setLevel(this.level);
+            }
             case KeyEvent.VK_ESCAPE -> {
                 paused = !paused;
                 if (paused)

@@ -277,6 +277,10 @@ public class Player extends Entity {
         return attackHitbox;
     }
 
+    public Rectangle getMoveHitbox() {
+        return moveHitbox;
+    }
+
     public void useItem(int item) {
         if (item == 1 && hitpoints != 20) {
             if (lifePotCount > 0) {

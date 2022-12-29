@@ -33,6 +33,9 @@ public abstract class AssetManager {
     public static final String FLOOR2_TS = "/assets/world/tilesets/second-floor.png";
     public static final String FLOOR3_TS = "/assets/world/tilesets/third-floor.png";
     public static final String FLOOR4_TS = "/assets/world/tilesets/fourth-floor.png";
+    public static final String FLOOR5_TS = "/assets/world/tilesets/fifth-floor.png";
+    public static final String FLOOR6_TS = "/assets/world/tilesets/sixth-floor.png";
+    public static final String FLOOR7_TS = "/assets/world/tilesets/seventh-floor.png";
 
     public static BufferedImage getSprite(String filePath) {
         BufferedImage image = null;
