@@ -59,9 +59,9 @@ public class RedNinja extends Entity{
     	
     	//reset directions
     	moveRight = false;
-		moveLeft = false;
-		moveUp = false;
-		moveDown = false;
+	moveLeft = false;
+	moveUp = false;
+	moveDown = false;
 		
         int xDiff = entityManager.getPlayer().getHitbox().x - hitbox.x; // x-axis distance between RedNinja and player
     	int yDiff = entityManager.getPlayer().getHitbox().y - hitbox.y; // y-axis distance between RedNinja and player
@@ -72,8 +72,8 @@ public class RedNinja extends Entity{
     	if(Math.abs(xDiff) <= 250 && Math.abs(yDiff) <= 250) { // chase the player
     		
     		//set attacking
-    		if(Math.abs(entityManager.getPlayer().getHitbox().getCenterX() - hitbox.getCenterX()) <= 128 &&
-    			Math.abs(Math.abs(entityManager.getPlayer().getHitbox().getCenterY() - hitbox.getCenterY())) <= 128)
+    		if(Math.abs(entityManager.getPlayer().getHitbox().getCenterX() - hitbox.getCenterX()) <= 80 &&
+    			Math.abs(Math.abs(entityManager.getPlayer().getHitbox().getCenterY() - hitbox.getCenterY())) <= 80)
     			attacking = true;
     		else
     			attacking = false;
@@ -212,7 +212,7 @@ public class RedNinja extends Entity{
         camOffsetY = Game.gameHeight / 2 - entityManager.getPlayer().getHitbox().y - entityManager.getPlayer().getHitbox().height / 2;
         setAction();
         updateAttackHitbox();
-		updateCooldowns();
+	updateCooldowns();
         animate();
         move();
     }
