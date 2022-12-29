@@ -2,6 +2,7 @@ package ui;
 
 import main.Game;
 import util.AssetManager;
+import util.SoundManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -23,15 +24,15 @@ public class MenuButton {
     private void loadImages(String imagePath) {
         BufferedImage sprite = AssetManager.getSprite(imagePath);
         images = new BufferedImage[3];
-        images[0] = sprite.getSubimage(350,270,348,170);
-        images[1] = sprite.getSubimage(350,445,348,170);
-        images[2] = sprite.getSubimage(350,624,348,170);
+        images[0] = sprite.getSubimage(350, 270, 348, 170);
+        images[1] = sprite.getSubimage(350, 445, 348, 170);
+        images[2] = sprite.getSubimage(350, 624, 348, 170);
     }
 
 
     public void update() {
         if (clicked)
-            if (timer>100)
+            if (timer > 100)
                 runAction();
             else
                 timer++;
@@ -71,6 +72,7 @@ public class MenuButton {
     }
 
     public void runAction() {
+        SoundManager.MouseSelect();
         action.action();
     }
 

@@ -3,6 +3,7 @@ package states;
 import main.Game;
 import ui.MenuButton;
 import util.AssetManager;
+import util.SoundManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -66,10 +67,10 @@ public class Menu extends State {
     public void mouseMoved(MouseEvent e) {
         for (MenuButton mb : buttons)
             mb.setMouseOver(false);
-
         for (MenuButton mb : buttons)
             if (mb.getHitbox().contains(e.getX(), e.getY()))
                 mb.setMouseOver(true);
+
     }
 
     @Override

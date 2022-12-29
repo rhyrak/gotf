@@ -3,6 +3,7 @@ package entities;
 import main.Game;
 import util.AssetManager;
 import util.Directions;
+import util.SoundManager;
 import world.Level;
 
 import java.awt.*;
@@ -67,6 +68,11 @@ public class Player extends Entity {
     private void move() {
         int xSpeed = 0, ySpeed = 0;
         int playerSpeed = 2;
+        if (moveDown || moveUp || moveLeft || moveRight)
+            SoundManager.Walking();
+        else
+            SoundManager.Stand();
+
         if (moveUp)
             ySpeed -= playerSpeed;
         if (moveDown)
@@ -75,6 +81,7 @@ public class Player extends Entity {
             xSpeed -= playerSpeed;
         if (moveRight)
             xSpeed += playerSpeed;
+
 
         if (level != null) {
             if (xSpeed > 0)
@@ -137,6 +144,7 @@ public class Player extends Entity {
         switch (direction) {
             case DOWN -> {
                 if (attacking) {
+                    SoundManager.Attack();
                     g.drawImage(sprite[4][0], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
                     g.drawImage(sprite[8][0], Game.gameWidth / 2 - hitbox.width / 2 - hitbox.x + attackHitbox.x + attackHitbox.width / 4, Game.gameHeight / 2 - hitbox.height / 2 - hitbox.y + attackHitbox.y, attackHitbox.width / 2, attackHitbox.height / 2, null);
                 } else
@@ -144,6 +152,7 @@ public class Player extends Entity {
             }
             case UP -> {
                 if (attacking) {
+                    SoundManager.Attack();
                     g.drawImage(sprite[4][1], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
                     g.drawImage(sprite[8][0], Game.gameWidth / 2 - hitbox.width / 2 - hitbox.x + attackHitbox.x + (int) (attackHitbox.width / 1.75), Game.gameHeight / 2 - hitbox.height / 2 - hitbox.y + attackHitbox.y + attackHitbox.height, -attackHitbox.width / 2, -attackHitbox.height / 2, null);
                 } else
@@ -151,6 +160,7 @@ public class Player extends Entity {
             }
             case LEFT -> {
                 if (attacking) {
+                    SoundManager.Attack();
                     g.drawImage(sprite[4][2], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
                     g.drawImage(sprite[8][1], Game.gameWidth / 2 - hitbox.width / 2 - hitbox.x + attackHitbox.x + attackHitbox.width, Game.gameHeight / 2 - hitbox.height / 2 - hitbox.y + attackHitbox.y + attackHitbox.height / 2, -attackHitbox.width / 2, attackHitbox.height / 2, null);
                 } else
@@ -158,6 +168,7 @@ public class Player extends Entity {
             }
             case RIGHT -> {
                 if (attacking) {
+                    SoundManager.Attack();
                     g.drawImage(sprite[4][3], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
                     g.drawImage(sprite[8][1], Game.gameWidth / 2 - hitbox.width / 2 - hitbox.x + attackHitbox.x, Game.gameHeight / 2 - hitbox.height / 2 - hitbox.y + attackHitbox.y + attackHitbox.height / 2, attackHitbox.width / 2, attackHitbox.height / 2, null);
                 } else
@@ -269,11 +280,13 @@ public class Player extends Entity {
     public void useItem(int item) {
         if (item == 1 && hitpoints != 20) {
             if (lifePotCount > 0) {
+                SoundManager.UseLifePot();
                 lifePotCount--;
                 hitpoints += 2;
             }
         } else if (item == 2 && hitpoints != 20) {
             if (medipackCount > 0) {
+                SoundManager.UseMedPac();
                 medipackCount--;
                 hitpoints += 4;
             }
@@ -286,12 +299,14 @@ public class Player extends Entity {
         switch (type) {
             case LIFEPOT -> {
                 if (lifePotCount < 5) {
+                    SoundManager.GetHealthItem();
                     lifePotCount++;
                     return true;
                 }
             }
             case MEDIPACK -> {
                 if (medipackCount < 5) {
+                    SoundManager.GetHealthItem();
                     medipackCount++;
                     return true;
                 }

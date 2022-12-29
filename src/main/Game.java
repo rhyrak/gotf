@@ -3,7 +3,10 @@ package main;
 import states.*;
 import states.Menu;
 import util.SaveData;
+import util.SoundManager;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
 
 public class Game implements Runnable {
@@ -18,11 +21,12 @@ public class Game implements Runnable {
     public static int gameHeight;
     public static boolean DEBUG_MODE = false;
 
-    public Game() {
+    public Game() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         this.gamePanel = new GamePanel(this);
         this.gameWindow = new GameWindow(gamePanel);
         this.gameState = new Menu(this);
         startGame();
+        startmusic();
         this.gamePanel.initListeners();
     }
 
@@ -107,7 +111,10 @@ public class Game implements Runnable {
 
     public void changeGameState(GameState newState) {
         switch (newState) {
-            case PLAYING -> this.gameState = new Playing(loadGame(0));
+            case PLAYING -> {
+                SoundManager.StartForest();
+                this.gameState = new Playing(loadGame(0));
+            }
             case MENU -> this.gameState = new Menu(this);
             case SETTINGS -> this.gameState = new Settings();
             case EXIT -> System.exit(0);
@@ -129,6 +136,10 @@ public class Game implements Runnable {
         }
 
         return saveData;
+    }
+    private void startmusic() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        SoundManager sound = new SoundManager();
+        SoundManager.Menu();
     }
 
     public static void toggleDebug() {
