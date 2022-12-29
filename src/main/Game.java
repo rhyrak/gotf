@@ -109,7 +109,7 @@ public class Game implements Runnable {
         switch (newState) {
             case PLAYING -> this.gameState = new Playing(loadGame(0));
             case MENU -> this.gameState = new Menu(this);
-            case SETTINGS -> this.gameState = new Settings();
+            case SETTINGS -> this.gameState = new Settings(this);
             case EXIT -> System.exit(0);
         }
     }
