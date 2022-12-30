@@ -12,7 +12,7 @@ import static util.Directions.LEFT;
 import static util.Directions.RIGHT;
 import static util.Directions.UP;
 
-public class Caveman extends Entity{
+public class Cavegirl extends Entity{
 
     private BufferedImage[][] sprite;
     private boolean moveUp, moveDown, moveRight, moveLeft;
@@ -25,20 +25,22 @@ public class Caveman extends Entity{
     public int startX, startY;
     public boolean returning = false;
     private int attackCoolDown=0;
+    private boolean isDead = false;
     
     // constructor
-    public Caveman(EntityManager entityManager) { 
+    public Cavegirl(EntityManager entityManager, Rectangle hitbox) { 
     	this.entityManager = entityManager;
-        this.hitbox = new Rectangle(16*64,16*64,64,64);
+        this.hitbox = hitbox;
         this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
         this.direction = LEFT;
+        this.hitpoints = 5;
         loadSprite();
         startX = hitbox.x;
         startY = hitbox.y;
     }
 
     private void loadSprite() {
-        BufferedImage temp = AssetManager.getSprite(AssetManager.CAVEMAN);
+        BufferedImage temp = AssetManager.getSprite(AssetManager.CAVEGIRL);
         sprite = new BufferedImage[9][4];
         for (int i = 0; i < 4; i++) {
             sprite[0][i] = temp.getSubimage(0, i * 16, 16, 16); // down
@@ -59,9 +61,9 @@ public class Caveman extends Entity{
     	
     	//reset directions
     	moveRight = false;
-	moveLeft = false;
-	moveUp = false;
-	moveDown = false;
+    	moveLeft = false;
+    	moveUp = false;
+    	moveDown = false;
 		
         int xDiff = entityManager.getPlayer().getHitbox().x - hitbox.x; // x-axis distance between monster and player
     	int yDiff = entityManager.getPlayer().getHitbox().y - hitbox.y; // y-axis distance between monster and player
@@ -174,6 +176,8 @@ public class Caveman extends Entity{
     
     @Override
     public void draw(Graphics g) {
+    	if(isDead)
+    		return;
         switch (direction) {
             case DOWN -> {
                 if (attacking) {
@@ -208,11 +212,14 @@ public class Caveman extends Entity{
 
     @Override
     public void update() {
+    	if(isDead)
+    		return;
         camOffsetX = Game.gameWidth / 2 - entityManager.getPlayer().getHitbox().x - entityManager.getPlayer().getHitbox().width / 2;
         camOffsetY = Game.gameHeight / 2 - entityManager.getPlayer().getHitbox().y - entityManager.getPlayer().getHitbox().height / 2;
         setAction();
         updateAttackHitbox();
-	updateCooldowns();
+        updateCooldowns();
+        updateHitpoints();
         animate();
         move();
     }
@@ -253,5 +260,16 @@ public class Caveman extends Entity{
         }
     }
     
+    private void updateHitpoints() {
+    	if(attacking && attackHitbox.contains(entityManager.getPlayer().getHitbox()) &&
+    		entityManager.getPlayer().getInvincible() == false) {
+    		entityManager.getPlayer().hitpoints--;
+    		entityManager.getPlayer().setInvincible(true);
+    	}	
+    	if(entityManager.getPlayer().getAttackHitbox().contains(hitbox)) 
+    		hitpoints--;
+    	if(hitpoints == 0)
+    		isDead = true;
+    }
+    
 }
-
