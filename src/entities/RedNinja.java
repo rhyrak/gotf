@@ -12,7 +12,7 @@ import static util.Directions.LEFT;
 import static util.Directions.RIGHT;
 import static util.Directions.UP;
 
-public class Cavegirl extends Entity{
+public class RedNinja extends Entity{
 
     private BufferedImage[][] sprite;
     private boolean moveUp, moveDown, moveRight, moveLeft;
@@ -26,21 +26,20 @@ public class Cavegirl extends Entity{
     public boolean returning = false;
     private int attackCoolDown=0;
     private boolean isDead = false;
-    
     // constructor
-    public Cavegirl(EntityManager entityManager, Rectangle hitbox) { 
+    public RedNinja(EntityManager entityManager, Rectangle hitbox) { 
     	this.entityManager = entityManager;
         this.hitbox = hitbox;
+        this.hitpoints = 3;
         this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
         this.direction = LEFT;
-        this.hitpoints = 5;
         loadSprite();
         startX = hitbox.x;
         startY = hitbox.y;
     }
 
     private void loadSprite() {
-        BufferedImage temp = AssetManager.getSprite(AssetManager.CAVEGIRL);
+        BufferedImage temp = AssetManager.getSprite(AssetManager.RED_NINJA);
         sprite = new BufferedImage[9][4];
         for (int i = 0; i < 4; i++) {
             sprite[0][i] = temp.getSubimage(0, i * 16, 16, 16); // down
@@ -52,11 +51,12 @@ public class Cavegirl extends Entity{
         sprite[4][1] = temp.getSubimage(16, 64, 16, 16); // attack up
         sprite[4][2] = temp.getSubimage(32, 64, 16, 16); // attack left
         sprite[4][3] = temp.getSubimage(48, 64, 16, 16); // attack right
-        sprite[8][0] = AssetManager.getSprite(AssetManager.CLUB_V);
-        sprite[8][1] = AssetManager.getSprite(AssetManager.CLUB_H);
+        sprite[8][0] = AssetManager.getSprite(AssetManager.KATANA_V);
+        sprite[8][1] = AssetManager.getSprite(AssetManager.KATANA_H);
     }
     
-    //checks and sets idle/chase situations
+    
+    //checks and sets RedNinja's idle/chase situations
     public void setAction() {
     	
     	//reset directions
@@ -65,11 +65,11 @@ public class Cavegirl extends Entity{
     	moveUp = false;
     	moveDown = false;
 		
-        int xDiff = entityManager.getPlayer().getHitbox().x - hitbox.x; // x-axis distance between monster and player
-    	int yDiff = entityManager.getPlayer().getHitbox().y - hitbox.y; // y-axis distance between monster and player
+        int xDiff = entityManager.getPlayer().getHitbox().x - hitbox.x; // x-axis distance between RedNinja and player
+    	int yDiff = entityManager.getPlayer().getHitbox().y - hitbox.y; // y-axis distance between RedNinja and player
     	
-    	int posDiffX = startX - hitbox.x; // x-axis distance between monster's starting position and initial position
-    	int posDiffY = startY - hitbox.y; // y-axis distance between monster's starting position and initial position
+    	int posDiffX = startX - hitbox.x; // x-axis distance between RedNinja's starting position and initial position
+    	int posDiffY = startY - hitbox.y; // y-axis distance between RedNinja's starting position and initial position
     	
     	if(Math.abs(xDiff) <= 250 && Math.abs(yDiff) <= 250) { // chase the player
     		
@@ -79,7 +79,7 @@ public class Cavegirl extends Entity{
     			attacking = true;
     		else
     			attacking = false;
-    		
+
     		//chasing
     		if(xDiff == 0 && yDiff < 0) 
 				moveUp = true;
@@ -212,22 +212,25 @@ public class Cavegirl extends Entity{
 
     @Override
     public void update() {
+    	if(hitpoints == 0)
+    		isDead = true;
     	if(isDead)
     		return;
         camOffsetX = Game.gameWidth / 2 - entityManager.getPlayer().getHitbox().x - entityManager.getPlayer().getHitbox().width / 2;
         camOffsetY = Game.gameHeight / 2 - entityManager.getPlayer().getHitbox().y - entityManager.getPlayer().getHitbox().height / 2;
         setAction();
+        updateHitpoints();
         updateAttackHitbox();
         updateCooldowns();
-        updateHitpoints();
         animate();
         move();
+        
     }
-
+    
     private void updateCooldowns() {
         //works only if player is always in attack range,
     	//if player gets in and out of the attack range repeatedly,
-    	//monster attacks without waiting to reset attack cooldown.
+    	//ninja attacks without waiting to reset attack cooldown.
     	if(attacking) {
         	if(attackCoolDown<125) //attack
         		attackCoolDown++;
@@ -268,8 +271,6 @@ public class Cavegirl extends Entity{
     	}	
     	if(entityManager.getPlayer().getAttackHitbox().contains(hitbox)) 
     		hitpoints--;
-    	if(hitpoints == 0)
-    		isDead = true;
     }
     
 }
