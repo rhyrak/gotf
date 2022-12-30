@@ -76,16 +76,26 @@ public class Playing extends State implements Serializable {
 
     private void checkSave() {
         if (saveData.floor != floorPrev) {
-            floorPrev = saveData.floor;
-            if (floorPrev == 0) {
+            if (saveData.floor == 0) { // exit dungeon
                 this.level = new Overworld(player, this);
                 this.player.getHitbox().x = 1874;
                 this.player.getHitbox().y = 2358;
                 this.player.getMoveHitbox().x = 1876;
                 this.player.getMoveHitbox().y = 2390;
-            }
-            else
+            } else if (floorPrev == 0){ // enter dungeon
                 this.level = new Dungeon(player, this);
+            } else if (floorPrev < saveData.floor) {
+                this.player.getHitbox().x = 900;
+                this.player.getHitbox().y = 2550;
+                this.player.getMoveHitbox().x = 902;
+                this.player.getMoveHitbox().y = 2582;
+            } else {
+                this.player.getHitbox().x = 900;
+                this.player.getHitbox().y = 576;
+                this.player.getMoveHitbox().x = 902;
+                this.player.getMoveHitbox().y = 608;
+            }
+            floorPrev = saveData.floor;
             player.setLevel(level);
             entityManager.floorChanged();
         }

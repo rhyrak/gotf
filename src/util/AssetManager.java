@@ -24,6 +24,13 @@ public abstract class AssetManager {
 
     public static final String LIZARD = "/assets/monsters/lizard.png";
     public static final String RED_NINJA = "/assets/monsters/red-ninja.png";
+    public static final String CAVEGIRL = "/assets/monsters/cavegirl.png";
+    public static final String CAVEMAN = "/assets/monsters/Caveman.png";
+    public static final String SKELETON = "/assets/monsters/skeleton.png";
+    public static final String CLUB_V = "/assets/weapons/club_v.png";
+    public static final String CLUB_H = "/assets/weapons/club_h.png";
+    public static final String BONE_V = "/assets/weapons/bone_v.png";
+    public static final String BONE_H = "/assets/weapons/bone_h.png";
 
     public static final String RAIN_P = "/assets/world/particles/rain.png";
     public static final String GRASS_P = "/assets/world/particles/grass.png";
