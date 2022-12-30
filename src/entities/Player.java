@@ -29,7 +29,9 @@ public class Player extends Entity {
     private int animIndex, animTick;
     private int attackCoolDown;
     private Level level;
-
+    private boolean invincible;
+    public int invinceTick;
+    
     public Player(Rectangle hitbox) {
         this.hitbox = hitbox;
         this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
@@ -45,6 +47,12 @@ public class Player extends Entity {
         move();
         updateAttackHitbox();
         updateCooldowns();
+        if(invincible)
+        	invinceTick++;
+        if(invinceTick > 250) {
+        	invinceTick = 0;
+        	invincible = false;
+        }
     }
 
     private void updateCooldowns() {
@@ -322,4 +330,13 @@ public class Player extends Entity {
     public void setLevel(Level level) {
         this.level = level;
     }
+    
+    public boolean getInvincible() {
+    	return invincible;
+    }
+    
+    public void setInvincible(boolean bool) {
+    	invincible = bool;
+    }
+    
 }
