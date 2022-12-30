@@ -76,6 +76,10 @@ public class Dungeon extends Level {
                 }
             }
         }
+        if (playing.getSaveData().floor != 4) {
+            g.drawImage(doorLadder[38], 14 * TILE_SIZE + camOffsetX, 8 * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE,null);
+            g.drawImage(doorLadder[52], 14 * TILE_SIZE + camOffsetX, 9 * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE,null);
+        }
         if (Game.DEBUG_MODE) {
             g.drawRect(prevFloor.x + camOffsetX, prevFloor.y + camOffsetY, prevFloor.width, prevFloor.height);
             g.drawRect(nextFloor.x + camOffsetX, nextFloor.y + camOffsetY, nextFloor.width, nextFloor.height);
