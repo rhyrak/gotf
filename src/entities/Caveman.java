@@ -12,7 +12,7 @@ import static util.Directions.LEFT;
 import static util.Directions.RIGHT;
 import static util.Directions.UP;
 
-public class Cavegirl extends Entity{
+public class Caveman extends Entity{
 
     private BufferedImage[][] sprite;
     private boolean moveUp, moveDown, moveRight, moveLeft;
@@ -28,7 +28,7 @@ public class Cavegirl extends Entity{
     private boolean isDead = false;
     
     // constructor
-    public Cavegirl(EntityManager entityManager, Rectangle hitbox) { 
+    public Caveman(EntityManager entityManager, Rectangle hitbox) { 
     	this.entityManager = entityManager;
         this.hitbox = hitbox;
         this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
@@ -40,7 +40,7 @@ public class Cavegirl extends Entity{
     }
 
     private void loadSprite() {
-        BufferedImage temp = AssetManager.getSprite(AssetManager.CAVEGIRL);
+        BufferedImage temp = AssetManager.getSprite(AssetManager.CAVEMAN);
         sprite = new BufferedImage[9][4];
         for (int i = 0; i < 4; i++) {
             sprite[0][i] = temp.getSubimage(0, i * 16, 16, 16); // down
