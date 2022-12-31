@@ -13,6 +13,7 @@ public abstract class AssetManager {
     public static final String PLAY_BTN = "/assets/ui/menu/start_btn.png";
     public static final String SETTINGS_BTN = "/assets/ui/menu/settings_btn.png";
     public static final String EXIT_BTN = "/assets/ui/menu/quit_btn.png";
+    public static final String MENU_BG = "/assets/ui/menu/menu.png";
 
     public static final String PLAYER_SPRITE = "/assets/player/player-sprite.png";
     public static final String BIG_SWORD_V = "/assets/player/big-sword-v.png";

@@ -8,10 +8,12 @@ import util.SoundManager;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 public class Menu extends State {
 
     private MenuButton[] buttons;
+    private BufferedImage bg;
     private Game game;
 
     public Menu(Game game) {
@@ -20,6 +22,7 @@ public class Menu extends State {
     }
 
     private void initButtons() {
+        bg = AssetManager.getSprite(AssetManager.MENU_BG);
         buttons = new MenuButton[3];
 
         buttons[0] = new MenuButton(
@@ -41,8 +44,7 @@ public class Menu extends State {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(new Color(240,217,181));
-        g.fillRect(0, 0, Game.gameWidth, Game.gameHeight);
+        g.drawImage(bg,0,0,Game.gameWidth,Game.gameHeight,null);
         for (MenuButton mb : buttons)
             mb.draw(g);
     }
