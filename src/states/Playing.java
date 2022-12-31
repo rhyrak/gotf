@@ -3,6 +3,7 @@ package states;
 import entities.EntityManager;
 import entities.Player;
 import main.Game;
+import util.AssetManager;
 import util.SaveData;
 import util.SoundManager;
 import util.WeatherTime;
@@ -13,6 +14,7 @@ import world.Overworld;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.*;
 
 public class Playing extends State implements Serializable {
@@ -25,6 +27,11 @@ public class Playing extends State implements Serializable {
     private Color overlay = new Color(0, 0, 0, 100);
     private int rainTick;
     private int floorPrev;
+    private Rectangle continueBtn, exitBtn;
+    private BufferedImage[] continueImg, exitImg;
+    private int continueIndex = 0, exitIndex = 0;
+    private int mouseX, mouseY;
+    private BufferedImage pauseBg;
 
     public Playing(SaveData saveData) {
         if (saveData == null)
@@ -32,13 +39,26 @@ public class Playing extends State implements Serializable {
         else
             this.saveData = saveData;
         initGame();
+        initPause();
+    }
+
+    private void initPause() {
+        continueBtn = new Rectangle(Game.gameWidth / 2 - 75, 100 + Game.gameHeight / 4, 150, 50);
+        exitBtn = new Rectangle(Game.gameWidth / 2 - 75, 75 + Game.gameHeight / 2, 150, 50);
+        pauseBg = AssetManager.getSprite(AssetManager.ESC_BG);
+        continueImg = new BufferedImage[2];
+        continueImg[0] = AssetManager.getSprite(AssetManager.ESC_CONTINUE).getSubimage(0, 0, 311, 76);
+        continueImg[1] = AssetManager.getSprite(AssetManager.ESC_CONTINUE).getSubimage(0, 122, 311, 76);
+        exitImg = new BufferedImage[2];
+        exitImg[0] = AssetManager.getSprite(AssetManager.ESC_EXIT).getSubimage(0, 0, 311, 76);
+        exitImg[1] = AssetManager.getSprite(AssetManager.ESC_EXIT).getSubimage(0, 122, 311, 76);
     }
 
     private void initGame() {
-        this.player = new Player(new Rectangle(saveData.playerX, saveData.playerY, 64, 64));
-        this.entityManager = new EntityManager(this, player);
-        this.level = saveData.floor == 0 ? new Overworld(player, this) : new Dungeon(player, this);
-        this.floorPrev = saveData.floor;
+        player = new Player(new Rectangle(saveData.playerX, saveData.playerY, 64, 64));
+        entityManager = new EntityManager(this, player);
+        level = saveData.floor == 0 ? new Overworld(player, this) : new Dungeon(player, this);
+        floorPrev = saveData.floor;
         player.setLevel(level);
     }
 
@@ -51,6 +71,9 @@ public class Playing extends State implements Serializable {
         if (paused) {
             g.setColor(overlay);
             g.fillRect(0, 0, Game.gameWidth, Game.gameHeight);
+            g.drawImage(pauseBg, Game.gameWidth / 2 - 150, Game.gameHeight / 4 + 25, 300, 400, null);
+            g.drawImage(continueImg[continueIndex], continueBtn.x, continueBtn.y, continueBtn.width, continueBtn.height, null);
+            g.drawImage(exitImg[exitIndex], exitBtn.x, exitBtn.y, exitBtn.width, exitBtn.height, null);
         }
         if (Game.DEBUG_MODE) {
             g.setColor(overlay);
@@ -59,6 +82,11 @@ public class Playing extends State implements Serializable {
             g.drawString("Plyr X: " + player.getHitbox().x + " Y: " + player.getHitbox().y, 45, 55);
             g.drawString("AHB X: " + player.getAttackHitbox().x + " Y: " + player.getAttackHitbox().y, 45, 80);
             g.drawString("Floor: " + saveData.floor, 45, 105);
+            if (paused) {
+                g.setColor(Color.MAGENTA);
+                g.drawRect(continueBtn.x, continueBtn.y, continueBtn.width, continueBtn.height);
+                g.drawRect(exitBtn.x, exitBtn.y, exitBtn.width, exitBtn.height);
+            }
         }
     }
 
@@ -71,29 +99,36 @@ public class Playing extends State implements Serializable {
             level.update();
             toggleRain();
             WeatherTime.update();
+        } else {
+            continueIndex = 0;
+            exitIndex = 0;
+            if (continueBtn.contains(mouseX,mouseY))
+                continueIndex = 1;
+            else if (exitBtn.contains(mouseX,mouseY))
+                exitIndex = 1;
         }
     }
 
     private void checkSave() {
         if (saveData.floor != floorPrev) {
             if (saveData.floor == 0) { // exit dungeon
-                this.level = new Overworld(player, this);
-                this.player.getHitbox().x = 1874;
-                this.player.getHitbox().y = 2358;
-                this.player.getMoveHitbox().x = 1876;
-                this.player.getMoveHitbox().y = 2390;
-            } else if (floorPrev == 0){ // enter dungeon
-                this.level = new Dungeon(player, this);
+                level = new Overworld(player, this);
+                player.getHitbox().x = 1874;
+                player.getHitbox().y = 2358;
+                player.getMoveHitbox().x = 1876;
+                player.getMoveHitbox().y = 2390;
+            } else if (floorPrev == 0) { // enter dungeon
+                level = new Dungeon(player, this);
             } else if (floorPrev < saveData.floor) {
-                this.player.getHitbox().x = 900;
-                this.player.getHitbox().y = 2550;
-                this.player.getMoveHitbox().x = 902;
-                this.player.getMoveHitbox().y = 2582;
+                player.getHitbox().x = 900;
+                player.getHitbox().y = 2550;
+                player.getMoveHitbox().x = 902;
+                player.getMoveHitbox().y = 2582;
             } else {
-                this.player.getHitbox().x = 900;
-                this.player.getHitbox().y = 576;
-                this.player.getMoveHitbox().x = 902;
-                this.player.getMoveHitbox().y = 608;
+                player.getHitbox().x = 900;
+                player.getHitbox().y = 576;
+                player.getMoveHitbox().x = 902;
+                player.getMoveHitbox().y = 608;
             }
             floorPrev = saveData.floor;
             player.setLevel(level);
@@ -168,13 +203,22 @@ public class Playing extends State implements Serializable {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        if (paused) {
+            mouseX = e.getX();
+            mouseY = e.getY();
+        }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        if (paused) {
+            if (continueBtn.contains(e.getX(),e.getY()))
+                paused = false;
+            else if (exitBtn.contains(e.getX(), e.getY()))
+                saveAndExit();
+        }
     }
+
 
     @Override
     public void mousePressed(MouseEvent e) {

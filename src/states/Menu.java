@@ -14,6 +14,7 @@ public class Menu extends State {
 
     private MenuButton[] buttons;
     private BufferedImage bg;
+    private BufferedImage header;
     private Game game;
 
     public Menu(Game game) {
@@ -23,6 +24,7 @@ public class Menu extends State {
 
     private void initButtons() {
         bg = AssetManager.getSprite(AssetManager.MENU_BG);
+        header = AssetManager.getSprite(AssetManager.HEADER);
         buttons = new MenuButton[3];
 
         buttons[0] = new MenuButton(
@@ -45,6 +47,7 @@ public class Menu extends State {
     @Override
     public void draw(Graphics g) {
         g.drawImage(bg,0,0,Game.gameWidth,Game.gameHeight,null);
+        g.drawImage(header, Game.gameWidth/3, (int) (Game.gameHeight/3.5), Game.gameWidth/3, 100,null);
         for (MenuButton mb : buttons)
             mb.draw(g);
     }

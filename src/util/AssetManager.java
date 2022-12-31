@@ -14,6 +14,11 @@ public abstract class AssetManager {
     public static final String SETTINGS_BTN = "/assets/ui/menu/settings_btn.png";
     public static final String EXIT_BTN = "/assets/ui/menu/quit_btn.png";
     public static final String MENU_BG = "/assets/ui/menu/menu.png";
+    public static final String HEADER = "/assets/ui/menu/header.png";
+
+    public static final String ESC_CONTINUE = "/assets/ui/escmenu/continue.png";
+    public static final String ESC_BG = "/assets/ui/escmenu/pause-bg.png";
+    public static final String ESC_EXIT = "/assets/ui/escmenu/save&exit.png";
 
     public static final String S_BUTTONS = "/assets/ui/settingsmenu/buttons_4x.png";
     public static final String GUI = "/assets/ui/settingsmenu/GUI_4x.png";

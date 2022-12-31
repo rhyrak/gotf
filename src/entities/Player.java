@@ -183,6 +183,9 @@ public class Player extends Entity {
                     g.drawImage(sprite[3][animIndex], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
             }
         }
+        // FIXME
+        if (invincible)
+            g.drawString("OOF", Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2);
     }
 
     private void drawHUD(Graphics g) {
