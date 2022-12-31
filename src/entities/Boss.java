@@ -32,7 +32,7 @@ public class Boss extends Entity{
     public Boss(EntityManager entityManager, Rectangle hitbox) { 
     	this.entityManager = entityManager;
         this.hitbox = hitbox;
-        this.hitpoints = 1;
+        this.hitpoints = 10;
         this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
         this.direction = Directions.LEFT;
         loadSprite();
