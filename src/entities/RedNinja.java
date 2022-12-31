@@ -212,8 +212,6 @@ public class RedNinja extends Entity{
 
     @Override
     public void update() {
-    	if(hitpoints == 0)
-    		isDead = true;
     	if(isDead)
     		return;
         camOffsetX = Game.gameWidth / 2 - entityManager.getPlayer().getHitbox().x - entityManager.getPlayer().getHitbox().width / 2;
@@ -268,9 +266,16 @@ public class RedNinja extends Entity{
     		entityManager.getPlayer().getInvincible() == false) {
     		entityManager.getPlayer().hitpoints--;
     		entityManager.getPlayer().setInvincible(true);
-    	}	
+    	}
+	if(attacking && hitbox.contains(entityManager.getPlayer().getHitbox()) &&
+        	entityManager.getPlayer().getInvincible() == false) {
+        	entityManager.getPlayer().hitpoints--;
+        	entityManager.getPlayer().setInvincible(true);
+        }
     	if(entityManager.getPlayer().getAttackHitbox().contains(hitbox)) 
     		hitpoints--;
+	if(hitpoints == 0)
+    		isDead = true;
     }
     
 }
