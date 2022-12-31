@@ -15,7 +15,7 @@ import util.Directions;
 
 public class Boss extends Entity{
 	
-	private BufferedImage[][] sprite;
+    private BufferedImage[][] sprite;
     private boolean moveUp, moveDown, moveRight, moveLeft;
     private Rectangle attackHitbox;
     private boolean attacking;
@@ -345,8 +345,6 @@ public class Boss extends Entity{
     		deathAnim = true;
     		animTick = 0;
     		animIndex = 0;
-    	}
-    		
+    	}	
     }
-
 }
