@@ -48,12 +48,12 @@ public class Settings extends State {
     }
 
     public void loadSprite() {
-        BufferedImage temp = AssetManager.getSprite("/assets/settingsmenu/GUI_4x.png");
+        BufferedImage temp = AssetManager.getSprite(AssetManager.GUI);
         window = temp.getSubimage(0, 0, 64, 64);
-        temp = AssetManager.getSprite("/assets/settingsmenu/buttons_4x.png");
+        temp = AssetManager.getSprite(AssetManager.S_BUTTONS);
         closeBtn = temp.getSubimage(352, 0, 32, 32);
         soundBtn = temp.getSubimage(320, 32, 12, 32);
-        temp = AssetManager.getSprite("/assets/settingsmenu/scrollbars free.png");
+        temp = AssetManager.getSprite(AssetManager.SCROLL_BAR_1);
         scrollBar = temp.getSubimage(16, 32, 48, 16);
         scrollBtn = temp.getSubimage(0, 0, 16, 16);
     }
