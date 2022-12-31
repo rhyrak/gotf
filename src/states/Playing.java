@@ -97,7 +97,6 @@ public class Playing extends State implements Serializable {
             }
             floorPrev = saveData.floor;
             player.setLevel(level);
-            entityManager.floorChanged();
         }
     }
 

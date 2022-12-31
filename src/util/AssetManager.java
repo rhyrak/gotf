@@ -31,6 +31,8 @@ public abstract class AssetManager {
     public static final String CLUB_H = "/assets/weapons/club_h.png";
     public static final String BONE_V = "/assets/weapons/bone_v.png";
     public static final String BONE_H = "/assets/weapons/bone_h.png";
+    public static final String KATANA_V = "/assets/weapons/katana_v.png";
+    public static final String KATANA_H = "/assets/weapons/katana_h.png";
 
     public static final String RAIN_P = "/assets/world/particles/rain.png";
     public static final String GRASS_P = "/assets/world/particles/grass.png";
