@@ -227,11 +227,11 @@ public class Boss extends Entity{
     	moveUp = false;
     	moveDown = false;
 		
-    	int xDiff = (int)entityManager.getPlayer().getHitbox().getCenterX() - (int)hitbox.getCenterX(); // x-axis distance between RedNinja and player
-    	int yDiff = (int)entityManager.getPlayer().getHitbox().getCenterY() - (int)hitbox.getCenterY(); // y-axis distance between RedNinja and player
+    	int xDiff = (int)entityManager.getPlayer().getHitbox().getCenterX() - (int)hitbox.getCenterX(); // x-axis distance between Boss and player
+    	int yDiff = (int)entityManager.getPlayer().getHitbox().getCenterY() - (int)hitbox.getCenterY(); // y-axis distance between Boss and player
     	
-    	int posDiffX = startX - hitbox.x; // x-axis distance between RedNinja's starting position and initial position
-    	int posDiffY = startY - hitbox.y; // y-axis distance between RedNinja's starting position and initial position
+    	int posDiffX = startX - hitbox.x; // x-axis distance between Boss' starting position and initial position
+    	int posDiffY = startY - hitbox.y; // y-axis distance between Boss' starting position and initial position
     	
     	if(Math.abs(xDiff) <= 450 && Math.abs(yDiff) <= 450) { // chase the player
     		
@@ -285,15 +285,14 @@ public class Boss extends Entity{
 			if(hitbox.x == startX && hitbox.y == startY)
 				returning = false;
 			
-		}else if(!returning){ // idle movements
+		}else if(!returning)
 			attacking = false;
-			}
     }
     
     private void updateCooldowns() {
         //works only if player is always in attack range,
     	//if player gets in and out of the attack range repeatedly,
-    	//ninja attacks without waiting to reset attack cooldown.
+    	//Boss attacks without waiting to reset attack cooldown.
     	if(attacking) {
         	if(attackCoolDown<300) //attack
         		attackCoolDown++;
