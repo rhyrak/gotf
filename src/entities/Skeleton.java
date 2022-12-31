@@ -265,7 +265,12 @@ public class Skeleton extends Entity{
     		entityManager.getPlayer().getInvincible() == false) {
     		entityManager.getPlayer().hitpoints--;
     		entityManager.getPlayer().setInvincible(true);
-    	}	
+    	}
+	if(attacking && hitbox.contains(entityManager.getPlayer().getHitbox()) &&
+        	entityManager.getPlayer().getInvincible() == false) {
+        	entityManager.getPlayer().hitpoints--;
+        	entityManager.getPlayer().setInvincible(true);
+        }
     	if(entityManager.getPlayer().getAttackHitbox().contains(hitbox)) 
     		hitpoints--;
     	if(hitpoints == 0)
