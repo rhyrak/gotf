@@ -2,9 +2,10 @@ package entities;
 import main.Game;
 import states.Playing;
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class EntityManager {
+public class EntityManager implements Serializable {
 
     private ArrayList<ArrayList<Entity>> entities;
     private Playing playing;

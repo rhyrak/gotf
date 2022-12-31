@@ -3,6 +3,7 @@ package entities;
 import main.Game;
 import util.AssetManager;
 import util.Directions;
+import util.SaveData;
 import util.SoundManager;
 import world.Level;
 
@@ -17,14 +18,14 @@ public class Player extends Entity {
     private Rectangle attackHitbox;
     private Rectangle moveHitbox;
     private boolean attacking;
+    private int maxHP;
     private Directions direction;
     private BufferedImage[][] sprite;
     private BufferedImage[] hudHeart;
     private BufferedImage itemSlot;
     private BufferedImage lifePot;
-    private int lifePotCount = 5;
+    private int lifePotCount = 5, medipackCount = 2;
     private BufferedImage medipack;
-    private int medipackCount = 2;
     private Color cdColor = new Color(222, 222, 222, 200);
     private int animIndex, animTick;
     private int attackCoolDown;
@@ -32,12 +33,14 @@ public class Player extends Entity {
     private boolean invincible;
     public int invinceTick;
     
-    public Player(Rectangle hitbox) {
-        this.hitbox = hitbox;
+    public Player(SaveData saveData) {
+        this.hitbox = new Rectangle(saveData.playerX, saveData.playerY, 64, 64);
         this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
         this.moveHitbox = new Rectangle(hitbox.x + 2, hitbox.y + 32, hitbox.width - 4, hitbox.height - 32);
         this.direction = RIGHT;
         this.hitpoints = 4;
+        // TODO: determine max hp from saveData
+        this.maxHP = 12;
         loadSprite();
     }
 
@@ -190,7 +193,7 @@ public class Player extends Entity {
 
     private void drawHUD(Graphics g) {
         // hitpoints
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < maxHP/4; i++)
             if (hitpoints - i * 4 >= 4)
                 g.drawImage(hudHeart[0], 48 + 36 * i, 48, 32, 32, null);
             else if (hitpoints - i * 4 > 0)
@@ -293,21 +296,21 @@ public class Player extends Entity {
     }
 
     public void useItem(int item) {
-        if (item == 1 && hitpoints != 20) {
+        if (item == 1 && hitpoints != maxHP) {
             if (lifePotCount > 0) {
                 SoundManager.UseLifePot();
                 lifePotCount--;
                 hitpoints += 2;
             }
-        } else if (item == 2 && hitpoints != 20) {
+        } else if (item == 2 && hitpoints != maxHP) {
             if (medipackCount > 0) {
                 SoundManager.UseMedPac();
                 medipackCount--;
                 hitpoints += 4;
             }
         }
-        if (hitpoints > 20)
-            hitpoints = 20;
+        if (hitpoints > maxHP)
+            hitpoints = maxHP;
     }
 
     public boolean addItem(Item.ItemType type) {

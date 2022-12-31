@@ -55,7 +55,7 @@ public class Playing extends State implements Serializable {
     }
 
     private void initGame() {
-        player = new Player(new Rectangle(saveData.playerX, saveData.playerY, 64, 64));
+        player = new Player(saveData);
         entityManager = new EntityManager(this, player);
         level = saveData.floor == 0 ? new Overworld(player, this) : new Dungeon(player, this);
         floorPrev = saveData.floor;

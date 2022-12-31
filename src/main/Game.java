@@ -113,7 +113,7 @@ public class Game implements Runnable {
         switch (newState) {
             case PLAYING -> {
                 SoundManager.StartForest();
-                this.gameState = new Playing(loadGame(0));
+                this.gameState = new Playing(loadGame(1));
             }
             case MENU -> this.gameState = new Menu(this);
             case SETTINGS -> this.gameState = new Settings(this);
@@ -122,19 +122,24 @@ public class Game implements Runnable {
     }
 
     private SaveData loadGame(int id) {
-        SaveData saveData = null;
+        SaveData saveData;
         try {
-            FileInputStream fis = new FileInputStream("save1.dat");
+            FileInputStream fis;
+            if (id == 1)
+                fis = new FileInputStream("save1.dat");
+            else if (id == 2)
+                fis = new FileInputStream("save2.dat");
+            else if (id == 3)
+                fis = new FileInputStream("save3.dat");
+            else
+                fis = new FileInputStream("nope");
             ObjectInputStream ois = new ObjectInputStream(fis);
             saveData = (SaveData) ois.readObject();
             ois.close();
         } catch (IOException | ClassNotFoundException e) {
             saveData = new SaveData();
-            saveData.playerX = 2310;
-            saveData.playerY = 1664;
-            saveData.floor = 0;
         }
-
+        saveData.saveID = id;
         return saveData;
     }
     private void startmusic() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
