@@ -359,6 +359,7 @@ public class Boss extends Entity{
     	
     	if(hitpoints == 0) {
     		deathAnim = true;
+		entityManager.getPlayer().setExp(50);
     		animTick = 0;
     		animIndex = 0;
     	}	
