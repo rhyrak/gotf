@@ -374,7 +374,6 @@ public class Player extends Entity {
     	if(this.exp >= 100) {
     		this.playerLevel++;
     		changeWeapon();
-    		System.out.print(playerLevel);
     		this.exp = this.exp%100;
     	}
     }
