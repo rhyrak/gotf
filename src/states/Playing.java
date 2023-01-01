@@ -53,10 +53,10 @@ public class Playing extends State implements Serializable {
         exitImg = new BufferedImage[2];
         exitImg[0] = AssetManager.getSprite(AssetManager.ESC_EXIT).getSubimage(0, 0, 311, 76);
         exitImg[1] = AssetManager.getSprite(AssetManager.ESC_EXIT).getSubimage(0, 122, 311, 76);
-        soundSliderBg = new Rectangle(Game.gameWidth / 2 - 75, 195 + Game.gameHeight / 4, 150, 10);
-        musicSliderBg = new Rectangle(Game.gameWidth / 2 - 75, 235 + Game.gameHeight / 4, 150, 10);
-        soundSlider = new Rectangle(Game.gameWidth / 2 - 75 + 40, 193 + Game.gameHeight / 4, 20, 14);
-        musicSlider = new Rectangle(Game.gameWidth / 2 - 75 + 70, 233 + Game.gameHeight / 4, 20, 14);
+        soundSliderBg = new Rectangle(Game.gameWidth / 2 - 55, 195 + Game.gameHeight / 4, 150, 10);
+        musicSliderBg = new Rectangle(Game.gameWidth / 2 - 55, 235 + Game.gameHeight / 4, 150, 10);
+        soundSlider = new Rectangle(Game.gameWidth / 2 - 55 + 40, 193 + Game.gameHeight / 4, 20, 14);
+        musicSlider = new Rectangle(Game.gameWidth / 2 - 55 + 70, 233 + Game.gameHeight / 4, 20, 14);
         sliderBgImg = AssetManager.getSprite(AssetManager.SCROLL_BAR_2).getSubimage(16, 38, 48, 4);
         sliderImg = AssetManager.getSprite(AssetManager.SCROLL_BAR_2).getSubimage(0, 4, 16, 8);
     }
