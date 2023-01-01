@@ -282,12 +282,14 @@ public class Caveman extends Entity{
         	entityManager.getPlayer().hitpoints--;
         	entityManager.getPlayer().setInvincible(true);
         }
-    if(entityManager.getPlayer().getAttackHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking()) 
-    	hitpoints--;
-    else if(entityManager.getPlayer().getHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking()) 
-    	hitpoints--;
-	if(hitpoints == 0)
-    		isDead = true;
+   	 if(entityManager.getPlayer().getAttackHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking()) 
+    		hitpoints--;
+    	else if(entityManager.getPlayer().getHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking()) 
+    		hitpoints--;
+	if(hitpoints == 0) {
+		isDead = true;
+		entityManager.getPlayer().setExp(35);
+	}
     }
     
 }
