@@ -27,12 +27,13 @@ public class RedNinja extends Entity {
     public boolean returning = false;
     private int attackCoolDown = 0;
     private boolean isDead = false;
+	private BufferedImage[] healthBar;
 
     // constructor
     public RedNinja(EntityManager entityManager, Rectangle hitbox) {
         this.entityManager = entityManager;
         this.hitbox = hitbox;
-        this.hitpoints = 3;
+        this.hitpoints = 150;
         this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
         this.direction = LEFT;
         loadSprite();
@@ -55,6 +56,11 @@ public class RedNinja extends Entity {
         sprite[4][3] = temp.getSubimage(48, 64, 16, 16); // attack right
         sprite[8][0] = AssetManager.getSprite(AssetManager.KATANA_V);
         sprite[8][1] = AssetManager.getSprite(AssetManager.KATANA_H);
+        healthBar = new BufferedImage[2];
+    	temp = AssetManager.getSprite(AssetManager.HEALTH_BAR_BG);
+    	healthBar[0] = temp.getSubimage(3, 0, 103,7);
+    	temp = AssetManager.getSprite(AssetManager.HEALTH_BAR_RED);
+    	healthBar[1] = temp.getSubimage(0, 0, 100,7);
     }
 
 
@@ -178,8 +184,9 @@ public class RedNinja extends Entity {
 
     @Override
     public void draw(Graphics g) {
-        if (isDead)
-            return;
+    	if(isDead)
+    		return;
+    	drawHealthBar(g);
         switch (direction) {
             case DOWN -> {
                 if (attacking) {
@@ -212,7 +219,12 @@ public class RedNinja extends Entity {
         }
     }
 
-    @Override
+    private void drawHealthBar(Graphics g) {
+    	g.drawImage(healthBar[0], hitbox.x + camOffsetX + 7, hitbox.y + camOffsetY - 15, 50, 4, null);
+		g.drawImage(healthBar[1], hitbox.x + camOffsetX + 7, hitbox.y + camOffsetY - 15, hitpoints/3, 4, null);
+	}
+
+	@Override
     public void update() {
         if (isDead)
             return;
@@ -264,29 +276,24 @@ public class RedNinja extends Entity {
     }
 
     private void updateHitpoints() {
-        if (attacking && attackHitbox.contains(entityManager.getPlayer().getHitbox()) &&
-                entityManager.getPlayer().getInvincible() == false) {
-            SoundManager.getDamage();
-            entityManager.getPlayer().hitpoints--;
-            entityManager.getPlayer().setInvincible(true);
+    	if(attacking && attackHitbox.contains(entityManager.getPlayer().getHitbox()) &&
+    		entityManager.getPlayer().getInvincible() == false) {
+    		entityManager.getPlayer().hitpoints--;
+    		entityManager.getPlayer().setInvincible(true);
+    	}
+	if(attacking && hitbox.contains(entityManager.getPlayer().getHitbox()) &&
+        	entityManager.getPlayer().getInvincible() == false) {
+        	entityManager.getPlayer().hitpoints--;
+        	entityManager.getPlayer().setInvincible(true);
         }
-
-        if (attacking && hitbox.contains(entityManager.getPlayer().getHitbox()) &&
-                entityManager.getPlayer().getInvincible() == false) {
-            SoundManager.getDamage();
-            entityManager.getPlayer().hitpoints--;
-            entityManager.getPlayer().setInvincible(true);
-        }
-
-
-        if (entityManager.getPlayer().getAttackHitbox().contains(hitbox)) {
-            SoundManager.Hitt();
-            hitpoints--;
-        }
-        if (hitpoints == 0) {
-            SoundManager.NinjaDead();
-            isDead = true;
-        }
+    	if(entityManager.getPlayer().getAttackHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking())
+    		hitpoints--;
+    	else if(entityManager.getPlayer().getHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking())
+    		hitpoints--;
+	if(hitpoints == 0) {
+    		isDead = true;
+    		entityManager.getPlayer().setExp(15);
+    	}
     }
 
 }
