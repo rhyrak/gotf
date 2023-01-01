@@ -117,9 +117,9 @@ public class Boss extends Entity{
 			return;
 		if(deathAnim)
 			if(moveRight)
-				g.drawImage(sprite[4][animIndex], hitbox.x + camOffsetX, hitbox.y + camOffsetY, hitbox.width, hitbox.height, null);
+				g.drawImage(sprite[4][animIndex], hitbox.x + entityManager.getCamOffsetX(), hitbox.y + entityManager.getCamOffsetY(), hitbox.width, hitbox.height, null);
 			else
-				g.drawImage(sprite[5][animIndex], hitbox.x + camOffsetX, hitbox.y + camOffsetY, hitbox.width, hitbox.height, null);
+				g.drawImage(sprite[5][animIndex], hitbox.x + entityManager.getCamOffsetX(), hitbox.y + entityManager.getCamOffsetY(), hitbox.width, hitbox.height, null);
 		else {
 		drawHealthBar(g);
 		switch(direction) {
