@@ -174,6 +174,7 @@ public class SoundManager {
     public static void bossAttackSound() {
         bossAttack.setFramePosition(0);
         bossAttack.start();
+
     }
     public static void ninjaAttackSound(){
         ninjaAttack.setFramePosition(0);
@@ -229,6 +230,9 @@ public class SoundManager {
     public static void WalkDungeon() {
         walkingDungeon.start();
         walkingDungeon.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+    public static void WalkingDungeonClose(){
+        walkingDungeon.stop();
     }
 
     public static void WalkForestClose() {
@@ -296,10 +300,12 @@ public class SoundManager {
     }
 
     public static void Walkingforest() {
+        WalkingDungeonClose();
         WalkForest();
     }
 
     public static void WalkingDungeon() {
+        WalkForestClose();
         WalkDungeon();
     }
 

@@ -97,10 +97,10 @@ public class Player extends Entity {
         int xSpeed = 0, ySpeed = 0;
         int playerSpeed = 2;
         if (moveDown || moveUp || moveLeft || moveRight)
-           if (Playing.getSaveData().floor==0)
-            SoundManager.Walkingforest();
+            if (Playing.getSaveData().floor == 0)
+                SoundManager.Walkingforest();
             else
-             SoundManager.WalkingDungeon();
+                SoundManager.WalkingDungeon();
         else
             SoundManager.Stand();
 
@@ -397,35 +397,36 @@ public class Player extends Entity {
     public void setLevel(Level level) {
         this.level = level;
     }
-    
+
     public boolean getInvincible() {
-    	return invincible;
+        return invincible;
     }
-    
+
     public void setInvincible(boolean bool) {
-    	invincible = bool;
+        invincible = bool;
     }
-    
+
     public boolean getAttacking() {
-    	return attacking;
+        return attacking;
     }
-    
+
     private void changeWeapon() {
-    	if(playerLevel == 1) {
-        	sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_ONE_V);
-        	sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_ONE_H);
-        }else if(playerLevel == 2) {
-        	sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_TWO_V);
-        	sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_TWO_H);
+        if (playerLevel == 1) {
+            sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_ONE_V);
+            sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_ONE_H);
+        } else if (playerLevel == 2) {
+            sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_TWO_V);
+            sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_TWO_H);
         }
     }
+
     public void setExp(int exp) {
-    	this.exp += exp;
-    	if(this.exp >= 100) {
-    		this.playerLevel++;
-    		changeWeapon();
-    		this.exp = this.exp%100;
-    	}
+        this.exp += exp;
+        if (this.exp >= 100) {
+            this.playerLevel++;
+            changeWeapon();
+            this.exp = this.exp % 100;
+        }
     }
-    
+
 }
