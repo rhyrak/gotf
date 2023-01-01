@@ -278,13 +278,13 @@ public class RedNinja extends Entity {
     private void updateHitpoints() {
         if (attacking && attackHitbox.contains(entityManager.getPlayer().getHitbox()) &&
                 entityManager.getPlayer().getInvincible() == false) {
-            SoundManager.getDamage();
+            SoundManager.NinjaAttack();
             entityManager.getPlayer().hitpoints--;
             entityManager.getPlayer().setInvincible(true);
         }
         if (attacking && hitbox.contains(entityManager.getPlayer().getHitbox()) &&
                 entityManager.getPlayer().getInvincible() == false) {
-            SoundManager.getDamage();
+            SoundManager.NinjaAttack();
             entityManager.getPlayer().hitpoints--;
             entityManager.getPlayer().setInvincible(true);
         }
