@@ -1,7 +1,6 @@
 package entities;
 
 import main.Game;
-import states.Playing;
 import util.AssetManager;
 import util.Directions;
 import util.SaveData;
@@ -37,7 +36,7 @@ public class Player extends Entity {
     private int playerLevel;
     private BufferedImage expBar;
     private BufferedImage expBarBg;
-
+    
     public Player(SaveData saveData) {
         this.hitbox = new Rectangle(saveData.playerX, saveData.playerY, 64, 64);
         this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
@@ -56,11 +55,11 @@ public class Player extends Entity {
         move();
         updateAttackHitbox();
         updateCooldowns();
-        if (invincible)
-            invinceTick++;
-        if (invinceTick > 250) {
-            invinceTick = 0;
-            invincible = false;
+        if(invincible)
+        	invinceTick++;
+        if(invinceTick > 250) {
+        	invinceTick = 0;
+        	invincible = false;
         }
     }
 
@@ -85,14 +84,11 @@ public class Player extends Entity {
     private void move() {
         int xSpeed = 0, ySpeed = 0;
         int playerSpeed = 2;
-        if (moveDown || moveUp || moveLeft || moveRight) {
-            if (Playing.getSaveData().floor == 0)
-                SoundManager.Walkingforest();
-            else
-                SoundManager.WalkingDungeon();
-        }
+        if (moveDown || moveUp || moveLeft || moveRight)
+            SoundManager.Walking();
         else
             SoundManager.Stand();
+
         if (moveUp)
             ySpeed -= playerSpeed;
         if (moveDown)
@@ -202,7 +198,7 @@ public class Player extends Entity {
 
     private void drawHUD(Graphics g) {
         // hitpoints
-        for (int i = 0; i < maxHP / 4; i++)
+        for (int i = 0; i < maxHP/4; i++)
             if (hitpoints - i * 4 >= 4)
                 g.drawImage(hudHeart[0], 48 + 36 * i, 48, 32, 32, null);
             else if (hitpoints - i * 4 > 0)
@@ -233,7 +229,7 @@ public class Player extends Entity {
                 g.drawString(medipackCount + "", 138, 140);
             }
         }
-
+        
         //EXP
         g.drawImage(expBarBg, 48, 24, 100, 7, null);
         g.drawImage(expBar, 48, 24, exp, 7, null);
@@ -353,36 +349,35 @@ public class Player extends Entity {
     public void setLevel(Level level) {
         this.level = level;
     }
-
+    
     public boolean getInvincible() {
-        return invincible;
+    	return invincible;
     }
-
+    
     public void setInvincible(boolean bool) {
-        invincible = bool;
+    	invincible = bool;
     }
-
+    
     public boolean getAttacking() {
-        return attacking;
+    	return attacking;
     }
-
+    
     private void changeWeapon() {
-        if (playerLevel == 1) {
-            sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_ONE_V);
-            sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_ONE_H);
-        } else if (playerLevel == 2) {
-            sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_TWO_V);
-            sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_TWO_H);
+    	if(playerLevel == 1) {
+        	sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_ONE_V);
+        	sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_ONE_H);
+        }else if(playerLevel == 2) {
+        	sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_TWO_V);
+        	sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_TWO_H);
         }
     }
-
     public void setExp(int exp) {
-        this.exp += exp;
-        if (this.exp >= 100) {
-            this.playerLevel++;
-            changeWeapon();
-            this.exp = this.exp % 100;
-        }
+    	this.exp += exp;
+    	if(this.exp >= 100) {
+    		this.playerLevel++;
+    		changeWeapon();
+    		this.exp = this.exp%100;
+    	}
     }
-
+    
 }
