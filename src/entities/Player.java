@@ -97,10 +97,10 @@ public class Player extends Entity {
         int xSpeed = 0, ySpeed = 0;
         int playerSpeed = 2;
         if (moveDown || moveUp || moveLeft || moveRight)
-           if (Playing.getSaveData().floor==0)
-            SoundManager.Walkingforest();
+            if (Playing.getSaveData().floor == 0)
+                SoundManager.Walkingforest();
             else
-             SoundManager.WalkingDungeon();
+                SoundManager.WalkingDungeon();
         else
             SoundManager.Stand();
 
@@ -172,6 +172,11 @@ public class Player extends Entity {
     public void draw(Graphics g) {
         drawHitbox(g);
         drawHUD(g);
+        int index;
+        if (moveRight || moveLeft || moveUp || moveDown)
+            index = animIndex;
+        else
+            index = 0;
         switch (direction) {
             case DOWN -> {
                 if (attacking) {
@@ -179,7 +184,7 @@ public class Player extends Entity {
                     g.drawImage(sprite[4][0], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
                     g.drawImage(sprite[8][0], Game.gameWidth / 2 - hitbox.width / 2 - hitbox.x + attackHitbox.x + attackHitbox.width / 4, Game.gameHeight / 2 - hitbox.height / 2 - hitbox.y + attackHitbox.y, attackHitbox.width / 2, attackHitbox.height / 2, null);
                 } else
-                    g.drawImage(sprite[0][animIndex], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[0][index], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
             }
             case UP -> {
                 if (attacking) {
@@ -187,7 +192,7 @@ public class Player extends Entity {
                     g.drawImage(sprite[4][1], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
                     g.drawImage(sprite[8][0], Game.gameWidth / 2 - hitbox.width / 2 - hitbox.x + attackHitbox.x + (int) (attackHitbox.width / 1.75), Game.gameHeight / 2 - hitbox.height / 2 - hitbox.y + attackHitbox.y + attackHitbox.height, -attackHitbox.width / 2, -attackHitbox.height / 2, null);
                 } else
-                    g.drawImage(sprite[1][animIndex], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[1][index], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
             }
             case LEFT -> {
                 if (attacking) {
@@ -195,7 +200,7 @@ public class Player extends Entity {
                     g.drawImage(sprite[4][2], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
                     g.drawImage(sprite[8][1], Game.gameWidth / 2 - hitbox.width / 2 - hitbox.x + attackHitbox.x + attackHitbox.width, Game.gameHeight / 2 - hitbox.height / 2 - hitbox.y + attackHitbox.y + attackHitbox.height / 2, -attackHitbox.width / 2, attackHitbox.height / 2, null);
                 } else
-                    g.drawImage(sprite[2][animIndex], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[2][index], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
             }
             case RIGHT -> {
                 if (attacking) {
@@ -203,7 +208,7 @@ public class Player extends Entity {
                     g.drawImage(sprite[4][3], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
                     g.drawImage(sprite[8][1], Game.gameWidth / 2 - hitbox.width / 2 - hitbox.x + attackHitbox.x, Game.gameHeight / 2 - hitbox.height / 2 - hitbox.y + attackHitbox.y + attackHitbox.height / 2, attackHitbox.width / 2, attackHitbox.height / 2, null);
                 } else
-                    g.drawImage(sprite[3][animIndex], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[3][index], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
             }
         }
         if (shielded)
@@ -397,35 +402,36 @@ public class Player extends Entity {
     public void setLevel(Level level) {
         this.level = level;
     }
-    
+
     public boolean getInvincible() {
-    	return invincible;
+        return invincible;
     }
-    
+
     public void setInvincible(boolean bool) {
-    	invincible = bool;
+        invincible = bool;
     }
-    
+
     public boolean getAttacking() {
-    	return attacking;
+        return attacking;
     }
-    
+
     private void changeWeapon() {
-    	if(playerLevel == 1) {
-        	sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_ONE_V);
-        	sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_ONE_H);
-        }else if(playerLevel == 2) {
-        	sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_TWO_V);
-        	sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_TWO_H);
+        if (playerLevel == 1) {
+            sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_ONE_V);
+            sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_ONE_H);
+        } else if (playerLevel == 2) {
+            sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_TWO_V);
+            sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_TWO_H);
         }
     }
+
     public void setExp(int exp) {
-    	this.exp += exp;
-    	if(this.exp >= 100) {
-    		this.playerLevel++;
-    		changeWeapon();
-    		this.exp = this.exp%100;
-    	}
+        this.exp += exp;
+        if (this.exp >= 100) {
+            this.playerLevel++;
+            changeWeapon();
+            this.exp = this.exp % 100;
+        }
     }
-    
+
 }

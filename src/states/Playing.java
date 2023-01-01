@@ -147,6 +147,8 @@ public class Playing extends State implements Serializable {
             }
             floorPrev = saveData.floor;
             player.setLevel(level);
+            entityManager.getDog().getHitbox().x = player.getHitbox().x - 64;
+            entityManager.getDog().getHitbox().y = player.getHitbox().y;
         }
     }
 
