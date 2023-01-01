@@ -219,6 +219,7 @@ public class SoundManager {
 
     public static void WalkDungeon() {
         walkingDungeon.start();
+        walkingDungeon.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public static void WalkForestClose() {

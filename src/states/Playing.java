@@ -191,7 +191,6 @@ public class Playing extends State implements Serializable {
             case KeyEvent.VK_A -> player.setMoveLeft(true);
             case KeyEvent.VK_E -> {
                 level.playerInteract();
-                System.out.println(getSaveData().floor);
                 switch (getSaveData().floor){
                     case 0-> SoundManager.StartForest();
                     case 1-> SoundManager.DungeonEnter();
