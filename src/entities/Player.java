@@ -1,6 +1,7 @@
 package entities;
 
 import main.Game;
+import states.Playing;
 import util.AssetManager;
 import util.Directions;
 import util.SaveData;
@@ -85,7 +86,10 @@ public class Player extends Entity {
         int xSpeed = 0, ySpeed = 0;
         int playerSpeed = 2;
         if (moveDown || moveUp || moveLeft || moveRight)
-            SoundManager.Walking();
+           if (Playing.getSaveData().floor==0)
+            SoundManager.Walkingforest();
+            else
+             SoundManager.WalkingDungeon();
         else
             SoundManager.Stand();
 
