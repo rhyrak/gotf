@@ -322,9 +322,6 @@ public class SoundManager {
         ChopSound();
     }
 
-    public static void getDamage() {
-        painSound();
-    }
     public static void NinjaAttack(){
         ninjaAttackSound();
         painSound();
