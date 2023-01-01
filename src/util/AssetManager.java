@@ -9,6 +9,9 @@ public abstract class AssetManager {
 
     public static final String BUTTONS = "/assets/buttons.png";
     public static final String WINDOWS = "/assets/windows.png";
+    
+    public static final String HEALTH_BAR_BG = "/assets/hud/background.png";
+    public static final String HEALTH_BAR_RED = "/assets/hud/red.png";
 
     public static final String PLAY_BTN = "/assets/ui/menu/start_btn.png";
     public static final String SETTINGS_BTN = "/assets/ui/menu/settings_btn.png";
