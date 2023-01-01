@@ -12,6 +12,7 @@ public abstract class AssetManager {
     
     public static final String HEALTH_BAR_BG = "/assets/hud/background.png";
     public static final String HEALTH_BAR_RED = "/assets/hud/red.png";
+    public static final String BLUE_BAR = "/assets/hud/blue.png";
 
     public static final String PLAY_BTN = "/assets/ui/menu/start_btn.png";
     public static final String SETTINGS_BTN = "/assets/ui/menu/settings_btn.png";
@@ -31,6 +32,10 @@ public abstract class AssetManager {
     public static final String PLAYER_SPRITE = "/assets/player/player-sprite.png";
     public static final String BIG_SWORD_V = "/assets/player/big-sword-v.png";
     public static final String BIG_SWORD_H = "/assets/player/big-sword-h.png";
+    public static final String AXE_ONE_V = "/assets/player/axe1-v.png";
+    public static final String AXE_ONE_H = "/assets/player/axe1-h.png";
+    public static final String AXE_TWO_V = "/assets/player/axe2-v.png";
+    public static final String AXE_TWO_H = "/assets/player/axe2-h.png";
     public static final String HEART = "/assets/hud/heart.png";
     public static final String ITEM_SLOT = "/assets/hud/item-slot.png";
     public static final String LIFE_POT = "/assets/items/life-pot.png";
