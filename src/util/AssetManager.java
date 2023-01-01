@@ -54,9 +54,6 @@ public abstract class AssetManager {
     public static final String BOSS_ATTACK_LEFT = "/assets/boss/attacking-left.png";
     public static final String BOSS_DEATH_RIGHT = "/assets/boss/death.png";
     public static final String BOSS_DEATH_LEFT = "/assets/boss/death-left.png";
-    public static final String RAIN_P = "/assets/world/particles/rain.png";
-    public static final String GRASS_P = "/assets/world/particles/grass.png";
-    public static final String RAIN_FLOOR = "/assets/world/particles/rain-on-floor.png";
     
     public static final String RAIN_P = "/assets/world/particles/rain.png";
     public static final String GRASS_P = "/assets/world/particles/grass.png";

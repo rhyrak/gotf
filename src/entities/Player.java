@@ -344,5 +344,8 @@ public class Player extends Entity {
     public void setInvincible(boolean bool) {
     	invincible = bool;
     }
-    
+
+    public boolean getAttacking() {
+        return attacking;
+    }
 }
