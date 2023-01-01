@@ -32,6 +32,7 @@ public class Playing extends State implements Serializable {
     private BufferedImage[] continueImg, exitImg;
     private int continueIndex = 0, exitIndex = 0;
     private int mouseX, mouseY;
+    private boolean soundPressed, musicPressed;
 
     public Playing(SaveData saveData) {
         if (saveData == null)
@@ -53,11 +54,11 @@ public class Playing extends State implements Serializable {
         exitImg[0] = AssetManager.getSprite(AssetManager.ESC_EXIT).getSubimage(0, 0, 311, 76);
         exitImg[1] = AssetManager.getSprite(AssetManager.ESC_EXIT).getSubimage(0, 122, 311, 76);
         soundSliderBg = new Rectangle(Game.gameWidth / 2 - 75, 195 + Game.gameHeight / 4, 150, 10);
-        musicSliderBg = new Rectangle(Game.gameWidth / 2 - 75, 235 +Game.gameHeight / 4, 150, 10);
+        musicSliderBg = new Rectangle(Game.gameWidth / 2 - 75, 235 + Game.gameHeight / 4, 150, 10);
         soundSlider = new Rectangle(Game.gameWidth / 2 - 75 + 40, 193 + Game.gameHeight / 4, 20, 14);
         musicSlider = new Rectangle(Game.gameWidth / 2 - 75 + 70, 233 + Game.gameHeight / 4, 20, 14);
-        sliderBgImg = AssetManager.getSprite(AssetManager.SCROLL_BAR_2).getSubimage(16,38,48,4);
-        sliderImg = AssetManager.getSprite(AssetManager.SCROLL_BAR_2).getSubimage(0,4,16,8);
+        sliderBgImg = AssetManager.getSprite(AssetManager.SCROLL_BAR_2).getSubimage(16, 38, 48, 4);
+        sliderImg = AssetManager.getSprite(AssetManager.SCROLL_BAR_2).getSubimage(0, 4, 16, 8);
     }
 
     private void initGame() {
@@ -80,10 +81,10 @@ public class Playing extends State implements Serializable {
             g.drawImage(pauseBg, Game.gameWidth / 2 - 150, Game.gameHeight / 4 + 25, 300, 400, null);
             g.drawImage(continueImg[continueIndex], continueBtn.x, continueBtn.y, continueBtn.width, continueBtn.height, null);
             g.drawImage(exitImg[exitIndex], exitBtn.x, exitBtn.y, exitBtn.width, exitBtn.height, null);
-            g.drawImage(sliderBgImg, soundSliderBg.x, soundSliderBg.y, soundSliderBg.width,soundSliderBg.height,null);
-            g.drawImage(sliderBgImg, musicSliderBg.x, musicSliderBg.y, musicSliderBg.width,musicSliderBg.height,null);
-            g.drawImage(sliderImg, soundSlider.x, soundSlider.y, soundSlider.width,soundSlider.height,null);
-            g.drawImage(sliderImg, musicSlider.x, musicSlider.y, musicSlider.width,musicSlider.height,null);
+            g.drawImage(sliderBgImg, soundSliderBg.x, soundSliderBg.y, soundSliderBg.width, soundSliderBg.height, null);
+            g.drawImage(sliderBgImg, musicSliderBg.x, musicSliderBg.y, musicSliderBg.width, musicSliderBg.height, null);
+            g.drawImage(sliderImg, soundSlider.x, soundSlider.y, soundSlider.width, soundSlider.height, null);
+            g.drawImage(sliderImg, musicSlider.x, musicSlider.y, musicSlider.width, musicSlider.height, null);
         }
         if (Game.DEBUG_MODE) {
             g.setColor(overlay);
@@ -116,9 +117,9 @@ public class Playing extends State implements Serializable {
         } else {
             continueIndex = 0;
             exitIndex = 0;
-            if (continueBtn.contains(mouseX,mouseY))
+            if (continueBtn.contains(mouseX, mouseY))
                 continueIndex = 1;
-            else if (exitBtn.contains(mouseX,mouseY))
+            else if (exitBtn.contains(mouseX, mouseY))
                 exitIndex = 1;
         }
     }
@@ -221,23 +222,45 @@ public class Playing extends State implements Serializable {
             mouseX = e.getX();
             mouseY = e.getY();
         }
+        if (soundPressed)
+            if (isIn(e, soundSlider) || isIn(e, soundSliderBg)) {
+                soundSlider.x = e.getX() - soundSlider.width / 2;
+                if (soundSlider.x < soundSliderBg.x)
+                    soundSlider.x = soundSliderBg.x;
+                if (soundSlider.x + soundSlider.width > soundSliderBg.x + soundSliderBg.width)
+                    soundSlider.x = soundSliderBg.x + soundSliderBg.width - soundSlider.width;
+            }
+        if (musicPressed)
+            if (isIn(e, musicSlider) || isIn(e, musicSliderBg)) {
+                musicSlider.x = e.getX() - musicSlider.width / 2;
+                if (musicSlider.x < musicSliderBg.x)
+                    musicSlider.x = musicSliderBg.x;
+                if (musicSlider.x + musicSlider.width > musicSliderBg.x + musicSliderBg.width)
+                    musicSlider.x = musicSliderBg.x + musicSliderBg.width - musicSlider.width;
+            }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (paused) {
-            if (continueBtn.contains(e.getX(),e.getY()))
+            if (continueBtn.contains(e.getX(), e.getY()))
                 paused = false;
             else if (exitBtn.contains(e.getX(), e.getY()))
                 saveAndExit();
+            else if (isIn(e, soundSliderBg) || isIn(e, soundSlider))
+                soundPressed = !soundPressed;
+            else if (isIn(e, musicSliderBg) || isIn(e, musicSlider))
+                musicPressed = !musicPressed;
         }
     }
 
 
     @Override
     public void mousePressed(MouseEvent e) {
-        switch (e.getButton()) {
-            case MouseEvent.BUTTON1 -> player.setAttacking();
+        if (!paused) {
+            switch (e.getButton()) {
+                case MouseEvent.BUTTON1 -> player.setAttacking();
+            }
         }
     }
 
@@ -247,5 +270,9 @@ public class Playing extends State implements Serializable {
 
     public SaveData getSaveData() {
         return saveData;
+    }
+
+    private boolean isIn(MouseEvent e, Rectangle rect) {
+        return rect.contains(e.getX(), e.getY());
     }
 }
