@@ -34,6 +34,8 @@ public class Player extends Entity {
     public int invinceTick;
     private int exp = 0;
     private int playerLevel;
+    private BufferedImage expBar;
+    private BufferedImage expBarBg;
     
     public Player(SaveData saveData) {
         this.hitbox = new Rectangle(saveData.playerX, saveData.playerY, 64, 64);
