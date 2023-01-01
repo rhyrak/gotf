@@ -26,13 +26,16 @@ public class Player extends Entity {
     private BufferedImage lifePot;
     private int lifePotCount = 5, medipackCount = 2;
     private BufferedImage medipack;
+    private BufferedImage expBar;
+    private BufferedImage expBarBg;
     private Color cdColor = new Color(222, 222, 222, 200);
     private int animIndex, animTick;
     private int attackCoolDown;
     private Level level;
     private boolean invincible;
     public int invinceTick;
-    
+    private int exp = 0;
+    private int playerLevel;
     public Player(SaveData saveData) {
         this.hitbox = new Rectangle(saveData.playerX, saveData.playerY, 64, 64);
         this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
@@ -41,6 +44,7 @@ public class Player extends Entity {
         this.hitpoints = 4;
         // TODO: determine max hp from saveData
         this.maxHP = 12;
+        this.playerLevel = 0;
         loadSprite();
     }
 
@@ -224,6 +228,10 @@ public class Player extends Entity {
                 g.drawString(medipackCount + "", 138, 140);
             }
         }
+        
+        //EXP
+        g.drawImage(expBarBg, 48, 24, 100, 7, null);
+        g.drawImage(expBar, 48, 24, exp, 7, null);
     }
 
     private void loadSprite() {
@@ -241,6 +249,7 @@ public class Player extends Entity {
         sprite[4][3] = temp.getSubimage(48, 64, 16, 16); // attack right
         sprite[8][0] = AssetManager.getSprite(AssetManager.BIG_SWORD_V);
         sprite[8][1] = AssetManager.getSprite(AssetManager.BIG_SWORD_H);
+        
         hudHeart = new BufferedImage[5];
         temp = AssetManager.getSprite(AssetManager.HEART);
         for (int i = 0; i < 5; i++)
@@ -248,6 +257,10 @@ public class Player extends Entity {
         this.itemSlot = AssetManager.getSprite(AssetManager.ITEM_SLOT);
         this.lifePot = AssetManager.getSprite(AssetManager.LIFE_POT);
         this.medipack = AssetManager.getSprite(AssetManager.MEDIPACK);
+        temp = AssetManager.getSprite(AssetManager.BLUE_BAR);
+        this.expBar = temp.getSubimage(0, 0, 100, 7);
+        temp = AssetManager.getSprite(AssetManager.HEALTH_BAR_BG);
+        this.expBarBg = temp.getSubimage(5, 0, 100, 7);
     }
 
     private void drawHitbox(Graphics g) {
@@ -344,8 +357,28 @@ public class Player extends Entity {
     public void setInvincible(boolean bool) {
     	invincible = bool;
     }
-
+    
     public boolean getAttacking() {
-        return attacking;
+    	return attacking;
     }
+    
+    private void changeWeapon() {
+    	if(playerLevel == 1) {
+        	sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_ONE_V);
+        	sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_ONE_H);
+        }else if(playerLevel == 2) {
+        	sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_TWO_V);
+        	sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_TWO_H);
+        }
+    }
+    public void setExp(int exp) {
+    	this.exp += exp;
+    	if(this.exp >= 100) {
+    		this.playerLevel++;
+    		changeWeapon();
+    		System.out.print(playerLevel);
+    		this.exp = this.exp%100;
+    	}
+    }
+    
 }
