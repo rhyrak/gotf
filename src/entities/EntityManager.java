@@ -5,16 +5,20 @@ import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import static main.Game.TILE_SIZE;
+
 public class EntityManager implements Serializable {
 
     private ArrayList<ArrayList<Entity>> entities;
     private Playing playing;
     private Player player;
+    private Dog dog;
     private int camOffsetX, camOffsetY;
 
     public EntityManager(Playing playing, Player player) {
         this.playing = playing;
         this.player = player;
+        this.dog = new Dog(this, new Rectangle(player.getHitbox().x - TILE_SIZE,player.getHitbox().y - TILE_SIZE,48,42));
         initEntities();
     }
 
@@ -37,15 +41,21 @@ public class EntityManager implements Serializable {
         camOffsetY = Game.gameHeight / 2 - player.getHitbox().y - player.getHitbox().height / 2;
         for(Entity e: entities.get(playing.getSaveData().floor))
             e.update();
+        dog.update();
     }
 
     public Player getPlayer() {
         return player;
     }
 
+    public Dog getDog() {
+        return dog;
+    }
+
     public void draw(Graphics g) {
         for(Entity e: entities.get(playing.getSaveData().floor))
             e.draw(g);
+        dog.draw(g);
     }
 
     public int getCamOffsetX() {

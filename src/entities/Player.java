@@ -172,6 +172,11 @@ public class Player extends Entity {
     public void draw(Graphics g) {
         drawHitbox(g);
         drawHUD(g);
+        int index;
+        if (moveRight || moveLeft || moveUp || moveDown)
+            index = animIndex;
+        else
+            index = 0;
         switch (direction) {
             case DOWN -> {
                 if (attacking) {
@@ -179,7 +184,7 @@ public class Player extends Entity {
                     g.drawImage(sprite[4][0], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
                     g.drawImage(sprite[8][0], Game.gameWidth / 2 - hitbox.width / 2 - hitbox.x + attackHitbox.x + attackHitbox.width / 4, Game.gameHeight / 2 - hitbox.height / 2 - hitbox.y + attackHitbox.y, attackHitbox.width / 2, attackHitbox.height / 2, null);
                 } else
-                    g.drawImage(sprite[0][animIndex], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[0][index], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
             }
             case UP -> {
                 if (attacking) {
@@ -187,7 +192,7 @@ public class Player extends Entity {
                     g.drawImage(sprite[4][1], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
                     g.drawImage(sprite[8][0], Game.gameWidth / 2 - hitbox.width / 2 - hitbox.x + attackHitbox.x + (int) (attackHitbox.width / 1.75), Game.gameHeight / 2 - hitbox.height / 2 - hitbox.y + attackHitbox.y + attackHitbox.height, -attackHitbox.width / 2, -attackHitbox.height / 2, null);
                 } else
-                    g.drawImage(sprite[1][animIndex], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[1][index], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
             }
             case LEFT -> {
                 if (attacking) {
@@ -195,7 +200,7 @@ public class Player extends Entity {
                     g.drawImage(sprite[4][2], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
                     g.drawImage(sprite[8][1], Game.gameWidth / 2 - hitbox.width / 2 - hitbox.x + attackHitbox.x + attackHitbox.width, Game.gameHeight / 2 - hitbox.height / 2 - hitbox.y + attackHitbox.y + attackHitbox.height / 2, -attackHitbox.width / 2, attackHitbox.height / 2, null);
                 } else
-                    g.drawImage(sprite[2][animIndex], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[2][index], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
             }
             case RIGHT -> {
                 if (attacking) {
@@ -203,7 +208,7 @@ public class Player extends Entity {
                     g.drawImage(sprite[4][3], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
                     g.drawImage(sprite[8][1], Game.gameWidth / 2 - hitbox.width / 2 - hitbox.x + attackHitbox.x, Game.gameHeight / 2 - hitbox.height / 2 - hitbox.y + attackHitbox.y + attackHitbox.height / 2, attackHitbox.width / 2, attackHitbox.height / 2, null);
                 } else
-                    g.drawImage(sprite[3][animIndex], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
+                    g.drawImage(sprite[3][index], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
             }
         }
         if (shielded)
@@ -255,10 +260,14 @@ public class Player extends Entity {
                 g.drawString(defScrollCount + "", 200, 140);
             }
         }
-
         //EXP
+        g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
+        g.drawString(Integer.toString(playerLevel), 35, 33);
+        g.drawString(Integer.toString(playerLevel+1), 151, 33);
         g.drawImage(expBarBg, 48, 24, 100, 7, null);
         g.drawImage(expBar, 48, 24, exp, 7, null);
+        g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 10));
+        g.drawString(Integer.toString(exp) + "/100", 85, 30);
     }
 
     private void loadSprite() {
