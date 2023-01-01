@@ -9,7 +9,7 @@ import static util.WeatherTime.raining;
 
 public class SoundManager {
     public static Clip attack;
-    public static Clip walking;
+    public static Clip walkingForest;
     public static Clip forest;
     public static Clip heal;
     public static Clip levelUp;
@@ -19,6 +19,17 @@ public class SoundManager {
     public static Clip lifepot;
     public static Clip medipac;
     public static Clip rain;
+    public static Clip walkingDungeon;
+
+    public static Clip dungeonfloor1;
+    public static Clip dungeonfloor2;
+    public static Clip dungeonfloor3;
+    public static Clip dungeonfloor4;
+    public static Clip pain;
+    public static Clip ninjadead;
+    public static Clip bossAttack;
+    public static Clip bossDead;
+
 
     public SoundManager() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 
@@ -26,8 +37,11 @@ public class SoundManager {
         menu.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/menu.wav")));
 
 
-        walking = AudioSystem.getClip();
-        walking.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/walking.wav")));
+        walkingForest = AudioSystem.getClip();
+        walkingForest.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/walkForest.wav")));
+
+        walkingDungeon = AudioSystem.getClip();
+        walkingDungeon.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/walkDungeon.wav")));
 
         forest = AudioSystem.getClip();
         forest.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/forest_bird.wav")));
@@ -57,7 +71,29 @@ public class SoundManager {
         selectButton = AudioSystem.getClip();
         selectButton.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/select_button.wav")));
 
+        dungeonfloor1 = AudioSystem.getClip();
+        dungeonfloor1.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/floor1.wav")));
 
+        dungeonfloor2 = AudioSystem.getClip();
+        dungeonfloor2.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/floor3.wav")));
+
+        dungeonfloor3 = AudioSystem.getClip();
+        dungeonfloor3.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/floor2.wav")));
+
+        dungeonfloor4 = AudioSystem.getClip();
+        dungeonfloor4.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/floor4.wav")));
+
+        ninjadead = AudioSystem.getClip();
+        ninjadead.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/ninjaDead.wav")));
+
+        pain = AudioSystem.getClip();
+        pain.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/pain.wav")));
+
+        bossAttack = AudioSystem.getClip();
+        bossAttack.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/bossAttack.wav")));
+
+        bossDead = AudioSystem.getClip();
+        bossDead.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/bossDead.wav")));
     }
 
     public static void MenuSound() {
@@ -80,9 +116,64 @@ public class SoundManager {
         forest.stop();
     }
 
+    public static void dungeonFloor1() {
+        dungeonfloor1.setFramePosition(0);
+        dungeonfloor1.start();
+        dungeonfloor1.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    public static void dungeonFloor1Close() {
+        dungeonfloor1.stop();
+    }
+
+    public static void dungeonFloor2() {
+        dungeonfloor2.setFramePosition(0);
+        dungeonfloor2.start();
+        dungeonfloor2.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    public static void dungeonFloor2Close() {
+        dungeonfloor2.stop();
+    }
+
+    public static void dungeonFloor3() {
+        dungeonfloor3.setFramePosition(0);
+        dungeonfloor3.start();
+        dungeonfloor3.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    public static void dungeonFloor3Close() {
+        dungeonfloor3.stop();
+    }
+
+    public static void dungeonFloor4() {
+        dungeonfloor4.setFramePosition(0);
+        dungeonfloor4.start();
+        dungeonfloor4.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    public static void dungeonFloor4Close() {
+        dungeonfloor4.stop();
+    }
+
     public static void HealSound() {
         heal.setFramePosition(0);
         heal.start();
+    }
+
+    public static void ninjaDeadSound() {
+        ninjadead.setFramePosition(0);
+        ninjadead.start();
+    }
+
+    public static void bossAttackSound() {
+        bossAttack.setFramePosition(0);
+        bossAttack.start();
+    }
+
+    public static void bossDeadSound() {
+        bossDead.setFramePosition(0);
+        bossDead.start();
     }
 
     public static void LifePotSound() {
@@ -110,18 +201,28 @@ public class SoundManager {
         attack.start();
     }
 
+
     public static void ChopSound() {
         chop.setFramePosition(0);
         chop.start();
     }
 
+    public static void painSound() {
+        pain.setFramePosition(0);
+        pain.start();
+    }
+
     public static void WalkForest() {
-        walking.start();
-        walking.loop(attack.LOOP_CONTINUOUSLY);
+        walkingForest.start();
+        walkingForest.loop(attack.LOOP_CONTINUOUSLY);
+    }
+
+    public static void WalkDungeon() {
+        walkingDungeon.start();
     }
 
     public static void WalkForestClose() {
-        walking.stop();
+        walkingForest.stop();
     }
 
     public static void rainSound() {
@@ -136,20 +237,76 @@ public class SoundManager {
     }
 
     public static void StartForest() {
+        dungeonFloor1Close();
         MenuSoundClose();
         ForestSound();
     }
 
-    public static void Walking() {
+    public static void DungeonEnter() {
+        dungeonFloor1();
+        dungeonFloor2Close();
+        dungeonFloor3Close();
+        dungeonFloor4Close();
+        ForestSoundClose();
+    }
+
+    public static void DungeonFloor2() {
+        dungeonFloor2();
+        dungeonFloor1Close();
+        dungeonFloor3Close();
+        dungeonFloor4Close();
+        ForestSoundClose();
+    }
+
+    public static void DungeonFloor3() {
+        dungeonFloor3();
+        dungeonFloor1Close();
+        dungeonFloor2Close();
+        dungeonFloor4Close();
+        ForestSoundClose();
+    }
+
+    public static void DungeonFloor4() {
+        dungeonFloor4();
+        dungeonFloor1Close();
+        dungeonFloor2Close();
+        dungeonFloor3Close();
+        ForestSoundClose();
+    }
+
+    public static void NinjaDead() {
+        ninjaDeadSound();
+    }
+    public static void BossDead(){
+        bossDeadSound();
+    }
+    public static void BossAttack(){
+        bossAttackSound();
+    }
+
+    public static void Walkingforest() {
         WalkForest();
+    }
+
+    public static void WalkingDungeon() {
+        WalkDungeon();
     }
 
     public static void Stand() {
         WalkForestClose();
+        walkingDungeon.stop();
     }
 
     public static void Attack() {
         AttackSound();
+    }
+
+    public static void Hitt() {
+        ChopSound();
+    }
+
+    public static void getDamage() {
+        painSound();
     }
 
     public static void GetHealthItem() {

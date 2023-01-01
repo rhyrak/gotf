@@ -1,6 +1,7 @@
 package entities;
 
 import main.Game;
+import states.Playing;
 import util.AssetManager;
 import util.Directions;
 import util.SaveData;
@@ -79,8 +80,12 @@ public class Player extends Entity {
     private void move() {
         int xSpeed = 0, ySpeed = 0;
         int playerSpeed = 2;
-        if (moveDown || moveUp || moveLeft || moveRight)
-            SoundManager.Walking();
+        if (moveDown || moveUp || moveLeft || moveRight) {
+            if (Playing.getSaveData().floor == 0)
+                SoundManager.Walkingforest();
+            else
+                SoundManager.WalkingDungeon();
+        }
         else
             SoundManager.Stand();
 
@@ -343,6 +348,9 @@ public class Player extends Entity {
     
     public void setInvincible(boolean bool) {
     	invincible = bool;
+    }
+    public boolean getAttacking(){
+        return attacking;
     }
     
 }

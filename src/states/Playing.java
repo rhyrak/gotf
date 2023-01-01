@@ -22,7 +22,7 @@ public class Playing extends State implements Serializable {
     private Player player;
     private EntityManager entityManager;
     private boolean paused = false;
-    private SaveData saveData;
+    private static SaveData saveData;
     private Level level;
     private Color overlay = new Color(0, 0, 0, 100);
     private int rainTick;
@@ -174,7 +174,17 @@ public class Playing extends State implements Serializable {
             case KeyEvent.VK_S -> player.setMoveDown(true);
             case KeyEvent.VK_D -> player.setMoveRight(true);
             case KeyEvent.VK_A -> player.setMoveLeft(true);
-            case KeyEvent.VK_E -> level.playerInteract();
+            case KeyEvent.VK_E -> {
+                level.playerInteract();
+                System.out.println(getSaveData().floor);
+                switch (getSaveData().floor){
+                    case 0-> SoundManager.StartForest();
+                    case 1-> SoundManager.DungeonEnter();
+                    case 2-> SoundManager.DungeonFloor2();
+                    case 3-> SoundManager.DungeonFloor3();
+                    case 4-> SoundManager.DungeonFloor4();
+                }
+            }
             case KeyEvent.VK_ESCAPE -> {
                 paused = !paused;
                 if (paused)
@@ -191,8 +201,6 @@ public class Playing extends State implements Serializable {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // if (e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_D   )
-        //  SoundManager.Stand();
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W -> player.setMoveUp(false);
             case KeyEvent.VK_S -> player.setMoveDown(false);
@@ -231,7 +239,7 @@ public class Playing extends State implements Serializable {
     public void mouseReleased(MouseEvent e) {
     }
 
-    public SaveData getSaveData() {
+    public static SaveData getSaveData() {
         return saveData;
     }
 }
