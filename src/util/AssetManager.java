@@ -9,6 +9,10 @@ public abstract class AssetManager {
 
     public static final String BUTTONS = "/assets/buttons.png";
     public static final String WINDOWS = "/assets/windows.png";
+    
+    public static final String HEALTH_BAR_BG = "/assets/hud/background.png";
+    public static final String HEALTH_BAR_RED = "/assets/hud/red.png";
+    public static final String BLUE_BAR = "/assets/hud/blue.png";
 
     public static final String PLAY_BTN = "/assets/ui/menu/start_btn.png";
     public static final String SETTINGS_BTN = "/assets/ui/menu/settings_btn.png";
@@ -28,10 +32,16 @@ public abstract class AssetManager {
     public static final String PLAYER_SPRITE = "/assets/player/player-sprite.png";
     public static final String BIG_SWORD_V = "/assets/player/big-sword-v.png";
     public static final String BIG_SWORD_H = "/assets/player/big-sword-h.png";
+    public static final String AXE_ONE_V = "/assets/player/axe1-v.png";
+    public static final String AXE_ONE_H = "/assets/player/axe1-h.png";
+    public static final String AXE_TWO_V = "/assets/player/axe2-v.png";
+    public static final String AXE_TWO_H = "/assets/player/axe2-h.png";
     public static final String HEART = "/assets/hud/heart.png";
     public static final String ITEM_SLOT = "/assets/hud/item-slot.png";
     public static final String LIFE_POT = "/assets/items/life-pot.png";
     public static final String MEDIPACK = "/assets/items/medipack.png";
+    public static final String DEF_SCROLL = "/assets/items/def-scroll.png";
+    public static final String SHIELD = "/assets/world/particles/shield.png";
 
     public static final String LIZARD = "/assets/monsters/lizard.png";
     public static final String RED_NINJA = "/assets/monsters/red-ninja.png";
@@ -51,10 +61,10 @@ public abstract class AssetManager {
     public static final String BOSS_ATTACK_LEFT = "/assets/boss/attacking-left.png";
     public static final String BOSS_DEATH_RIGHT = "/assets/boss/death.png";
     public static final String BOSS_DEATH_LEFT = "/assets/boss/death-left.png";
+    
     public static final String RAIN_P = "/assets/world/particles/rain.png";
     public static final String GRASS_P = "/assets/world/particles/grass.png";
     public static final String RAIN_FLOOR = "/assets/world/particles/rain-on-floor.png";
-
 
     public static final String FLOOR1_TS = "/assets/world/tilesets/first-floor.png";
     public static final String FLOOR2_TS = "/assets/world/tilesets/second-floor.png";

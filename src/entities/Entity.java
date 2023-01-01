@@ -11,15 +11,7 @@ public abstract class Entity {
 
     public abstract void update();
 
-    public enum state {
-        IDLE, RETURN, CHASE
-    }
-
     public Rectangle getHitbox() {
         return hitbox;
-    }
-
-    public void setHitbox(Rectangle hitbox) {
-        this.hitbox = hitbox;
     }
 }

@@ -24,8 +24,12 @@ public class EntityManager implements Serializable {
         for (int i = 0; i < 5; i++)
             entities.add(new ArrayList<>(10));
         entities.get(1).add(new RedNinja(this, new Rectangle(16*64,16*64,64,64)));
+        entities.get(1).add(new Item(this, Item.ItemType.DEF_SCROLL, 1000, 2300));
         entities.get(2).add(new Item(this,Item.ItemType.LIFEPOT, 1000, 1000));
         entities.get(3).add(new Item(this,Item.ItemType.MEDIPACK, 1000, 1500));
+        entities.get(4).add(new Item(this,Item.ItemType.MEDIPACK, 1000, 2300));
+        entities.get(4).add(new Item(this,Item.ItemType.LIFEPOT, 1050, 2300));
+        entities.get(4).add(new Boss(this, new Rectangle(16*64,16*64,64*5,64*5)));
     }
 
     public void update() {

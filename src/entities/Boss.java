@@ -16,6 +16,7 @@ import util.Directions;
 public class Boss extends Entity{
 	
     private BufferedImage[][] sprite;
+    private BufferedImage[] healthBar;
     private boolean moveUp, moveDown, moveRight, moveLeft;
     private Rectangle attackHitbox;
     private boolean attacking;
@@ -32,7 +33,7 @@ public class Boss extends Entity{
     public Boss(EntityManager entityManager, Rectangle hitbox) { 
     	this.entityManager = entityManager;
         this.hitbox = hitbox;
-        this.hitpoints = 10;
+        this.hitpoints = 600;
         this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
         this.direction = Directions.LEFT;
         loadSprite();
@@ -102,6 +103,12 @@ public class Boss extends Entity{
     	sprite[5][5] = temp.getSubimage(0, 0, 100, 100);
     	sprite[5][6] = temp.getSubimage(600, 100, 100, 99);
     	sprite[5][7]= temp.getSubimage(300, 100, 100, 99);
+    	//-------------------health bar----------------------
+    	healthBar = new BufferedImage[2];
+    	temp = AssetManager.getSprite(AssetManager.HEALTH_BAR_BG);
+    	healthBar[0] = temp.getSubimage(3, 0, 103,7);
+    	temp = AssetManager.getSprite(AssetManager.HEALTH_BAR_RED);
+    	healthBar[1] = temp.getSubimage(0, 0, 100, 7);
     }
     
 	@Override
@@ -110,10 +117,11 @@ public class Boss extends Entity{
 			return;
 		if(deathAnim)
 			if(moveRight)
-				g.drawImage(sprite[4][animIndex], hitbox.x + camOffsetX, hitbox.y + camOffsetY, hitbox.width, hitbox.height, null);
+				g.drawImage(sprite[4][animIndex], hitbox.x + entityManager.getCamOffsetX(), hitbox.y + entityManager.getCamOffsetY(), hitbox.width, hitbox.height, null);
 			else
-				g.drawImage(sprite[5][animIndex], hitbox.x + camOffsetX, hitbox.y + camOffsetY, hitbox.width, hitbox.height, null);
-		else
+				g.drawImage(sprite[5][animIndex], hitbox.x + entityManager.getCamOffsetX(), hitbox.y + entityManager.getCamOffsetY(), hitbox.width, hitbox.height, null);
+		else {
+		drawHealthBar(g);
 		switch(direction) {
 		case LEFT:
 			if(attacking)
@@ -156,6 +164,7 @@ public class Boss extends Entity{
 			}
 			break;
 		}
+	}
 		
 	}
 
@@ -172,10 +181,15 @@ public class Boss extends Entity{
 			animate();
 			updateCooldowns();
 			updateAttackHitbox();
-        	updateHitpoints();
-        	move();
+        		updateHitpoints();
+        		move();
 		}
 		
+	}
+	
+	private void drawHealthBar(Graphics g) {
+		g.drawImage(healthBar[0], hitbox.x + camOffsetX + 80, hitbox.y + camOffsetY + 20, 200, 14, null);
+		g.drawImage(healthBar[1], hitbox.x + camOffsetX + 80, hitbox.y + camOffsetY + 20, hitpoints/3, 14, null);
 	}
 	
 	private void animate() {
@@ -227,11 +241,11 @@ public class Boss extends Entity{
     	moveUp = false;
     	moveDown = false;
 		
-    	int xDiff = (int)entityManager.getPlayer().getHitbox().getCenterX() - (int)hitbox.getCenterX(); // x-axis distance between Boss and player
-    	int yDiff = (int)entityManager.getPlayer().getHitbox().getCenterY() - (int)hitbox.getCenterY(); // y-axis distance between Boss and player
+    	int xDiff = (int)entityManager.getPlayer().getHitbox().getCenterX() - (int)hitbox.getCenterX(); // x-axis distance between RedNinja and player
+    	int yDiff = (int)entityManager.getPlayer().getHitbox().getCenterY() - (int)hitbox.getCenterY(); // y-axis distance between RedNinja and player
     	
-    	int posDiffX = startX - hitbox.x; // x-axis distance between Boss' starting position and initial position
-    	int posDiffY = startY - hitbox.y; // y-axis distance between Boss' starting position and initial position
+    	int posDiffX = startX - hitbox.x; // x-axis distance between RedNinja's starting position and initial position
+    	int posDiffY = startY - hitbox.y; // y-axis distance between RedNinja's starting position and initial position
     	
     	if(Math.abs(xDiff) <= 450 && Math.abs(yDiff) <= 450) { // chase the player
     		
@@ -292,7 +306,7 @@ public class Boss extends Entity{
     private void updateCooldowns() {
         //works only if player is always in attack range,
     	//if player gets in and out of the attack range repeatedly,
-    	//Boss attacks without waiting to reset attack cooldown.
+    	//ninja attacks without waiting to reset attack cooldown.
     	if(attacking) {
         	if(attackCoolDown<300) //attack
         		attackCoolDown++;
@@ -338,10 +352,14 @@ public class Boss extends Entity{
     	        }
     	}
     	
-    	if(hitbox.contains(entityManager.getPlayer().getHitbox()) && entityManager.getPlayer().getAttacking()) 
-    		hitpoints--;
+    	if(entityManager.getPlayer().getAttackHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking()) 
+        	hitpoints--;
+        else if(entityManager.getPlayer().getHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking()) 
+        	hitpoints--;
+    	
     	if(hitpoints == 0) {
     		deathAnim = true;
+		entityManager.getPlayer().setExp(50);
     		animTick = 0;
     		animIndex = 0;
     	}	

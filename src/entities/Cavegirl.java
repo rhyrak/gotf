@@ -26,6 +26,7 @@ public class Cavegirl extends Entity{
     public boolean returning = false;
     private int attackCoolDown=0;
     private boolean isDead = false;
+    private BufferedImage[] healthBar;
     
     // constructor
     public Cavegirl(EntityManager entityManager, Rectangle hitbox) { 
@@ -33,7 +34,7 @@ public class Cavegirl extends Entity{
         this.hitbox = hitbox;
         this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
         this.direction = LEFT;
-        this.hitpoints = 5;
+        this.hitpoints = 250;
         loadSprite();
         startX = hitbox.x;
         startY = hitbox.y;
@@ -54,6 +55,11 @@ public class Cavegirl extends Entity{
         sprite[4][3] = temp.getSubimage(48, 64, 16, 16); // attack right
         sprite[8][0] = AssetManager.getSprite(AssetManager.CLUB_V);
         sprite[8][1] = AssetManager.getSprite(AssetManager.CLUB_H);
+        healthBar = new BufferedImage[2];
+    	temp = AssetManager.getSprite(AssetManager.HEALTH_BAR_BG);
+    	healthBar[0] = temp.getSubimage(3, 0, 103,7);
+    	temp = AssetManager.getSprite(AssetManager.HEALTH_BAR_RED);
+    	healthBar[1] = temp.getSubimage(0, 0, 100,7);
     }
     
     //checks and sets idle/chase situations
@@ -178,6 +184,7 @@ public class Cavegirl extends Entity{
     public void draw(Graphics g) {
     	if(isDead)
     		return;
+    	drawHealthBar(g);
         switch (direction) {
             case DOWN -> {
                 if (attacking) {
@@ -209,7 +216,11 @@ public class Cavegirl extends Entity{
             }
         }
     }
-
+    
+    private void drawHealthBar(Graphics g) {
+    	g.drawImage(healthBar[0], hitbox.x + camOffsetX + 7, hitbox.y + camOffsetY - 15, 50, 4, null);
+		g.drawImage(healthBar[1], hitbox.x + camOffsetX + 7, hitbox.y + camOffsetY - 15, hitpoints/5, 4, null);
+	}
     @Override
     public void update() {
     	if(isDead)
@@ -271,10 +282,14 @@ public class Cavegirl extends Entity{
         	entityManager.getPlayer().hitpoints--;
         	entityManager.getPlayer().setInvincible(true);
         }
-    	if(entityManager.getPlayer().getAttackHitbox().contains(hitbox)) 
+    	if(entityManager.getPlayer().getAttackHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking()) 
     		hitpoints--;
-    	if(hitpoints == 0)
-    		isDead = true;
+    	else if(entityManager.getPlayer().getHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking()) 
+    		hitpoints--;
+	if(hitpoints == 0) {
+		isDead = true;
+		entityManager.getPlayer().setExp(35);
+	}
     }
     
 }
