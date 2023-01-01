@@ -1,7 +1,5 @@
 package util;
 
-import entities.EntityManager;
-
 import java.io.Serializable;
 
 public class SaveData implements Serializable {

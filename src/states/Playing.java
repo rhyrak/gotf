@@ -27,11 +27,11 @@ public class Playing extends State implements Serializable {
     private Color overlay = new Color(0, 0, 0, 100);
     private int rainTick;
     private int floorPrev;
-    private Rectangle continueBtn, exitBtn;
+    private Rectangle continueBtn, exitBtn, soundSliderBg, soundSlider, musicSliderBg, musicSlider;
+    private BufferedImage pauseBg, sliderBgImg, sliderImg;
     private BufferedImage[] continueImg, exitImg;
     private int continueIndex = 0, exitIndex = 0;
     private int mouseX, mouseY;
-    private BufferedImage pauseBg;
 
     public Playing(SaveData saveData) {
         if (saveData == null)
@@ -52,6 +52,12 @@ public class Playing extends State implements Serializable {
         exitImg = new BufferedImage[2];
         exitImg[0] = AssetManager.getSprite(AssetManager.ESC_EXIT).getSubimage(0, 0, 311, 76);
         exitImg[1] = AssetManager.getSprite(AssetManager.ESC_EXIT).getSubimage(0, 122, 311, 76);
+        soundSliderBg = new Rectangle(Game.gameWidth / 2 - 75, 195 + Game.gameHeight / 4, 150, 10);
+        musicSliderBg = new Rectangle(Game.gameWidth / 2 - 75, 235 +Game.gameHeight / 4, 150, 10);
+        soundSlider = new Rectangle(Game.gameWidth / 2 - 75 + 40, 193 + Game.gameHeight / 4, 20, 14);
+        musicSlider = new Rectangle(Game.gameWidth / 2 - 75 + 70, 233 + Game.gameHeight / 4, 20, 14);
+        sliderBgImg = AssetManager.getSprite(AssetManager.SCROLL_BAR_2).getSubimage(16,38,48,4);
+        sliderImg = AssetManager.getSprite(AssetManager.SCROLL_BAR_2).getSubimage(0,4,16,8);
     }
 
     private void initGame() {
@@ -74,6 +80,10 @@ public class Playing extends State implements Serializable {
             g.drawImage(pauseBg, Game.gameWidth / 2 - 150, Game.gameHeight / 4 + 25, 300, 400, null);
             g.drawImage(continueImg[continueIndex], continueBtn.x, continueBtn.y, continueBtn.width, continueBtn.height, null);
             g.drawImage(exitImg[exitIndex], exitBtn.x, exitBtn.y, exitBtn.width, exitBtn.height, null);
+            g.drawImage(sliderBgImg, soundSliderBg.x, soundSliderBg.y, soundSliderBg.width,soundSliderBg.height,null);
+            g.drawImage(sliderBgImg, musicSliderBg.x, musicSliderBg.y, musicSliderBg.width,musicSliderBg.height,null);
+            g.drawImage(sliderImg, soundSlider.x, soundSlider.y, soundSlider.width,soundSlider.height,null);
+            g.drawImage(sliderImg, musicSlider.x, musicSlider.y, musicSlider.width,musicSlider.height,null);
         }
         if (Game.DEBUG_MODE) {
             g.setColor(overlay);
@@ -86,6 +96,10 @@ public class Playing extends State implements Serializable {
                 g.setColor(Color.MAGENTA);
                 g.drawRect(continueBtn.x, continueBtn.y, continueBtn.width, continueBtn.height);
                 g.drawRect(exitBtn.x, exitBtn.y, exitBtn.width, exitBtn.height);
+                g.drawRect(soundSliderBg.x, soundSliderBg.y, soundSliderBg.width, soundSliderBg.height);
+                g.drawRect(soundSlider.x, soundSlider.y, soundSlider.width, soundSlider.height);
+                g.drawRect(musicSliderBg.x, musicSliderBg.y, musicSliderBg.width, musicSliderBg.height);
+                g.drawRect(musicSlider.x, musicSlider.y, musicSlider.width, musicSlider.height);
             }
         }
     }

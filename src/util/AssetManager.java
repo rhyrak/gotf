@@ -40,6 +40,8 @@ public abstract class AssetManager {
     public static final String ITEM_SLOT = "/assets/hud/item-slot.png";
     public static final String LIFE_POT = "/assets/items/life-pot.png";
     public static final String MEDIPACK = "/assets/items/medipack.png";
+    public static final String DEF_SCROLL = "/assets/items/def-scroll.png";
+    public static final String SHIELD = "/assets/world/particles/shield.png";
 
     public static final String LIZARD = "/assets/monsters/lizard.png";
     public static final String RED_NINJA = "/assets/monsters/red-ninja.png";

@@ -21,11 +21,9 @@ public class Player extends Entity {
     private int maxHP;
     private Directions direction;
     private BufferedImage[][] sprite;
-    private BufferedImage[] hudHeart;
-    private BufferedImage itemSlot;
-    private BufferedImage lifePot;
-    private int lifePotCount = 5, medipackCount = 2;
-    private BufferedImage medipack;
+    private BufferedImage[] hudHeart, shield;
+    private BufferedImage itemSlot, lifePot, medipack, defScroll;
+    private int lifePotCount = 5, medipackCount = 2, defScrollCount = 1;
     private BufferedImage expBar;
     private BufferedImage expBarBg;
     private Color cdColor = new Color(222, 222, 222, 200);
@@ -36,6 +34,9 @@ public class Player extends Entity {
     public int invinceTick;
     private int exp = 0;
     private int playerLevel;
+    private boolean shielded;
+    private int shieldTick, shieldIndex;
+
     public Player(SaveData saveData) {
         this.hitbox = new Rectangle(saveData.playerX, saveData.playerY, 64, 64);
         this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
@@ -54,11 +55,11 @@ public class Player extends Entity {
         move();
         updateAttackHitbox();
         updateCooldowns();
-        if(invincible)
-        	invinceTick++;
-        if(invinceTick > 250) {
-        	invinceTick = 0;
-        	invincible = false;
+        if (invincible)
+            invinceTick++;
+        if (invinceTick > 250) {
+            invinceTick = 0;
+            invincible = false;
         }
     }
 
@@ -77,6 +78,17 @@ public class Player extends Entity {
             animIndex++;
             if (animIndex >= 4)
                 animIndex = 0;
+        }
+        if (shielded) {
+            shieldTick++;
+            if (shieldTick >= 1000) {
+                shielded = false;
+            }
+            if (shieldTick % 15 == 0) {
+                shieldIndex--;
+                if (shieldIndex == -1)
+                    shieldIndex = 5;
+            }
         }
     }
 
@@ -190,6 +202,8 @@ public class Player extends Entity {
                     g.drawImage(sprite[3][animIndex], Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2, hitbox.width, hitbox.height, null);
             }
         }
+        if (shielded)
+            g.drawImage(shield[shieldIndex], Game.gameWidth / 2 - hitbox.width / 2 - 10, Game.gameHeight / 2 - hitbox.height / 2 - 10, hitbox.width + 20, hitbox.height + 20, null);
         // FIXME
         if (invincible)
             g.drawString("OOF", Game.gameWidth / 2 - hitbox.width / 2, Game.gameHeight / 2 - hitbox.height / 2);
@@ -197,7 +211,7 @@ public class Player extends Entity {
 
     private void drawHUD(Graphics g) {
         // hitpoints
-        for (int i = 0; i < maxHP/4; i++)
+        for (int i = 0; i < maxHP / 4; i++)
             if (hitpoints - i * 4 >= 4)
                 g.drawImage(hudHeart[0], 48 + 36 * i, 48, 32, 32, null);
             else if (hitpoints - i * 4 > 0)
@@ -227,8 +241,17 @@ public class Player extends Entity {
                 g.setColor(Color.WHITE);
                 g.drawString(medipackCount + "", 138, 140);
             }
+            if (i == 2) {
+                g.drawImage(defScroll, 168, 108, 24, 24, null);
+                if (defScrollCount == 0) {
+                    g.setColor(cdColor);
+                    g.fillRect(168, 108, 24, 24);
+                }
+                g.setColor(Color.WHITE);
+                g.drawString(defScrollCount + "", 200, 140);
+            }
         }
-        
+
         //EXP
         g.drawImage(expBarBg, 48, 24, 100, 7, null);
         g.drawImage(expBar, 48, 24, exp, 7, null);
@@ -249,11 +272,19 @@ public class Player extends Entity {
         sprite[4][3] = temp.getSubimage(48, 64, 16, 16); // attack right
         sprite[8][0] = AssetManager.getSprite(AssetManager.BIG_SWORD_V);
         sprite[8][1] = AssetManager.getSprite(AssetManager.BIG_SWORD_H);
-        
+
         hudHeart = new BufferedImage[5];
         temp = AssetManager.getSprite(AssetManager.HEART);
         for (int i = 0; i < 5; i++)
             hudHeart[i] = temp.getSubimage(16 * i, 0, 16, 16);
+        shield = new BufferedImage[6];
+        temp = AssetManager.getSprite(AssetManager.SHIELD);
+        for (int i = 0; i < 6; i++)
+            shield[i] = temp.getSubimage(24 * i, 0, 24, 26);
+        itemSlot = AssetManager.getSprite(AssetManager.ITEM_SLOT);
+        lifePot = AssetManager.getSprite(AssetManager.LIFE_POT);
+        medipack = AssetManager.getSprite(AssetManager.MEDIPACK);
+        defScroll = AssetManager.getSprite(AssetManager.DEF_SCROLL);
         this.itemSlot = AssetManager.getSprite(AssetManager.ITEM_SLOT);
         this.lifePot = AssetManager.getSprite(AssetManager.LIFE_POT);
         this.medipack = AssetManager.getSprite(AssetManager.MEDIPACK);
@@ -321,6 +352,13 @@ public class Player extends Entity {
                 medipackCount--;
                 hitpoints += 4;
             }
+        } else if (item == 3 && shieldTick == 0) {
+            if (defScrollCount > 0) {
+                defScrollCount--;
+                shieldTick = 0;
+                shieldIndex = 5;
+                shielded = true;
+            }
         }
         if (hitpoints > maxHP)
             hitpoints = maxHP;
@@ -349,19 +387,19 @@ public class Player extends Entity {
     public void setLevel(Level level) {
         this.level = level;
     }
-    
+
     public boolean getInvincible() {
-    	return invincible;
+        return invincible;
     }
-    
+
     public void setInvincible(boolean bool) {
-    	invincible = bool;
+        invincible = bool;
     }
-    
+
     public boolean getAttacking() {
     	return attacking;
     }
-    
+
     private void changeWeapon() {
     	if(playerLevel == 1) {
         	sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_ONE_V);
@@ -380,5 +418,5 @@ public class Player extends Entity {
     		this.exp = this.exp%100;
     	}
     }
-    
+
 }

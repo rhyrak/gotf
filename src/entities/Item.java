@@ -14,7 +14,7 @@ public class Item extends Entity {
     private boolean pickedUp = false;
 
     public enum ItemType {
-        LIFEPOT, MEDIPACK
+        LIFEPOT, MEDIPACK, DEF_SCROLL
     }
 
     public Item(EntityManager entityManager, ItemType type, int x, int y) {
@@ -28,6 +28,7 @@ public class Item extends Entity {
         switch (type) {
             case LIFEPOT -> img = AssetManager.getSprite(AssetManager.LIFE_POT);
             case MEDIPACK -> img = AssetManager.getSprite(AssetManager.MEDIPACK);
+            case DEF_SCROLL -> img = AssetManager.getSprite(AssetManager.DEF_SCROLL);
         }
     }
 
