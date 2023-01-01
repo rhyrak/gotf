@@ -285,12 +285,14 @@ public class RedNinja extends Entity{
         	entityManager.getPlayer().hitpoints--;
         	entityManager.getPlayer().setInvincible(true);
         }
-    if(entityManager.getPlayer().getAttackHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking()) 
-    	hitpoints--;
-    else if(entityManager.getPlayer().getHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking()) 
-    	hitpoints--;
-	if(hitpoints == 0)
+    	if(entityManager.getPlayer().getAttackHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking()) 
+    		hitpoints--;
+    	else if(entityManager.getPlayer().getHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking()) 
+    		hitpoints--;
+	if(hitpoints == 0) {
     		isDead = true;
+    		entityManager.getPlayer().setExp(15);
+    	}
     }
     
 }
