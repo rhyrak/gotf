@@ -29,6 +29,7 @@ public class SoundManager {
     public static Clip ninjadead;
     public static Clip bossAttack;
     public static Clip bossDead;
+    public static Clip ninjaAttack;
 
 
     public SoundManager() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -94,6 +95,10 @@ public class SoundManager {
 
         bossDead = AudioSystem.getClip();
         bossDead.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/bossDead.wav")));
+
+        ninjaAttack = AudioSystem.getClip();
+        ninjaAttack.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/ninjaAttack.wav")));
+
     }
 
     public static void MenuSound() {
@@ -169,6 +174,11 @@ public class SoundManager {
     public static void bossAttackSound() {
         bossAttack.setFramePosition(0);
         bossAttack.start();
+
+    }
+    public static void ninjaAttackSound(){
+        ninjaAttack.setFramePosition(0);
+        ninjaAttack.start();
     }
 
     public static void bossDeadSound() {
@@ -220,6 +230,9 @@ public class SoundManager {
     public static void WalkDungeon() {
         walkingDungeon.start();
         walkingDungeon.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+    public static void WalkingDungeonClose(){
+        walkingDungeon.stop();
     }
 
     public static void WalkForestClose() {
@@ -282,14 +295,17 @@ public class SoundManager {
         bossDeadSound();
     }
     public static void BossAttack(){
+        painSound();
         bossAttackSound();
     }
 
     public static void Walkingforest() {
+        WalkingDungeonClose();
         WalkForest();
     }
 
     public static void WalkingDungeon() {
+        WalkForestClose();
         WalkDungeon();
     }
 
@@ -307,6 +323,10 @@ public class SoundManager {
     }
 
     public static void getDamage() {
+        painSound();
+    }
+    public static void NinjaAttack(){
+        ninjaAttackSound();
         painSound();
     }
 
