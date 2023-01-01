@@ -83,8 +83,10 @@ public class RedNinja extends Entity {
 
             //set attacking
             if (Math.abs(entityManager.getPlayer().getHitbox().getCenterX() - hitbox.getCenterX()) <= 80 &&
-                    Math.abs(Math.abs(entityManager.getPlayer().getHitbox().getCenterY() - hitbox.getCenterY())) <= 80)
+                    Math.abs(Math.abs(entityManager.getPlayer().getHitbox().getCenterY() - hitbox.getCenterY())) <= 80){
                 attacking = true;
+                SoundManager.DogWoof();
+        }
             else
                 attacking = false;
 

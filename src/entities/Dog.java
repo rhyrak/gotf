@@ -106,6 +106,10 @@ public class Dog extends Entity {
     private void move() {
         int xSpeed = 0, ySpeed = 0;
 
+        //if (moveDown || moveUp||moveLeft||moveRight)
+
+       // else
+
         if (moveUp)
             ySpeed -= speed;
         if (moveDown)
@@ -144,7 +148,7 @@ public class Dog extends Entity {
         else
             speed = 1;
 
-        if (speed==0)
+        if (speed == 0)
             return;
         //following
         if (xDiff == 0 && yDiff < 0)

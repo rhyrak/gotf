@@ -251,8 +251,10 @@ public class Boss extends Entity {
 
             //set attacking
             if (Math.abs(entityManager.getPlayer().getHitbox().getCenterX() - hitbox.getCenterX()) <= 280 &&
-                    Math.abs(Math.abs(entityManager.getPlayer().getHitbox().getCenterY() - hitbox.getCenterY())) <= 280)
+                    Math.abs(Math.abs(entityManager.getPlayer().getHitbox().getCenterY() - hitbox.getCenterY())) <= 280) {
                 attacking = true;
+                SoundManager.DogWoof();
+            }
             else
                 attacking = false;
 

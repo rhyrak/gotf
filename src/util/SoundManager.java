@@ -30,13 +30,14 @@ public class SoundManager {
     public static Clip bossAttack;
     public static Clip bossDead;
     public static Clip ninjaAttack;
+    public static Clip dogSound;
+
 
 
     public SoundManager() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 
         menu = AudioSystem.getClip();
         menu.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/menu.wav")));
-
 
         walkingForest = AudioSystem.getClip();
         walkingForest.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/walkForest.wav")));
@@ -99,6 +100,9 @@ public class SoundManager {
         ninjaAttack = AudioSystem.getClip();
         ninjaAttack.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/ninjaAttack.wav")));
 
+        dogSound = AudioSystem.getClip();
+        dogSound.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/dogSound.wav")));
+
     }
 
     public static void MenuSound() {
@@ -159,6 +163,10 @@ public class SoundManager {
 
     public static void dungeonFloor4Close() {
         dungeonfloor4.stop();
+    }
+    public static void DogSound(){
+        dogSound.setFramePosition(0);
+        dogSound.start();
     }
 
     public static void HealSound() {
@@ -320,6 +328,9 @@ public class SoundManager {
 
     public static void Hitt() {
         ChopSound();
+    }
+    public static  void DogWoof(){
+        DogSound();
     }
 
     public static void NinjaAttack(){
