@@ -42,7 +42,10 @@ public abstract class AssetManager {
     public static final String MEDIPACK = "/assets/items/medipack.png";
     public static final String DEF_SCROLL = "/assets/items/def-scroll.png";
     public static final String SHIELD = "/assets/world/particles/shield.png";
-
+    
+    public static final String ANIMALS = "/assets/player/spritesheet.png";
+    public static final String ANIMALS_LEFT = "/assets/player/spritesheet-left.png";
+    
     public static final String LIZARD = "/assets/monsters/lizard.png";
     public static final String RED_NINJA = "/assets/monsters/red-ninja.png";
     public static final String CAVEGIRL = "/assets/monsters/cavegirl.png";
