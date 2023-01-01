@@ -27,8 +27,8 @@ public class Dungeon extends Level {
         this.player.getMoveHitbox().x = 902;
         this.player.getMoveHitbox().y = 2582;
         this.playing = playing;
-        this.prevFloor = new Rectangle(832,2528,192,192);
-        this.nextFloor = new Rectangle(832,448,192,192);
+        this.prevFloor = new Rectangle(832, 2528, 192, 192);
+        this.nextFloor = new Rectangle(832, 448, 192, 192);
         initTileSet();
     }
 
@@ -64,21 +64,28 @@ public class Dungeon extends Level {
         for (int layer = 0; layer < DungeonData.arr.length; layer++) {
             for (int y = 0; y < DungeonData.arr[layer].length; y++) {
                 for (int x = 0; x < DungeonData.arr[layer][y].length; x++) {
-                    if (DungeonData.arr[layer][y][x] > 0)
-                        switch (layer) {
-                            case 0 ->
-                                    g.drawImage(wall, x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                            case 1 ->
-                                    g.drawImage(floor[DungeonData.arr[layer][y][x] - 374], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                            case 2 ->
-                                    g.drawImage(doorLadder[DungeonData.arr[layer][y][x] - 946], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                    if ((x + 1) * TILE_SIZE + camOffsetX > 0 &&
+                            x * TILE_SIZE + camOffsetX < Game.gameWidth &&
+                            (y + 1) * TILE_SIZE + camOffsetY > 0 &&
+                            y * TILE_SIZE + camOffsetY < Game.gameHeight
+                    ) {
+                        if (DungeonData.arr[layer][y][x] > 0) {
+                            switch (layer) {
+                                case 0 ->
+                                        g.drawImage(wall, x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                                case 1 ->
+                                        g.drawImage(floor[DungeonData.arr[layer][y][x] - 374], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                                case 2 ->
+                                        g.drawImage(doorLadder[DungeonData.arr[layer][y][x] - 946], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+                            }
                         }
+                    }
                 }
             }
         }
         if (playing.getSaveData().floor != 4) {
-            g.drawImage(doorLadder[38], 14 * TILE_SIZE + camOffsetX, 8 * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE,null);
-            g.drawImage(doorLadder[52], 14 * TILE_SIZE + camOffsetX, 9 * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE,null);
+            g.drawImage(doorLadder[38], 14 * TILE_SIZE + camOffsetX, 8 * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+            g.drawImage(doorLadder[52], 14 * TILE_SIZE + camOffsetX, 9 * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
         }
         if (Game.DEBUG_MODE) {
             g.drawRect(prevFloor.x + camOffsetX, prevFloor.y + camOffsetY, prevFloor.width, prevFloor.height);
@@ -94,7 +101,7 @@ public class Dungeon extends Level {
 
     @Override
     public boolean canMove(int x, int y) {
-        if (x<768 || x>2496 || y>2816 || y<448)
+        if (x < 768 || x > 2496 || y > 2816 || y < 448)
             return false;
         return true;
     }
