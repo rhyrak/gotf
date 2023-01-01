@@ -260,10 +260,14 @@ public class Player extends Entity {
                 g.drawString(defScrollCount + "", 200, 140);
             }
         }
-
         //EXP
+        g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
+        g.drawString(Integer.toString(playerLevel), 35, 33);
+        g.drawString(Integer.toString(playerLevel+1), 151, 33);
         g.drawImage(expBarBg, 48, 24, 100, 7, null);
         g.drawImage(expBar, 48, 24, exp, 7, null);
+        g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 10));
+        g.drawString(Integer.toString(exp) + "/100", 85, 30);
     }
 
     private void loadSprite() {
