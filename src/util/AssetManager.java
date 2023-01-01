@@ -9,6 +9,9 @@ public abstract class AssetManager {
 
     public static final String BUTTONS = "/assets/buttons.png";
     public static final String WINDOWS = "/assets/windows.png";
+    
+    public static final String HEALTH_BAR_BG = "/assets/hud/background.png";
+    public static final String HEALTH_BAR_RED = "/assets/hud/red.png";
 
     public static final String PLAY_BTN = "/assets/ui/menu/start_btn.png";
     public static final String SETTINGS_BTN = "/assets/ui/menu/settings_btn.png";
@@ -44,7 +47,14 @@ public abstract class AssetManager {
     public static final String BONE_H = "/assets/weapons/bone_h.png";
     public static final String KATANA_V = "/assets/weapons/katana_v.png";
     public static final String KATANA_H = "/assets/weapons/katana_h.png";
-
+    
+    public static final String BOSS_WALK_RIGHT = "/assets/boss/idle2.png";
+    public static final String BOSS_WALK_LEFT = "/assets/boss/idle3.png";
+    public static final String BOSS_ATTACK_RIGHT = "/assets/boss/attacking.png";
+    public static final String BOSS_ATTACK_LEFT = "/assets/boss/attacking-left.png";
+    public static final String BOSS_DEATH_RIGHT = "/assets/boss/death.png";
+    public static final String BOSS_DEATH_LEFT = "/assets/boss/death-left.png";
+    
     public static final String RAIN_P = "/assets/world/particles/rain.png";
     public static final String GRASS_P = "/assets/world/particles/grass.png";
     public static final String RAIN_FLOOR = "/assets/world/particles/rain-on-floor.png";
