@@ -364,7 +364,7 @@ public class Player extends Entity {
                 medipackCount--;
                 hitpoints += 4;
             }
-        } else if (item == 3 && shieldTick == 0) {
+        } else if (item == 3 && !shielded) {
             if (defScrollCount > 0) {
                 defScrollCount--;
                 shieldTick = 0;
@@ -417,6 +417,10 @@ public class Player extends Entity {
 
     public boolean getAttacking() {
         return attacking;
+    }
+
+    public boolean isShielded() {
+        return shielded;
     }
 
     private void changeWeapon() {

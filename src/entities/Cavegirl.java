@@ -273,12 +273,16 @@ public class Cavegirl extends Entity{
     
     private void updateHitpoints() {
     	if(attacking && attackHitbox.contains(entityManager.getPlayer().getHitbox()) &&
-    		entityManager.getPlayer().getInvincible() == false) {
+    		entityManager.getPlayer().getInvincible() == false &&
+                entityManager.getPlayer().isShielded() == false
+        ) {
     		entityManager.getPlayer().hitpoints--;
     		entityManager.getPlayer().setInvincible(true);
     	}
 	if(attacking && hitbox.contains(entityManager.getPlayer().getHitbox()) &&
-        	entityManager.getPlayer().getInvincible() == false) {
+        	entityManager.getPlayer().getInvincible() == false &&
+            entityManager.getPlayer().isShielded() == false
+    ) {
         	entityManager.getPlayer().hitpoints--;
         	entityManager.getPlayer().setInvincible(true);
         }

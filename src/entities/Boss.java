@@ -344,12 +344,16 @@ public class Boss extends Entity {
     private void updateHitpoints() {
         if (attacking) {
             if (attackHitbox.contains(entityManager.getPlayer().getHitbox()) &&
-                    entityManager.getPlayer().getInvincible() == false) {
+                    entityManager.getPlayer().getInvincible() == false &&
+                    entityManager.getPlayer().isShielded() == false
+            ) {
                 SoundManager.BossAttack();
                 entityManager.getPlayer().hitpoints--;
                 entityManager.getPlayer().setInvincible(true);
             } else if (hitbox.contains(entityManager.getPlayer().getHitbox()) &&
-                    entityManager.getPlayer().getInvincible() == false) {
+                    entityManager.getPlayer().getInvincible() == false &&
+                    entityManager.getPlayer().isShielded() == false
+            ) {
                 SoundManager.BossAttack();
                 entityManager.getPlayer().hitpoints--;
                 entityManager.getPlayer().setInvincible(true);
