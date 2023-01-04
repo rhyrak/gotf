@@ -173,6 +173,9 @@ public class Playing extends State implements Serializable {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             saveData.playerX = player.getHitbox().x;
             saveData.playerY = player.getHitbox().y;
+            saveData.XP = player.getExp();
+            saveData.HP = player.getHP();
+            saveData.maxHP = player.getMaxHP();
             oos.writeObject(saveData);
             oos.flush();
             oos.close();
