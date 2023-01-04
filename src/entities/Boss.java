@@ -363,8 +363,10 @@ public class Boss extends Entity {
         if (entityManager.getPlayer().getAttackHitbox().intersects(hitbox) && entityManager.getPlayer().isAttacking()) {
             SoundManager.Hitt();
             hitpoints--;
-        } else if (entityManager.getPlayer().getHitbox().intersects(hitbox) && entityManager.getPlayer().isAttacking())
+        } else if (entityManager.getPlayer().getHitbox().intersects(hitbox) && entityManager.getPlayer().isAttacking()) {
+            SoundManager.Hitt();
             hitpoints--;
+        }
         if (hitpoints == 0) {
             SoundManager.BossDead();
             deathAnim = true;

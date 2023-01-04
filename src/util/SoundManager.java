@@ -31,8 +31,13 @@ public class SoundManager {
     public static Clip bossDead;
     public static Clip ninjaAttack;
     public static Clip dogSound;
-
-
+    public static Clip cavegirlAttack;
+    public static Clip cavegirlDead;
+    public static Clip cavemanAttack;
+    public static Clip cavemanDead;
+    public static Clip shield;
+    public static Clip skeletonAttack;
+    public static Clip skeletonDead;
 
     public SoundManager() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 
@@ -103,13 +108,44 @@ public class SoundManager {
         dogSound = AudioSystem.getClip();
         dogSound.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/dogSound.wav")));
 
+
+        cavegirlAttack = AudioSystem.getClip();
+        cavegirlAttack.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/cavegirlAttack.wav")));
+
+        cavegirlDead = AudioSystem.getClip();
+        cavegirlDead.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/cavegirlDead.wav")));
+
+        cavemanAttack = AudioSystem.getClip();
+        cavemanAttack.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/cavemanAttack.wav")));
+
+        cavemanDead = AudioSystem.getClip();
+        cavemanDead.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/cavemanDead.wav")));
+
+        skeletonAttack = AudioSystem.getClip();
+        skeletonAttack.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/skeletonAttack.wav")));
+
+        skeletonDead = AudioSystem.getClip();
+        skeletonDead.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/skeletonDead.wav")));
+
+        shield = AudioSystem.getClip();
+        shield.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/shield.wav")));
+
     }
 
     public static void MenuSound() {
         menu.setFramePosition(0);
         menu.start();
         menu.loop(Clip.LOOP_CONTINUOUSLY);
+
     }
+
+    public static void shieldSound() {
+        shield.loop(6);
+        shield.setFramePosition(0);
+        shield.start();
+
+    }
+
 
     public static void MenuSoundClose() {
         menu.stop();
@@ -164,7 +200,8 @@ public class SoundManager {
     public static void dungeonFloor4Close() {
         dungeonfloor4.stop();
     }
-    public static void DogSound(){
+
+    public static void DogSound() {
         dogSound.setFramePosition(0);
         dogSound.start();
     }
@@ -184,9 +221,38 @@ public class SoundManager {
         bossAttack.start();
 
     }
-    public static void ninjaAttackSound(){
+
+    public static void ninjaAttackSound() {
         ninjaAttack.setFramePosition(0);
         ninjaAttack.start();
+    }
+
+    public static void skeletonAttackSound() {
+        skeletonAttack.setFramePosition(0);
+        skeletonAttack.start();
+    }
+
+    public static void cavegirlAttackSound() {
+        cavegirlAttack.setFramePosition(0);
+        cavegirlAttack.start();
+    }
+
+    public static void cavemanAttackSound() {
+        cavemanAttack.setFramePosition(0);
+        cavemanAttack.start();
+    }
+
+    public static void cavegirlDeadSound() {
+        cavegirlDead.setFramePosition(0);
+        cavegirlDead.start();
+    }
+    public static void cavemanDeadSound() {
+        cavemanDead.setFramePosition(0);
+        cavemanDead.start();
+    }
+    public static void skeletonDeadSound() {
+        skeletonDead.setFramePosition(0);
+        skeletonDead.start();
     }
 
     public static void bossDeadSound() {
@@ -239,7 +305,8 @@ public class SoundManager {
         walkingDungeon.start();
         walkingDungeon.loop(Clip.LOOP_CONTINUOUSLY);
     }
-    public static void WalkingDungeonClose(){
+
+    public static void WalkingDungeonClose() {
         walkingDungeon.stop();
     }
 
@@ -299,12 +366,36 @@ public class SoundManager {
     public static void NinjaDead() {
         ninjaDeadSound();
     }
-    public static void BossDead(){
+
+    public static void BossDead() {
         bossDeadSound();
     }
-    public static void BossAttack(){
+
+    public static void CavegirlDead() {
+        cavegirlDeadSound();
+    }
+
+    public static void SkeletonDead() {
+        skeletonDeadSound();
+    }
+
+    public static void BossAttack() {
         painSound();
         bossAttackSound();
+    }
+
+    public static void CavegirlAttack() {
+        painSound();
+        cavegirlAttackSound();
+    }
+
+    public static void CavemanAttack() {
+        painSound();
+        cavemanAttackSound();
+    }
+
+    public static void CavemanDead() {
+        cavemanDeadSound();
     }
 
     public static void Walkingforest() {
@@ -329,12 +420,18 @@ public class SoundManager {
     public static void Hitt() {
         ChopSound();
     }
-    public static  void DogWoof(){
+
+    public static void DogWoof() {
         DogSound();
     }
 
-    public static void NinjaAttack(){
+    public static void NinjaAttack() {
         ninjaAttackSound();
+        painSound();
+    }
+
+    public static void SkeletonAttack() {
+        skeletonAttackSound();
         painSound();
     }
 
@@ -348,6 +445,10 @@ public class SoundManager {
 
     public static void UseMedPac() {
         MedPacSound();
+    }
+
+    public static void UseShield() {
+        shieldSound();
     }
 
     public static void RainStart() {

@@ -366,6 +366,7 @@ public class Player extends Entity {
             }
         } else if (item == 3 && !shielded) {
             if (defScrollCount > 0) {
+                SoundManager.UseShield();
                 defScrollCount--;
                 shieldTick = 0;
                 shieldIndex = 5;
