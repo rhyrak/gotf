@@ -43,10 +43,10 @@ public class Player extends Entity {
         this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
         this.moveHitbox = new Rectangle(hitbox.x + 2, hitbox.y + 32, hitbox.width - 4, hitbox.height - 32);
         this.direction = RIGHT;
-        this.hitpoints = 4;
-        // TODO: determine max hp from saveData
-        this.maxHP = 12;
-        this.playerLevel = 0;
+        this.maxHP = saveData.HP;
+        this.hitpoints = saveData.HP;
+        this.playerLevel = saveData.level;
+        this.exp = saveData.XP;
         loadSprite();
     }
 
@@ -304,6 +304,7 @@ public class Player extends Entity {
         this.expBar = temp.getSubimage(0, 0, 100, 7);
         temp = AssetManager.getSprite(AssetManager.HEALTH_BAR_BG);
         this.expBarBg = temp.getSubimage(5, 0, 100, 7);
+        changeWeapon();
     }
 
     private void drawHitbox(Graphics g) {
@@ -445,4 +446,15 @@ public class Player extends Entity {
         }
     }
 
+    public int getExp() {
+        return exp;
+    }
+
+    public int getHP() {
+        return hitpoints;
+    }
+
+    public int getMaxHP() {
+        return maxHP;
+    }
 }
