@@ -344,14 +344,14 @@ public class Boss extends Entity {
     private void updateHitpoints() {
         if (attacking) {
             if (attackHitbox.contains(entityManager.getPlayer().getHitbox()) &&
-                    entityManager.getPlayer().getInvincible() == false &&
+                    entityManager.getPlayer().isInvincible() == false &&
                     entityManager.getPlayer().isShielded() == false
             ) {
                 SoundManager.BossAttack();
                 entityManager.getPlayer().hitpoints--;
                 entityManager.getPlayer().setInvincible(true);
             } else if (hitbox.contains(entityManager.getPlayer().getHitbox()) &&
-                    entityManager.getPlayer().getInvincible() == false &&
+                    entityManager.getPlayer().isInvincible() == false &&
                     entityManager.getPlayer().isShielded() == false
             ) {
                 SoundManager.BossAttack();
@@ -360,15 +360,15 @@ public class Boss extends Entity {
             }
         }
 
-        if (entityManager.getPlayer().getAttackHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking()) {
+        if (entityManager.getPlayer().getAttackHitbox().intersects(hitbox) && entityManager.getPlayer().isAttacking()) {
             SoundManager.Hitt();
             hitpoints--;
-        } else if (entityManager.getPlayer().getHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking())
+        } else if (entityManager.getPlayer().getHitbox().intersects(hitbox) && entityManager.getPlayer().isAttacking())
             hitpoints--;
         if (hitpoints == 0) {
             SoundManager.BossDead();
             deathAnim = true;
-            entityManager.getPlayer().setExp(50);
+            entityManager.getPlayer().addExp(50);
             animTick = 0;
             animIndex = 0;
         }

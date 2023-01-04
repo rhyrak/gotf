@@ -278,7 +278,7 @@ public class RedNinja extends Entity {
 
     private void updateHitpoints() {
         if (attacking && attackHitbox.contains(entityManager.getPlayer().getHitbox()) &&
-                entityManager.getPlayer().getInvincible() == false &&
+                entityManager.getPlayer().isInvincible() == false &&
                 entityManager.getPlayer().isShielded() == false
         ) {
             SoundManager.NinjaAttack();
@@ -286,24 +286,24 @@ public class RedNinja extends Entity {
             entityManager.getPlayer().setInvincible(true);
         }
         if (attacking && hitbox.contains(entityManager.getPlayer().getHitbox()) &&
-                entityManager.getPlayer().getInvincible() == false &&
+                entityManager.getPlayer().isInvincible() == false &&
                 entityManager.getPlayer().isShielded() == false
         ) {
             SoundManager.NinjaAttack();
             entityManager.getPlayer().hitpoints--;
             entityManager.getPlayer().setInvincible(true);
         }
-        if (entityManager.getPlayer().getAttackHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking()) {
+        if (entityManager.getPlayer().getAttackHitbox().intersects(hitbox) && entityManager.getPlayer().isAttacking()) {
             SoundManager.Hitt();
             hitpoints--;
-        } else if (entityManager.getPlayer().getHitbox().intersects(hitbox) && entityManager.getPlayer().getAttacking()) {
+        } else if (entityManager.getPlayer().getHitbox().intersects(hitbox) && entityManager.getPlayer().isAttacking()) {
             SoundManager.Hitt();
             hitpoints--;
         }
         if (hitpoints == 0) {
             SoundManager.NinjaDead();
             isDead = true;
-            entityManager.getPlayer().setExp(15);
+            entityManager.getPlayer().addExp(15);
         }
     }
 

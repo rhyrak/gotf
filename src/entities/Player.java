@@ -407,7 +407,7 @@ public class Player extends Entity {
         this.level = level;
     }
 
-    public boolean getInvincible() {
+    public boolean isInvincible() {
         return invincible;
     }
 
@@ -415,7 +415,7 @@ public class Player extends Entity {
         invincible = bool;
     }
 
-    public boolean getAttacking() {
+    public boolean isAttacking() {
         return attacking;
     }
 
@@ -433,10 +433,12 @@ public class Player extends Entity {
         }
     }
 
-    public void setExp(int exp) {
+    public void addExp(int exp) {
         this.exp += exp;
         if (this.exp >= 100) {
-            this.playerLevel++;
+            playerLevel++;
+            maxHP += 4;
+            hitpoints += 4;
             changeWeapon();
             this.exp = this.exp % 100;
         }
