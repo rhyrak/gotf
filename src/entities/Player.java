@@ -427,9 +427,11 @@ public class Player extends Entity {
 
     private void changeWeapon() {
         if (playerLevel == 1) {
+            SoundManager.LevelUp();
             sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_ONE_V);
             sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_ONE_H);
         } else if (playerLevel == 2) {
+            SoundManager.LevelUp();
             sprite[8][0] = AssetManager.getSprite(AssetManager.AXE_TWO_V);
             sprite[8][1] = AssetManager.getSprite(AssetManager.AXE_TWO_H);
         }

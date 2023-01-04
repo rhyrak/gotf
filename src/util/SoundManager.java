@@ -5,7 +5,6 @@ import states.Settings;
 import javax.sound.sampled.Clip;
 import java.io.File;
 import javax.sound.sampled.*;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.io.IOException;
 
 import static util.WeatherTime.raining;
@@ -46,7 +45,6 @@ public class SoundManager {
     public SoundManager() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 
 
-
         menu = AudioSystem.getClip();
         menu.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/menu.wav")));
         musıc = (FloatControl) menu.getControl(FloatControl.Type.MASTER_GAIN);
@@ -78,7 +76,7 @@ public class SoundManager {
         medipac.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/med_pac.wav")));
 
         levelUp = AudioSystem.getClip();
-        levelUp.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/level_up.wav")));
+        levelUp.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/levelUp.wav")));
 
         rain = AudioSystem.getClip();
         rain.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/rain.wav")));
@@ -285,7 +283,7 @@ public class SoundManager {
         selectButton.start();
     }
 
-    public static void LevelUp() {
+    public static void levelup() {
         levelUp.setFramePosition(0);
         levelUp.start();
     }
@@ -501,11 +499,12 @@ public class SoundManager {
         sound.setValue(+5f);
     }
 
-
+    public static void LevelUp() {
+        levelup();
+    }
 
     public static void MouseSelect() {
         SelectButton();
     }
-
 
 }
