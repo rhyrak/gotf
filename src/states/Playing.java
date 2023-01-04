@@ -196,12 +196,12 @@ public class Playing extends State implements Serializable {
             case KeyEvent.VK_A -> player.setMoveLeft(true);
             case KeyEvent.VK_E -> {
                 level.playerInteract();
-                switch (getSaveData().floor){
-                    case 0-> SoundManager.StartForest();
-                    case 1-> SoundManager.DungeonEnter();
-                    case 2-> SoundManager.DungeonFloor2();
-                    case 3-> SoundManager.DungeonFloor3();
-                    case 4-> SoundManager.DungeonFloor4();
+                switch (getSaveData().floor) {
+                    case 0 -> SoundManager.StartForest();
+                    case 1 -> SoundManager.DungeonEnter();
+                    case 2 -> SoundManager.DungeonFloor2();
+                    case 3 -> SoundManager.DungeonFloor3();
+                    case 4 -> SoundManager.DungeonFloor4();
                 }
             }
             case KeyEvent.VK_ESCAPE -> {
@@ -236,27 +236,43 @@ public class Playing extends State implements Serializable {
         }
         if (soundPressed)
             if (isIn(e, soundSlider) || isIn(e, soundSliderBg)) {
+
+                if (soundSlider.x < (e.getX() - soundSlider.width / 2))
+                    SoundManager.SetSoundUpward();
+                else if (soundSlider.x > (e.getX() - soundSlider.width / 2))
+                    SoundManager.SetSoundLower();
+
                 soundSlider.x = e.getX() - soundSlider.width / 2;
                 if (soundSlider.x < soundSliderBg.x)
                     soundSlider.x = soundSliderBg.x;
                 if (soundSlider.x + soundSlider.width > soundSliderBg.x + soundSliderBg.width)
                     soundSlider.x = soundSliderBg.x + soundSliderBg.width - soundSlider.width;
+
             }
         if (musicPressed)
             if (isIn(e, musicSlider) || isIn(e, musicSliderBg)) {
+
+                if (musicSlider.x < (e.getX() - musicSlider.width / 2))
+                    SoundManager.SetMusicUpward();
+                else if (musicSlider.x > (e.getX() - musicSlider.width / 2))
+                    SoundManager.SetMusicLower();
+
                 musicSlider.x = e.getX() - musicSlider.width / 2;
                 if (musicSlider.x < musicSliderBg.x)
                     musicSlider.x = musicSliderBg.x;
                 if (musicSlider.x + musicSlider.width > musicSliderBg.x + musicSliderBg.width)
                     musicSlider.x = musicSliderBg.x + musicSliderBg.width - musicSlider.width;
+
             }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (paused) {
-            if (continueBtn.contains(e.getX(), e.getY()))
+            if (continueBtn.contains(e.getX(), e.getY())) {
+                SoundManager.StartForest();
                 paused = false;
+            }
             else if (exitBtn.contains(e.getX(), e.getY()))
                 saveAndExit();
             else if (isIn(e, soundSliderBg) || isIn(e, soundSlider))

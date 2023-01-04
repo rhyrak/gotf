@@ -1,8 +1,11 @@
 package util;
 
+import states.Settings;
+
 import javax.sound.sampled.Clip;
 import java.io.File;
 import javax.sound.sampled.*;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.io.IOException;
 
 import static util.WeatherTime.raining;
@@ -20,7 +23,6 @@ public class SoundManager {
     public static Clip medipac;
     public static Clip rain;
     public static Clip walkingDungeon;
-
     public static Clip dungeonfloor1;
     public static Clip dungeonfloor2;
     public static Clip dungeonfloor3;
@@ -38,11 +40,16 @@ public class SoundManager {
     public static Clip shield;
     public static Clip skeletonAttack;
     public static Clip skeletonDead;
+    public static FloatControl musıc;
+    public static FloatControl sound;
 
     public SoundManager() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 
+
+
         menu = AudioSystem.getClip();
         menu.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/menu.wav")));
+        musıc = (FloatControl) menu.getControl(FloatControl.Type.MASTER_GAIN);
 
         walkingForest = AudioSystem.getClip();
         walkingForest.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/walkForest.wav")));
@@ -52,6 +59,7 @@ public class SoundManager {
 
         forest = AudioSystem.getClip();
         forest.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/forest_bird.wav")));
+        sound = (FloatControl) forest.getControl(FloatControl.Type.MASTER_GAIN);
 
         attack = AudioSystem.getClip();
         attack.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/sword_attack.wav")));
@@ -246,10 +254,12 @@ public class SoundManager {
         cavegirlDead.setFramePosition(0);
         cavegirlDead.start();
     }
+
     public static void cavemanDeadSound() {
         cavemanDead.setFramePosition(0);
         cavemanDead.start();
     }
+
     public static void skeletonDeadSound() {
         skeletonDead.setFramePosition(0);
         skeletonDead.start();
@@ -474,6 +484,24 @@ public class SoundManager {
         else
             RainStop();
     }
+
+    public static void SetMusicLower() {
+        musıc.setValue(-5f);
+    }
+
+    public static void SetMusicUpward() {
+        musıc.setValue(+5f);
+    }
+
+    public static void SetSoundLower() {
+        sound.setValue(-5f);
+    }
+
+    public static void SetSoundUpward() {
+        sound.setValue(+5f);
+    }
+
+
 
     public static void MouseSelect() {
         SelectButton();

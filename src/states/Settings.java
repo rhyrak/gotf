@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import main.Game;
 import util.AssetManager;
+import util.SoundManager;
 
 public class Settings extends State {
 
@@ -77,6 +78,12 @@ public class Settings extends State {
     public void mouseMoved(MouseEvent e) {
         if (pressed) {
             if (isIn(e, scrollBtnRect) || isIn(e, barRect)) {
+
+                if (scrollBtnRect.x < (e.getX() - scrollBtnRect.width / 2))
+                    SoundManager.SetMusicUpward();
+                else if (scrollBtnRect.x > (e.getX() - scrollBtnRect.width / 2))
+                    SoundManager.SetMusicLower();
+
                 scrollBtnRect.x = e.getX() - scrollBtnRect.width / 2;
                 if (scrollBtnRect.x < barRect.x)
                     scrollBtnRect.x = barRect.x;
