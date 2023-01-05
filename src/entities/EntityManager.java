@@ -53,6 +53,9 @@ public class EntityManager implements Serializable {
         for(Entity e: entities.get(playing.getSaveData().floor))
             e.update();
         dog.update();
+        if (player.hitpoints <= 0) {
+            playing.gameOver();
+        }
     }
 
     public Player getPlayer() {

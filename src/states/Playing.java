@@ -32,9 +32,11 @@ public class Playing extends State implements Serializable {
     private BufferedImage[] continueImg, exitImg;
     private int continueIndex = 0, exitIndex = 0;
     private int mouseX, mouseY;
+    private Game game;
     private boolean soundPressed, musicPressed;
 
-    public Playing(SaveData saveData) {
+    public Playing(SaveData saveData, Game game) {
+        this.game = game;
         if (saveData == null)
             this.saveData = new SaveData();
         else
@@ -302,5 +304,9 @@ public class Playing extends State implements Serializable {
 
     private boolean isIn(MouseEvent e, Rectangle rect) {
         return rect.contains(e.getX(), e.getY());
+    }
+
+    public void gameOver() {
+        game.changeGameState(GameState.GAMEOVER);
     }
 }

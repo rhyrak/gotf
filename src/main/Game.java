@@ -113,11 +113,12 @@ public class Game implements Runnable {
         switch (newState) {
             case PLAYING -> {
                 SoundManager.StartForest();
-                this.gameState = new Playing(loadGame(1));
+                this.gameState = new Playing(loadGame(1), this);
             }
             case MENU -> this.gameState = new Menu(this);
             case SETTINGS -> this.gameState = new Settings(this);
             case EXIT -> System.exit(0);
+            case GAMEOVER -> this.gameState = new GameOver();
         }
     }
 
