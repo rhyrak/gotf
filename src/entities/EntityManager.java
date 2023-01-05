@@ -1,6 +1,8 @@
 package entities;
 import main.Game;
 import states.Playing;
+import util.SoundManager;
+
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -54,6 +56,7 @@ public class EntityManager implements Serializable {
             e.update();
         dog.update();
         if (player.hitpoints <= 0) {
+            SoundManager.PlayerDead();
             playing.gameOver();
         }
     }

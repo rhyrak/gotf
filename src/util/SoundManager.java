@@ -101,7 +101,7 @@ public class SoundManager {
         ninjadead.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/ninjaDead.wav")));
 
         playerDead = AudioSystem.getClip();
-        playerDead.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/ninjaDead.wav")));
+        playerDead.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/playerDead.wav")));
 
         pain = AudioSystem.getClip();
         pain.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/pain.wav")));
