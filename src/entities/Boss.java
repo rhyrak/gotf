@@ -188,8 +188,8 @@ public class Boss extends Entity {
     }
 
     private void drawHealthBar(Graphics g) {
-        g.drawImage(healthBar[0], hitbox.x + camOffsetX + 80, hitbox.y + camOffsetY + 20, 200, 14, null);
-        g.drawImage(healthBar[1], hitbox.x + camOffsetX + 80, hitbox.y + camOffsetY + 20, hitpoints / 3, 14, null);
+        g.drawImage(healthBar[0], hitbox.x + camOffsetX + 150, hitbox.y + camOffsetY + 20, 200, 14, null);
+        g.drawImage(healthBar[1], hitbox.x + camOffsetX + 150, hitbox.y + camOffsetY + 20, hitpoints / 3, 14, null);
     }
 
     private void animate() {

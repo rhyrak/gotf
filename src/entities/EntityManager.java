@@ -44,7 +44,7 @@ public class EntityManager implements Serializable {
         entities.get(3).add(new Skeleton(this, new Rectangle(16*64,30*64,64,64)));
         entities.get(3).add(new Skeleton(this, new Rectangle(22*64,20*64,64,64)));
         entities.get(3).add(new Skeleton(this, new Rectangle(22*64,30*64,64,64)));
-        entities.get(4).add(new Boss(this, new Rectangle(16*64,16*64,64*5,64*5)));
+        entities.get(4).add(new Boss(this, new Rectangle(16*64,16*64,64*8,64*8)));
     }
 
     public void update() {
