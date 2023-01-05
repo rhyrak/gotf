@@ -41,6 +41,7 @@ public class SoundManager {
     public static Clip skeletonDead;
     public static FloatControl musıc;
     public static FloatControl sound;
+    public static Clip playerDead;
 
     public SoundManager() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 
@@ -98,6 +99,9 @@ public class SoundManager {
 
         ninjadead = AudioSystem.getClip();
         ninjadead.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/ninjaDead.wav")));
+
+        playerDead = AudioSystem.getClip();
+        playerDead.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/ninjaDead.wav")));
 
         pain = AudioSystem.getClip();
         pain.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/pain.wav")));
@@ -220,6 +224,10 @@ public class SoundManager {
     public static void ninjaDeadSound() {
         ninjadead.setFramePosition(0);
         ninjadead.start();
+    }
+    public static void playerDeadSound() {
+        playerDead.setFramePosition(0);
+        playerDead.start();
     }
 
     public static void bossAttackSound() {
@@ -462,6 +470,10 @@ public class SoundManager {
     public static void RainStart() {
         rainSound();
         ForestSoundClose();
+    }
+
+    public static void PlayerDead() {
+        playerDeadSound();
     }
 
     public static void RainStop() {
