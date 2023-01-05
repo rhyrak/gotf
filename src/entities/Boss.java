@@ -165,7 +165,8 @@ public class Boss extends Entity {
                     break;
             }
         }
-
+        if (Game.DEBUG_MODE)
+            g.drawRect(hitbox.x + camOffsetX, hitbox.y + camOffsetY, hitbox.width, hitbox.height);
     }
 
     @Override
@@ -348,14 +349,14 @@ public class Boss extends Entity {
                     entityManager.getPlayer().isShielded() == false
             ) {
                 SoundManager.BossAttack();
-                entityManager.getPlayer().hitpoints--;
+                entityManager.getPlayer().hitpoints -= 2;
                 entityManager.getPlayer().setInvincible(true);
             } else if (hitbox.contains(entityManager.getPlayer().getHitbox()) &&
                     entityManager.getPlayer().isInvincible() == false &&
                     entityManager.getPlayer().isShielded() == false
             ) {
                 SoundManager.BossAttack();
-                entityManager.getPlayer().hitpoints--;
+                entityManager.getPlayer().hitpoints -= 2;
                 entityManager.getPlayer().setInvincible(true);
             }
         }

@@ -1,4 +1,5 @@
 package entities;
+
 import main.Game;
 import states.Playing;
 import util.SoundManager;
@@ -39,13 +40,13 @@ public class EntityManager implements Serializable {
         entities.get(1).add(new RedNinja(this, new Rectangle(16*64,20*64,64,64)));
         entities.get(1).add(new RedNinja(this, new Rectangle(22*64,20*64,64,64)));
         entities.get(1).add(new RedNinja(this, new Rectangle(19*64,30*64,64,64)));
-        entities.get(2).add(new Cavegirl(this, new Rectangle(16*64,20*64,64,64)));
-        entities.get(2).add(new Cavegirl(this, new Rectangle(22*64,20*64,64,64)));
-        entities.get(2).add(new Caveman(this, new Rectangle(19*64,30*64,64,64)));
-        entities.get(3).add(new Skeleton(this, new Rectangle(16*64,20*64,64,64)));
-        entities.get(3).add(new Skeleton(this, new Rectangle(16*64,30*64,64,64)));
-        entities.get(3).add(new Skeleton(this, new Rectangle(22*64,20*64,64,64)));
-        entities.get(3).add(new Skeleton(this, new Rectangle(22*64,30*64,64,64)));
+        entities.get(3).add(new Cavegirl(this, new Rectangle(16*64,20*64,64,64)));
+        entities.get(3).add(new Cavegirl(this, new Rectangle(22*64,20*64,64,64)));
+        entities.get(3).add(new Caveman(this, new Rectangle(19*64,30*64,64,64)));
+        entities.get(2).add(new Skeleton(this, new Rectangle(16*64,20*64,64,64)));
+        entities.get(2).add(new Skeleton(this, new Rectangle(16*64,30*64,64,64)));
+        entities.get(2).add(new Skeleton(this, new Rectangle(22*64,20*64,64,64)));
+        entities.get(2).add(new Skeleton(this, new Rectangle(22*64,30*64,64,64)));
         entities.get(4).add(new Boss(this, new Rectangle(16*64,16*64,64*8,64*8)));
     }
 
