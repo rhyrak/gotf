@@ -2,6 +2,7 @@ package main;
 
 import listeners.KeyboardListener;
 import listeners.MouseListener;
+import util.AssetManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,7 +46,7 @@ public class GamePanel extends JPanel {
 
             Graphics temp = buffer.getGraphics();
             temp.setColor(Color.GRAY);
-            temp.fillRect(0,0,size.width,size.height);
+            temp.fillRect(0, 0, size.width, size.height);
             temp.dispose();
 
         }
@@ -72,7 +73,7 @@ public class GamePanel extends JPanel {
         if (game.getGameState() != null)
             game.getGameState().draw(g);
         else
-            g.drawString("LOADING",250,250);
+            g.drawImage(AssetManager.getSprite(AssetManager.MENU_BG), 0, 0, Game.gameWidth, Game.gameHeight, null);
     }
 
     public Game getGame() {
