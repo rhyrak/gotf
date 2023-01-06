@@ -14,6 +14,14 @@ import util.AssetManager;
 import util.Directions;
 import util.SoundManager;
 
+/**
+ * Boss class <p>
+ * It is a hostile to the player and if player is in chasing range of it, it starts to chase player. <p>
+ * If player is in attacking range, it attacks to player. <p>
+ * If player gets in and out of range, it returns to initialization position (startX, startY)
+ * 
+ * @author Tayfun Ozdemir
+ */
 public class Boss extends Entity {
 
     private BufferedImage[][] sprite;
