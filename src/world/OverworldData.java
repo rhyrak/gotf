@@ -2,6 +2,8 @@ package world;
 
 public abstract class OverworldData {
     public static int[][][] arr = new int[][][]{
+            //This class by creating a forest map using the tiled program, 4 different layers were made on the map.
+            // The locations of the objects in these layers are available in arrays.
             {
 
                     {245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246, 245, 246},
