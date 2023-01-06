@@ -8,11 +8,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * The panel where the game will be drawn
+ *
+ * @author Selcuk Gencay
+ */
 public class GamePanel extends JPanel {
 
-    private Game game;
+    private final Game game;
     private BufferedImage buffer;
 
+    /**
+     * Generates a new GamePanel then sets focus to itself for the mouse and keyboard listeners.
+     *
+     * @param game Game is used for accessing the current state's draw method
+     */
     public GamePanel(Game game) {
         this.game = game;
         setFocusable(true);
@@ -20,11 +30,13 @@ public class GamePanel extends JPanel {
         requestFocusInWindow();
     }
 
+    /**
+     * generates and adds mouse and keyboard listeners
+     */
     public void initListeners() {
         addKeyListener(new KeyboardListener(game));
-        MouseListener mouseListener = new MouseListener(game);
-        addMouseListener(mouseListener);
-        addMouseMotionListener(mouseListener);
+        addMouseListener(MouseListener.getInstance(game));
+        addMouseMotionListener(MouseListener.getInstance(game));
     }
 
 
@@ -69,15 +81,16 @@ public class GamePanel extends JPanel {
 
     }
 
+    /**
+     * If gameState is null, the game is changing state, draws the background image as a loading screen.
+     * If not, calls the gameState's draw method with given graphics context
+     *
+     * @param g graphics context of the target
+     */
     private void paintGame(Graphics g) {
         if (game.getGameState() != null)
             game.getGameState().draw(g);
         else
             g.drawImage(AssetManager.getSprite(AssetManager.MENU_BG), 0, 0, Game.gameWidth, Game.gameHeight, null);
     }
-
-    public Game getGame() {
-        return game;
-    }
-
 }

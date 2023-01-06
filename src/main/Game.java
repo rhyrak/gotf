@@ -1,14 +1,20 @@
 package main;
 
 import states.*;
-import states.Menu;
 import util.SaveData;
 import util.SoundManager;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
+/**
+ * Game is a class that implement Runnable, which inits the game and starts game loop in a new thread by passing itself
+ *
+ * @author Selcuk Gencay
+ */
 public class Game implements Runnable {
 
     private GamePanel gamePanel;
@@ -16,12 +22,19 @@ public class Game implements Runnable {
     private State gameState;
     private Thread gameThread;
 
+    /** Size of each tile */
     public static final int TILE_SIZE = 64;
+    /** Screen width */
     public static int gameWidth;
+    /** Screen height */
     public static int gameHeight;
+    /** Debug flag */
     public static boolean DEBUG_MODE = false;
 
-    public Game() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    /**
+     * Inits necessary classes and the game thread. Then starts the game thread which runs the game loop.
+     */
+    public Game() {
         this.gamePanel = new GamePanel(this);
         this.gameWindow = new GameWindow(gamePanel);
         this.gameState = new Menu(this);
@@ -105,10 +118,19 @@ public class Game implements Runnable {
         gamePanel.repaint();
     }
 
+    /**
+     * @return current game state
+     */
     public State getGameState() {
         return gameState;
     }
 
+    /**
+     * Takes a GameState enum, changes the state accordingly
+     *
+     * @param newState new game state
+     * @see GameState
+     */
     public void changeGameState(GameState newState) {
         switch (newState) {
             case PLAYING -> {
@@ -122,6 +144,10 @@ public class Game implements Runnable {
         }
     }
 
+    /**
+     * @param id saved game's id
+     * @return SaveData if id mathces, if not null
+     */
     private SaveData loadGame(int id) {
         SaveData saveData;
         try {
@@ -143,11 +169,19 @@ public class Game implements Runnable {
         saveData.saveID = id;
         return saveData;
     }
-    private void startmusic() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        SoundManager sound = new SoundManager();
+    private void startmusic() {
+        try {
+            // necessary for loading sounds
+            SoundManager sound = new SoundManager();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
         SoundManager.Menu();
     }
 
+    /**
+     * turn debug on/off
+     */
     public static void toggleDebug() {
         DEBUG_MODE = !DEBUG_MODE;
     }

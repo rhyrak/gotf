@@ -7,10 +7,18 @@ import util.WeatherTime;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * When added to the gamePanel, KeyboardListener takes inputs and passes them to the current State's methods
+ *
+ * @author Selcuk Gencay
+ */
 public class KeyboardListener implements KeyListener {
 
     private Game game;
 
+    /**
+     * @param game Game is used for accessing the current state
+     */
     public KeyboardListener(Game game) {
         this.game = game;
     }
