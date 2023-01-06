@@ -1,4 +1,4 @@
 /**
- * TODO: ADD INFO
+ * User Interface related classes
  */
 package ui;

@@ -7,6 +7,11 @@ import util.SoundManager;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ *
+ *
+ * @author Selcuk Gencay
+ */
 public class MenuButton {
 
     private Rectangle hitbox;
@@ -16,6 +21,10 @@ public class MenuButton {
     private int timer = 0;
     private static final int NORMAL = 0, HOVER = 1, CLICKED = 2;
 
+    /**
+     * @param hitbox boundaries of the button
+     * @param imagePath image of the button
+     */
     public MenuButton(Rectangle hitbox, String imagePath) {
         this.hitbox = hitbox;
         loadImages(imagePath);
@@ -29,7 +38,9 @@ public class MenuButton {
         images[2] = sprite.getSubimage(350, 624, 348, 170);
     }
 
-
+    /**
+     * updates the button
+     */
     public void update() {
         if (clicked)
             if (timer > 100)
@@ -38,6 +49,11 @@ public class MenuButton {
                 timer++;
     }
 
+    /**
+     * Displays the button
+     *
+     * @param g graphic context for drawing
+     */
     public void draw(Graphics g) {
         if (Game.DEBUG_MODE) {
             if (mouseOver)
@@ -55,28 +71,51 @@ public class MenuButton {
 
     }
 
+    /**
+     * @return button's hitbox
+     */
     public Rectangle getHitbox() {
         return hitbox;
     }
 
+    /**
+     * change mouseOver status
+     *
+     * @param mouseOver new status
+     */
     public void setMouseOver(boolean mouseOver) {
         this.mouseOver = mouseOver;
     }
 
+    /**
+     * @param action defines what will happen after the button is clicked
+     */
     public void setAction(Action action) {
         this.action = action;
     }
 
+    /**
+     * @return mouseOver status
+     */
     public boolean isMouseOver() {
         return mouseOver;
     }
 
+    /**
+     * called when the button is clicked
+     */
     public void runAction() {
-        SoundManager.MouseSelect();
         action.action();
     }
 
+    /**
+     * change button's clicked status
+     *
+     * @param clicked new status
+     */
     public void setClicked(boolean clicked) {
         this.clicked = clicked;
+        if (clicked)
+            SoundManager.MouseSelect();
     }
 }
