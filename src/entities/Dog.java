@@ -13,6 +13,13 @@ import main.Game;
 import util.AssetManager;
 import util.Directions;
 
+/**
+ * Dog class <p>
+ * It is player's friend. It follows the player all the time and never left him alone. <p>
+ * If enemies attack to player, it barks to them.
+ * 
+ * @author Tayfun Ozdemir
+ */
 public class Dog extends Entity {
 
     private BufferedImage[][] sprite;
