@@ -181,8 +181,8 @@ public class RedNinja extends Entity {
     }
     
     /**
-     * Updates the x-axis and y-axis speed according to direction booleans,
-     * then changes the coordinates according to x-axis and y-axis speed,
+     * Updates the x-axis and y-axis speed according to direction booleans, <p>
+     * then changes the coordinates according to x-axis and y-axis speed, <p>
      * and then sets the enum Direction according to x-axis and y-axis speed.
      */
     private void move() {
@@ -260,7 +260,7 @@ public class RedNinja extends Entity {
     }
     
     /**
-     * Runs 200 times per second, calls some functions and updates everything.
+     * Runs 200 times per second, calls some functions and updates everything. <p>
      * If RedNinja is dead, returns nothing to leave function. So nothing is updated no more.
      */
     @Override
@@ -279,8 +279,8 @@ public class RedNinja extends Entity {
     }
     
     /**
-     * Sets and resets the attacking cooldown.
-     * If RedNinja attacked once, attacking goes on cooldown to prevent to attack for every run of update method (200 attack per second).
+     * Sets and resets the attacking cooldown. <p>
+     * If RedNinja attacked once, attacking goes on cooldown to prevent to attack for every run of update method (200 attack per second). <p>
      * After a while, attacking cooldown resets.
      */
     private void updateCooldowns() {
@@ -323,8 +323,8 @@ public class RedNinja extends Entity {
     }
     
     /**
-     * Updates RedNinja's and player's hitpoints if they are attacked.
-     * If RedNinja attacks player, plays the attacking sound and 
+     * Updates RedNinja's and player's hitpoints if they are attacked. <p>
+     * If RedNinja attacks player, plays the attacking sound and <p>
      * sets player's invincible boolean variable to true which prevents player to be attacked repeatedly.
      */
     private void updateHitpoints() {
