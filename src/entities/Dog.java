@@ -13,6 +13,13 @@ import main.Game;
 import util.AssetManager;
 import util.Directions;
 
+/**
+ * Dog class <p>
+ * It is player's friend. It follows the player all the time and never left him alone. <p>
+ * If enemies attack to player, it barks to them.
+ * 
+ * @author Tayfun Ozdemir
+ */
 public class Dog extends Entity {
 
     private BufferedImage[][] sprite;
@@ -22,7 +29,12 @@ public class Dog extends Entity {
     private int camOffsetX, camOffsetY;
     private int speed;
 
-    // constructor
+    /**
+     * Class constructor 
+     * @param  entityManager  an EntityManager to access player's properties
+     * @param  hitbox  a Rectangle to assign Dog's hitbox
+     * @see  EntityManager
+     */
     public Dog(EntityManager entityManager, Rectangle hitbox) {
         this.entityManager = entityManager;
         this.hitbox = hitbox;
@@ -30,7 +42,10 @@ public class Dog extends Entity {
         loadSprite();
         this.speed = 1;
     }
-
+    
+    /**
+     * Loads needed sprites for Dog
+     */
     private void loadSprite() {
         BufferedImage temp = AssetManager.getSprite(AssetManager.ANIMALS);
         sprite = new BufferedImage[4][4];
@@ -56,7 +71,11 @@ public class Dog extends Entity {
         sprite[3][2] = temp.getSubimage(13 * 16, 24 * 16, 16, 16);
         sprite[3][3] = temp.getSubimage(12 * 16, 24 * 16, 16, 16);
     }
-
+    
+    /**
+     * Draws all the sprites and animations
+     * @param  g  it is a needed instance of Graphics to be able to draw sprites
+     */
     @Override
     public void draw(Graphics g) {
 
@@ -82,7 +101,10 @@ public class Dog extends Entity {
         }
 
     }
-
+    
+    /**
+     * Runs 200 times per second, calls some functions and updates everything.
+     */
     @Override
     public void update() {
         camOffsetX = Game.gameWidth / 2 - entityManager.getPlayer().getHitbox().x - entityManager.getPlayer().getHitbox().width / 2;
@@ -92,7 +114,10 @@ public class Dog extends Entity {
         move();
 
     }
-
+    
+    /**
+     * Sets and resets cool-down time to draw next sprite of current animation
+     */
     private void animate() {
         animTick++;
         if (animTick >= 50) {
@@ -102,7 +127,12 @@ public class Dog extends Entity {
                 animIndex = 0;
         }
     }
-
+    
+    /**
+     * Updates the x-axis and y-axis speed according to direction booleans, <p>
+     * then changes the coordinates according to x-axis and y-axis speed, <p>
+     * and then sets the enum Direction according to x-axis and y-axis speed.
+     */
     private void move() {
         int xSpeed = 0, ySpeed = 0;
         if (moveUp)
@@ -126,7 +156,9 @@ public class Dog extends Entity {
             direction = RIGHT;
     }
 
-    //checks and sets RedNinja's idle/chase situations
+    /**
+     * Follows player and if dog is close enough to player, dog does not move.
+     */
     private void setAction() {
 
         //reset directions

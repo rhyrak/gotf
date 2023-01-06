@@ -14,6 +14,14 @@ import util.AssetManager;
 import util.Directions;
 import util.SoundManager;
 
+/**
+ * Boss class <p>
+ * It is a hostile to the player and if player is in chasing range of it, it starts to chase player. <p>
+ * If player is in attacking range, it attacks to player. <p>
+ * If player gets in and out of range, it returns to initialization position (startX, startY)
+ * 
+ * @author Tayfun Ozdemir
+ */
 public class Boss extends Entity {
 
     private BufferedImage[][] sprite;
@@ -182,7 +190,7 @@ public class Boss extends Entity {
     }
     
     /**
-     * Runs 200 times per second, calls some functions and updates everything.
+     * Runs 200 times per second, calls some functions and updates everything. <p>
      * If Boss is dead, returns nothing to leave function. So nothing is updated no more.
      */
     @Override
@@ -233,8 +241,8 @@ public class Boss extends Entity {
     }
     
     /**
-     * Updates the x-axis and y-axis speed according to direction booleans,
-     * then changes the coordinates according to x-axis and y-axis speed,
+     * Updates the x-axis and y-axis speed according to direction booleans, <p>
+     * then changes the coordinates according to x-axis and y-axis speed, <p>
      * and then sets the enum Direction according to x-axis and y-axis speed.
      */
     private void move() {
@@ -337,8 +345,8 @@ public class Boss extends Entity {
     }
     
     /**
-     * Sets and resets the attacking cooldown.
-     * If Boss attacked once, attacking goes on cooldown to prevent to attack for every run of update method (200 attack per second).
+     * Sets and resets the attacking cooldown. <p>
+     * If Boss attacked once, attacking goes on cooldown to prevent to attack for every run of update method (200 attack per second). <p>
      * After a while, attacking cooldown resets.
      */
     private void updateCooldowns() {
@@ -381,8 +389,8 @@ public class Boss extends Entity {
     }
     
     /**
-     * Updates Boss' and player's hitpoints if they are attacked.
-     * If Boss attacks player, plays the attacking sound and 
+     * Updates Boss' and player's hitpoints if they are attacked. <p>
+     * If Boss attacks player, plays the attacking sound and <p>
      * sets player's invincible boolean variable to true which prevents player to be attacked repeatedly.
      */
     private void updateHitpoints() {
