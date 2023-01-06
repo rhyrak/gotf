@@ -44,7 +44,7 @@ public class Dungeon extends Level {
     }
 
     private void initTileSet() {
-        //This part,using the dimensions of the images, each pixel is separated as a single piece with two for loops.
+        //This part,using the dimensions of the images, each tile is separated as a single piece with two for loops.
         BufferedImage temp = AssetManager.getSprite(AssetManager.FLOOR5_TS);
 
         wall = temp.getSubimage(12 * 16, 13 * 16, 16, 16)
@@ -73,7 +73,7 @@ public class Dungeon extends Level {
 
     @Override
     public void draw(Graphics g) {
-        //this part set up for loops that take the layer, x, and y values to print the single pixels we get
+        //this part set up for loops that take the layer, x, and y values to print the single tile we get
         for (int layer = 0; layer < DungeonData.arr.length; layer++) {
             for (int y = 0; y < DungeonData.arr[layer].length; y++) {
                 for (int x = 0; x < DungeonData.arr[layer][y].length; x++) {

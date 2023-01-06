@@ -40,7 +40,7 @@ public class Overworld extends Level {
     }
 
     private void initTileSet() {
-        //This part,using the dimensions of the images, each pixel is separated as a single piece with two for loops.
+        //This part,using the dimensions of the images, each tile is separated as a single piece with two for loops.
         BufferedImage temp = AssetManager.getSprite(AssetManager.FLOOR1_TS);
         floor1 = new Image[573];
         int iter = 1;
@@ -84,7 +84,7 @@ public class Overworld extends Level {
 
     @Override
     public void draw(Graphics g) {
-        //this part set up for loops that take the layer, x, and y values to print the single pixels we get
+        //this part set up for loops that take the layer, x, and y values to print the single tile we get
         //the layers were taken separately and the elements such as trees and stones
         // that the character should not collide with were counted in different layers with the switch case, so no collision occurred.
         for (int layer = 0; layer < OverworldData.arr.length; layer++) {
