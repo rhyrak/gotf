@@ -29,6 +29,7 @@ public class Overworld extends Level {
     }
 
     private void initTileSet() {
+        //This part,using the dimensions of the images, each pixel is separated as a single piece with two for loops.
         BufferedImage temp = AssetManager.getSprite(AssetManager.FLOOR1_TS);
         floor1 = new Image[573];
         int iter = 1;
@@ -72,6 +73,9 @@ public class Overworld extends Level {
 
     @Override
     public void draw(Graphics g) {
+        //this part set up for loops that take the layer, x, and y values to print the single pixels we get
+        //the layers were taken separately and the elements such as trees and stones
+        // that the character should not collide with were counted in different layers with the switch case, so no collision occurred.
         for (int layer = 0; layer < OverworldData.arr.length; layer++) {
             for (int y = 0; y < OverworldData.arr[layer].length; y++) {
                 for (int x = 0; x < OverworldData.arr[layer][y].length; x++) {
@@ -96,12 +100,14 @@ public class Overworld extends Level {
 
     @Override
     public void update() {
+        //Position is set to the middle, taking half the x and y lengths so that the character stays in the middle of the main screen
         camOffsetX = Game.gameWidth / 2 - player.getHitbox().x - player.getHitbox().width / 2;
         camOffsetY = Game.gameHeight / 2 - player.getHitbox().y - player.getHitbox().height / 2;
     }
 
     @Override
     public boolean canMove(int x, int y) {
+        //The area that the character wants to go is determined and prevented from leaving the area.
         int xIndex = x / 64, yIndex = y / 64;
         boolean canMove = true;
 

@@ -33,6 +33,7 @@ public class Dungeon extends Level {
     }
 
     private void initTileSet() {
+        //This part,using the dimensions of the images, each pixel is separated as a single piece with two for loops.
         BufferedImage temp = AssetManager.getSprite(AssetManager.FLOOR5_TS);
 
         wall = temp.getSubimage(12 * 16, 13 * 16, 16, 16)
@@ -61,6 +62,7 @@ public class Dungeon extends Level {
 
     @Override
     public void draw(Graphics g) {
+        //this part set up for loops that take the layer, x, and y values to print the single pixels we get
         for (int layer = 0; layer < DungeonData.arr.length; layer++) {
             for (int y = 0; y < DungeonData.arr[layer].length; y++) {
                 for (int x = 0; x < DungeonData.arr[layer][y].length; x++) {
@@ -88,12 +90,14 @@ public class Dungeon extends Level {
 
     @Override
     public void update() {
+        //Position is set to the middle, taking half the x and y lengths so that the character stays in the middle of the main screen
         camOffsetX = Game.gameWidth / 2 - player.getHitbox().x - player.getHitbox().width / 2;
         camOffsetY = Game.gameHeight / 2 - player.getHitbox().y - player.getHitbox().height / 2;
     }
 
     @Override
     public boolean canMove(int x, int y) {
+        //The area that the character wants to go is determined and prevented from leaving the area.
         if (x<768 || x>2496 || y>2816 || y<448)
             return false;
         return true;
