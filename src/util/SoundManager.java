@@ -1,7 +1,5 @@
 package util;
 
-import states.Settings;
-
 import javax.sound.sampled.Clip;
 import java.io.File;
 import javax.sound.sampled.*;
@@ -39,7 +37,7 @@ public class SoundManager {
     public static Clip shield;
     public static Clip skeletonAttack;
     public static Clip skeletonDead;
-    public static FloatControl musıc;
+    public static FloatControl music;
     public static FloatControl sound;
     public static Clip playerDead;
 
@@ -48,7 +46,7 @@ public class SoundManager {
 
         menu = AudioSystem.getClip();
         menu.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/menu.wav")));
-        musıc = (FloatControl) menu.getControl(FloatControl.Type.MASTER_GAIN);
+        music = (FloatControl) menu.getControl(FloatControl.Type.MASTER_GAIN);
 
         walkingForest = AudioSystem.getClip();
         walkingForest.open(AudioSystem.getAudioInputStream(new File("res/assets/sound/walkForest.wav")));
@@ -499,11 +497,11 @@ public class SoundManager {
     }
     /**Subtract 5 to musıc volume every called*/
     public static void SetMusicLower() {
-        musıc.setValue(-5f);
+        music.setValue(-5f);
     }
     /**Add 5 to musıc volume every called*/
     public static void SetMusicUpward() {
-        musıc.setValue(+5f);
+        music.setValue(+5f);
     }
     /**Subtract 5 to sound volume every called*/
     public static void SetSoundLower() {

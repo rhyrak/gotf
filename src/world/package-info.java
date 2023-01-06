@@ -1,4 +1,4 @@
 /**
- * TODO: ADD INFO
+ * Contains levels and their data
  */
 package world;

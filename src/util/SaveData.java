@@ -2,12 +2,20 @@ package util;
 
 import java.io.Serializable;
 
+/**
+ * A class which can be stored as a file to save player's progress
+ *
+ * @author Selcuk Gencay
+ */
 public class SaveData implements Serializable {
-    public int playerX, playerY, XP, HP, maxHP, level;
-    public int floor; // 0 overworld, 1-2-3-4 dungeon floor 1-2-3-4
+    /** player's info which needs to be saved */
+    public int playerX, playerY, XP, HP, maxHP, level, floor;
+    /** id of the saved game */
     public int saveID;
 
-    // called when a new game is created
+    /**
+     * generates a new game
+     */
     public SaveData() {
         floor = 0;
         playerX = 2310;

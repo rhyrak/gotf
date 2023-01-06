@@ -10,6 +10,11 @@ import java.awt.image.BufferedImage;
 
 import static main.Game.TILE_SIZE;
 
+/**
+ * Forest level where the dungeon entrance is located
+ *
+ * @author Selcuk Gencay
+ */
 public class Overworld extends Level {
 
     private Image[] floor1;
@@ -18,12 +23,18 @@ public class Overworld extends Level {
     private Image[] floor4;
     private int camOffsetX = 0, camOffsetY = 0;
     private Player player;
-    private Rectangle dungeonEnterance;
+    private Rectangle dungeonEntrance;
     private Playing playing;
 
+    /**
+     * inits the tile set and dungeon entrance
+     *
+     * @param player for accessing player's position
+     * @param playing for accessing save data
+     */
     public Overworld(Player player, Playing playing) {
         this.player = player;
-        this.dungeonEnterance = new Rectangle(1792,2240,192,128);
+        this.dungeonEntrance = new Rectangle(1792,2240,192,128);
         this.playing = playing;
         initTileSet();
     }
@@ -94,7 +105,7 @@ public class Overworld extends Level {
             }
         }
         if (Game.DEBUG_MODE) {
-            g.drawRect(dungeonEnterance.x + camOffsetX, dungeonEnterance.y + camOffsetY, dungeonEnterance.width, dungeonEnterance.height);
+            g.drawRect(dungeonEntrance.x + camOffsetX, dungeonEntrance.y + camOffsetY, dungeonEntrance.width, dungeonEntrance.height);
         }
     }
 
@@ -126,7 +137,7 @@ public class Overworld extends Level {
 
     @Override
     public void playerInteract() {
-        if (player.getHitbox().intersects(dungeonEnterance))
+        if (player.getHitbox().intersects(dungeonEntrance))
             playing.getSaveData().floor = 1;
     }
 }

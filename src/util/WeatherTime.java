@@ -5,12 +5,18 @@ import main.Game;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * The class which controls rain and time
+ *
+ * @author Selcuk Gencay
+ */
 public abstract class WeatherTime {
 
     private static BufferedImage[] rain = new BufferedImage[3];
     private static BufferedImage[] rainOnFloor = new BufferedImage[3];
     private static int animIndx = 0, animTick = 0;
     private static int rainX = 0, rainY = 0, xShift = 0, yShift = 0;
+    /** flag for the weather */
     public static boolean raining = false;
 
     static {
@@ -24,6 +30,9 @@ public abstract class WeatherTime {
         rainOnFloor[2] = temp.getSubimage(16, 0, 8, 8);
     }
 
+    /**
+     * updates rain position if it is raining
+     */
     public static void update() {
         if (raining) {
             animTick++;
@@ -45,6 +54,11 @@ public abstract class WeatherTime {
         }
     }
 
+    /**
+     * Draws the rain if it is raining
+     *
+     * @param g graphics context for drawing
+     */
     public static void draw(Graphics g) {
         if (raining)
             for (int i = 0; i < Game.gameWidth / 64; i++)
@@ -53,6 +67,9 @@ public abstract class WeatherTime {
                         g.drawImage(rain[animIndx], i * 64 + xShift + rainX, j * 32 + rainY + yShift, 16, 16, null);
     }
 
+    /**
+     * start/stop the rain
+     */
     public static void toggleRain() {
         raining = !raining;
         if (raining)

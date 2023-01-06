@@ -1,7 +1,14 @@
 package world;
 
+
+/**
+ * Keeps tile layout information for the dungeon
+ *
+ * @author Merter Coban
+ */
 public abstract class DungeonData {
 
+    /** tile IDs of the corresponding coordinates <p> arr[layer][y][x] */
     public static int[][][] arr = new int[][][]{
             //This abstract class by creating a dungeon map using the tiled program, 3 different layers were made on the map.
             // The locations of the objects in these layers are available in arrays.

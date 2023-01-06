@@ -10,6 +10,11 @@ import java.awt.image.BufferedImage;
 
 import static main.Game.TILE_SIZE;
 
+/**
+ * Dungeon level where the player fights the enemies
+ *
+ * @author Selcuk Gencay
+ */
 public class Dungeon extends Level {
 
     private Image wall;
@@ -20,6 +25,12 @@ public class Dungeon extends Level {
     private Playing playing;
     private Rectangle prevFloor, nextFloor;
 
+    /**
+     * inits the tile set and repositions the player
+     *
+     * @param player for accessing player's position
+     * @param playing for accessing save data
+     */
     public Dungeon(Player player, Playing playing) {
         this.player = player;
         this.player.getHitbox().x = 900;

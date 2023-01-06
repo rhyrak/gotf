@@ -5,6 +5,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Contains constant fields of asset paths and a method for getting an asset
+ *
+ * @author Selcuk Gencay
+ */
 public abstract class AssetManager {
 
     public static final String BUTTONS = "/assets/buttons.png";
@@ -77,6 +82,12 @@ public abstract class AssetManager {
     public static final String FLOOR6_TS = "/assets/world/tilesets/sixth-floor.png";
     public static final String FLOOR7_TS = "/assets/world/tilesets/seventh-floor.png";
 
+    /**
+     * Crashes the game if it cannot find the image
+     *
+     * @param filePath location of the image
+     * @return BufferedImage if filePath mathces, otherwise null
+     */
     public static BufferedImage getSprite(String filePath) {
         BufferedImage image = null;
         InputStream is = AssetManager.class.getResourceAsStream(filePath);
