@@ -129,8 +129,8 @@ public class Dog extends Entity {
     }
     
     /**
-     * Updates the x-axis and y-axis speed according to direction booleans,
-     * then changes the coordinates according to x-axis and y-axis speed,
+     * Updates the x-axis and y-axis speed according to direction booleans, <p>
+     * then changes the coordinates according to x-axis and y-axis speed, <p>
      * and then sets the enum Direction according to x-axis and y-axis speed.
      */
     private void move() {
