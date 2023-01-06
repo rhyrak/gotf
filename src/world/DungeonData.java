@@ -3,7 +3,7 @@ package world;
 public abstract class DungeonData {
 
     public static int[][][] arr = new int[][][]{
-            //This class by creating a dungeon map using the tiled program, 3 different layers were made on the map.
+            //This abstract class by creating a dungeon map using the tiled program, 3 different layers were made on the map.
             // The locations of the objects in these layers are available in arrays.
             {
                     {299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299},
