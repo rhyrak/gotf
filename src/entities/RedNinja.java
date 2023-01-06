@@ -29,7 +29,12 @@ public class RedNinja extends Entity {
     private boolean isDead = false;
     private BufferedImage[] healthBar;
 
-    // constructor
+    /**
+     * Class constructor 
+     * @param  entityManager  an EntityManager to access player's properties
+     * @param  hitbox  a Rectangle to assign RedNinja's hitbox
+     * @see  EntityManager
+     */
     public RedNinja(EntityManager entityManager, Rectangle hitbox) {
         this.entityManager = entityManager;
         this.hitbox = hitbox;
@@ -40,7 +45,10 @@ public class RedNinja extends Entity {
         startX = hitbox.x;
         startY = hitbox.y;
     }
-
+    
+    /**
+     * Loads needed sprites for RedNinja
+     */
     private void loadSprite() {
         BufferedImage temp = AssetManager.getSprite(AssetManager.RED_NINJA);
         sprite = new BufferedImage[9][4];
@@ -64,7 +72,9 @@ public class RedNinja extends Entity {
     }
 
 
-    //checks and sets RedNinja's idle/chase situations
+    /**
+     * Checks and sets idle, chasing, attacking situations
+     */
     public void setAction() {
 
         //reset directions
@@ -148,7 +158,10 @@ public class RedNinja extends Entity {
                 actionLockCounter = 0;
         }
     }
-
+    
+    /**
+     * Sets and resets cool-down time to draw next sprite of current animation
+     */
     private void animate() {
         animTick++;
         if (animTick >= 50) {
@@ -158,7 +171,12 @@ public class RedNinja extends Entity {
                 animIndex = 0;
         }
     }
-
+    
+    /**
+     * Updates the x-axis and y-axis speed according to direction booleans,
+     * then changes the coordinates according to x-axis and y-axis speed,
+     * and then sets the enum Direction according to x-axis and y-axis speed.
+     */
     private void move() {
         int xSpeed = 0, ySpeed = 0;
         int ninjaSpeed = 1;
@@ -182,7 +200,11 @@ public class RedNinja extends Entity {
         else if (xSpeed > 0)
             direction = RIGHT;
     }
-
+    
+    /**
+     * Draws all the sprites and animations, if RedNinja is dead, returns nothing and leaves the function and draws nothing all the time
+     * @param  g  it is a needed instance of Graphics to be able to draw sprites
+     */
     @Override
     public void draw(Graphics g) {
         if (isDead)
@@ -219,12 +241,20 @@ public class RedNinja extends Entity {
             }
         }
     }
-
+    
+    /**
+     * A function to draw health bar above the RedNinja
+     * @param  g  it is a needed instance of Graphics to be able to draw health bar
+     */
     private void drawHealthBar(Graphics g) {
         g.drawImage(healthBar[0], hitbox.x + camOffsetX + 7, hitbox.y + camOffsetY - 15, 50, 4, null);
         g.drawImage(healthBar[1], hitbox.x + camOffsetX + 7, hitbox.y + camOffsetY - 15, hitpoints / 3, 4, null);
     }
-
+    
+    /**
+     * Runs 200 times per second, calls some functions and updates everything.
+     * If RedNinja is dead, returns nothing to leave function. So nothing is updated no more.
+     */
     @Override
     public void update() {
         if (isDead)
@@ -239,7 +269,12 @@ public class RedNinja extends Entity {
         move();
 
     }
-
+    
+    /**
+     * Sets and resets the attacking cooldown.
+     * If RedNinja attacked once, attacking goes on cooldown to prevent to attack for every run of update method (200 attack per second).
+     * After a while, attacking cooldown resets.
+     */
     private void updateCooldowns() {
         //works only if player is always in attack range,
         //if player gets in and out of the attack range repeatedly,
@@ -254,7 +289,10 @@ public class RedNinja extends Entity {
                 attackCoolDown = 0;
         }
     }
-
+    
+    /**
+     * Designates attackHitbox according to direction
+     */
     private void updateAttackHitbox() {
         switch (direction) {
             case UP -> {
@@ -275,7 +313,12 @@ public class RedNinja extends Entity {
             }
         }
     }
-
+    
+    /**
+     * Updates RedNinja's and player's hitpoints if they are attacked.
+     * If RedNinja attacks player, plays the attacking sound and 
+     * sets player's invincible boolean variable to true which prevents player to be attacked repeatedly.
+     */
     private void updateHitpoints() {
         if (attacking && attackHitbox.contains(entityManager.getPlayer().getHitbox()) &&
                 entityManager.getPlayer().isInvincible() == false &&
