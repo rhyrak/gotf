@@ -31,7 +31,12 @@ public class Boss extends Entity {
     private boolean isDead = false;
     private boolean deathAnim = false;
 
-    // constructor
+    /**
+     * Class constructor 
+     * @param  entityManager  an EntityManager to access player's properties
+     * @param  hitbox  a Rectangle to assign Boss' hitbox
+     * @see  EntityManager
+     */
     public Boss(EntityManager entityManager, Rectangle hitbox) {
         this.entityManager = entityManager;
         this.hitbox = hitbox;
@@ -42,7 +47,10 @@ public class Boss extends Entity {
         startX = hitbox.x;
         startY = hitbox.y;
     }
-
+    
+    /**
+     * Loads needed sprites for Boss
+     */
     private void loadSprite() {
         BufferedImage temp = AssetManager.getSprite(AssetManager.BOSS_WALK_RIGHT);
         sprite = new BufferedImage[6][8];
@@ -112,7 +120,11 @@ public class Boss extends Entity {
         temp = AssetManager.getSprite(AssetManager.HEALTH_BAR_RED);
         healthBar[1] = temp.getSubimage(0, 0, 100, 7);
     }
-
+    
+    /**
+     * Draws all the sprites and animations, if boss is dead, returns nothing and leaves the function and draws nothing all the time
+     * @param  g  it is a needed instance of Graphics to be able to draw sprites
+     */
     @Override
     public void draw(Graphics g) {
         if (isDead)
@@ -168,7 +180,11 @@ public class Boss extends Entity {
         if (Game.DEBUG_MODE)
             g.drawRect(hitbox.x + camOffsetX, hitbox.y + camOffsetY, hitbox.width, hitbox.height);
     }
-
+    
+    /**
+     * Runs 200 times per second, calls some functions and updates everything.
+     * If Boss is dead, returns nothing to leave function. So nothing is updated no more.
+     */
     @Override
     public void update() {
         if (isDead)
@@ -187,12 +203,19 @@ public class Boss extends Entity {
         }
 
     }
-
+    
+    /**
+     * A function to draw health bar above the Boss
+     * @param  g  it is a needed instance of Graphics to be able to draw health bar
+     */
     private void drawHealthBar(Graphics g) {
         g.drawImage(healthBar[0], hitbox.x + camOffsetX + 150, hitbox.y + camOffsetY + 20, 200, 14, null);
         g.drawImage(healthBar[1], hitbox.x + camOffsetX + 150, hitbox.y + camOffsetY + 20, hitpoints / 3, 14, null);
     }
-
+    
+    /**
+     * Sets and resets cool-down time to draw next sprite of current animation
+     */
     private void animate() {
         animTick++;
         if (animTick >= 50 && deathAnim == false) {
@@ -208,7 +231,12 @@ public class Boss extends Entity {
                 isDead = true;
         }
     }
-
+    
+    /**
+     * Updates the x-axis and y-axis speed according to direction booleans,
+     * then changes the coordinates according to x-axis and y-axis speed,
+     * and then sets the enum Direction according to x-axis and y-axis speed.
+     */
     private void move() {
         int xSpeed = 0, ySpeed = 0;
         int ninjaSpeed = 1;
@@ -233,7 +261,9 @@ public class Boss extends Entity {
             direction = RIGHT;
     }
 
-    //checks and sets RedNinja's idle/chase situations
+    /**
+     * Checks and sets idle, chasing, attacking situations
+     */
     public void setAction() {
 
         //reset directions
@@ -305,7 +335,12 @@ public class Boss extends Entity {
         } else if (!returning)
             attacking = false;
     }
-
+    
+    /**
+     * Sets and resets the attacking cooldown.
+     * If Boss attacked once, attacking goes on cooldown to prevent to attack for every run of update method (200 attack per second).
+     * After a while, attacking cooldown resets.
+     */
     private void updateCooldowns() {
         //works only if player is always in attack range,
         //if player gets in and out of the attack range repeatedly,
@@ -320,7 +355,10 @@ public class Boss extends Entity {
                 attackCoolDown = 0;
         }
     }
-
+    
+    /**
+     * Designates attackHitbox according to direction
+     */
     private void updateAttackHitbox() {
         switch (direction) {
             case UP -> {
@@ -341,7 +379,12 @@ public class Boss extends Entity {
             }
         }
     }
-
+    
+    /**
+     * Updates Boss' and player's hitpoints if they are attacked.
+     * If Boss attacks player, plays the attacking sound and 
+     * sets player's invincible boolean variable to true which prevents player to be attacked repeatedly.
+     */
     private void updateHitpoints() {
         if (attacking) {
             if (attackHitbox.contains(entityManager.getPlayer().getHitbox()) &&
