@@ -20,7 +20,6 @@ public class Item extends Entity {
 
     /** Enum for specifying type of the item */
     public enum ItemType {
-        /** Consumable item */
         LIFEPOT, MEDIPACK, DEF_SCROLL
     }
 
