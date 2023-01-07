@@ -9,6 +9,12 @@ import main.Game;
 import util.AssetManager;
 import util.SoundManager;
 
+/**
+ * Settings menu state
+ *
+ * @author Tayfun Ozdemir
+ * @author Selcuk Gencay
+ */
 public class Settings extends State {
 
     private BufferedImage window;
@@ -22,6 +28,9 @@ public class Settings extends State {
     private boolean pressed;
     private Game game;
 
+    /**
+     * @param game for changing the state
+     */
     public Settings(Game game) {
         this.game = game;
         loadSprite();
@@ -48,7 +57,7 @@ public class Settings extends State {
         }
     }
 
-    public void loadSprite() {
+    private void loadSprite() {
         BufferedImage temp = AssetManager.getSprite(AssetManager.GUI);
         window = temp.getSubimage(0, 0, 64, 64);
         temp = AssetManager.getSprite(AssetManager.S_BUTTONS);
@@ -109,6 +118,11 @@ public class Settings extends State {
     public void mouseReleased(MouseEvent e) {
     }
 
+    /**
+     * @param e Mouse event
+     * @param rect Rectangle
+     * @return true if the mouse event happened inside the given rectangle
+     */
     private boolean isIn(MouseEvent e, Rectangle rect) {
         return rect.contains(e.getX(), e.getY());
     }

@@ -6,6 +6,11 @@ import util.AssetManager;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Represents all items in the game.
+ *
+ * @author Selcuk Gencay
+ */
 public class Item extends Entity {
 
     private BufferedImage img;
@@ -13,10 +18,21 @@ public class Item extends Entity {
     private ItemType type;
     private boolean pickedUp = false;
 
+    /** Enum for specifying type of the item */
     public enum ItemType {
+        /** Consumable item */
         LIFEPOT, MEDIPACK, DEF_SCROLL
     }
 
+    /**
+     * Generates an item on the given position
+     *
+     * @param entityManager manager of the item
+     * @param type type of the item
+     * @param x x coordinate of the item
+     * @param y y coordinate of the item
+     * @see ItemType
+     */
     public Item(EntityManager entityManager, ItemType type, int x, int y) {
         loadImg(type);
         this.manager = entityManager;

@@ -3,13 +3,17 @@ package states;
 import main.Game;
 import ui.MenuButton;
 import util.AssetManager;
-import util.SoundManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+/**
+ * Initial state which has buttons for entering the game and settings or exiting the game
+ *
+ * @author Selcuk Gencay
+ */
 public class Menu extends State {
 
     private MenuButton[] buttons;
@@ -17,6 +21,11 @@ public class Menu extends State {
     private BufferedImage header;
     private Game game;
 
+    /**
+     * Inits the menu buttons
+     *
+     * @param game for changing the state
+     */
     public Menu(Game game) {
         this.game = game;
         initButtons();

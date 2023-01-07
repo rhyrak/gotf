@@ -10,6 +10,11 @@ import java.util.ArrayList;
 
 import static main.Game.TILE_SIZE;
 
+/**
+ * The controller class for entities in the game
+ *
+ * @author Selcuk Gencay
+ */
 public class EntityManager implements Serializable {
 
     private ArrayList<ArrayList<Entity>> entities;
@@ -18,6 +23,12 @@ public class EntityManager implements Serializable {
     private Dog dog;
     private int camOffsetX, camOffsetY;
 
+    /**
+     * Generates the entities
+     *
+     * @param playing for accessing save data
+     * @param player for accessing its position and hitpoints
+     */
     public EntityManager(Playing playing, Player player) {
         this.playing = playing;
         this.player = player;
@@ -26,7 +37,6 @@ public class EntityManager implements Serializable {
     }
 
     private void initEntities() {
-        //TODO: Check savedata to find monster count
         entities = new ArrayList<>(5);
         for (int i = 0; i < 5; i++)
             entities.add(new ArrayList<>(10));
@@ -50,6 +60,7 @@ public class EntityManager implements Serializable {
         entities.get(4).add(new Boss(this, new Rectangle(16*64,16*64,64*8,64*8)));
     }
 
+    /** Updates camera offsets then the entities */
     public void update() {
         camOffsetX = Game.gameWidth / 2 - player.getHitbox().x - player.getHitbox().width / 2;
         camOffsetY = Game.gameHeight / 2 - player.getHitbox().y - player.getHitbox().height / 2;
@@ -62,23 +73,37 @@ public class EntityManager implements Serializable {
         }
     }
 
+    /** @return the player instance */
     public Player getPlayer() {
         return player;
     }
 
+    /** @return Player's companion */
     public Dog getDog() {
         return dog;
     }
 
+    /**
+     * Draws entities that are on the same floor as the player
+     *
+     * @param g graphics context for drawing
+     */
     public void draw(Graphics g) {
         for(Entity e: entities.get(playing.getSaveData().floor))
             e.draw(g);
         dog.draw(g);
     }
 
+    /**
+     * @return the offset in the x-axis of the camera
+     */
     public int getCamOffsetX() {
         return camOffsetX;
     }
+
+    /**
+     * @return the offset in the y-axis of the camera
+     */
     public int getCamOffsetY() {
         return camOffsetY;
     }

@@ -17,7 +17,12 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-public class Playing extends State implements Serializable {
+/**
+ * the state where
+ *
+ * @author Selcuk Gencay
+ */
+public class Playing extends State {
 
     private Player player;
     private EntityManager entityManager;
@@ -35,6 +40,10 @@ public class Playing extends State implements Serializable {
     private Game game;
     private boolean soundPressed, musicPressed;
 
+    /**
+     * @param saveData for continuing the previous save
+     * @param game for changing the state
+     */
     public Playing(SaveData saveData, Game game) {
         this.game = game;
         if (saveData == null)
@@ -298,6 +307,9 @@ public class Playing extends State implements Serializable {
     public void mouseReleased(MouseEvent e) {
     }
 
+    /**
+     * @return save data instance of the current session
+     */
     public static SaveData getSaveData() {
         return saveData;
     }
@@ -306,6 +318,9 @@ public class Playing extends State implements Serializable {
         return rect.contains(e.getX(), e.getY());
     }
 
+    /**
+     * Used for entering the gameover state when the player dies
+     */
     public void gameOver() {
         game.changeGameState(GameState.GAMEOVER);
     }

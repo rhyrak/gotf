@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- *
+ * Buttons which are located only in the Menu state
  *
  * @author Selcuk Gencay
  */

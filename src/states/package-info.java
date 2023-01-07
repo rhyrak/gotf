@@ -1,4 +1,4 @@
 /**
- * TODO: ADD INFO
+ * Contains game states
  */
 package states;

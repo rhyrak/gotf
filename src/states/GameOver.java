@@ -8,11 +8,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+/**
+ * Displays death screen
+ *
+ * @author Selcuk Gencay
+ */
 public class GameOver extends State{
 
     private BufferedImage death;
     private boolean drawn = false;
 
+    /**
+     * Inits the death message
+     */
     public GameOver() {
         death = AssetManager.getSprite("/assets/death.png");
     }
@@ -23,14 +31,6 @@ public class GameOver extends State{
             g.drawImage(death,0, Game.gameHeight/4, Game.gameWidth, Game.gameHeight/8, null);
             drawn = true;
         }
-        /*
-        g.setColor(Color.BLACK);
-        g.fillRect(0,0,Game.gameWidth, Game.gameHeight);
-        g.setColor(Color.WHITE);
-        g.setFont(new Font(Font.SERIF, Font.BOLD, 32));
-        g.drawString("YOU DIED", Game.gameWidth/2, Game.gameHeight/2);
-
-         */
     }
 
     @Override

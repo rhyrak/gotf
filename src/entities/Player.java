@@ -13,6 +13,11 @@ import java.awt.image.BufferedImage;
 
 import static util.Directions.*;
 
+/**
+ * Player class represents the player in the game.
+ *
+ * @author Selcuk Gencay
+ */
 public class Player extends Entity {
 
     private boolean moveUp, moveDown, moveRight, moveLeft;
@@ -32,12 +37,18 @@ public class Player extends Entity {
     private int attackCoolDown;
     private Level level;
     private boolean invincible;
-    public int invinceTick;
-    private int exp = 0;
+    private int invinceTick;
+    private int exp;
     private int playerLevel;
     private boolean shielded;
     private int shieldTick, shieldIndex;
 
+    /**
+     * Generates a player instance by using the data from the SaveData
+     *
+     * @param saveData save data of the game progress
+     * @see SaveData
+     */
     public Player(SaveData saveData) {
         this.hitbox = new Rectangle(saveData.playerX, saveData.playerY, 64, 64);
         this.attackHitbox = new Rectangle(hitbox.x + hitbox.width, hitbox.y, hitbox.width, hitbox.height);
@@ -50,6 +61,9 @@ public class Player extends Entity {
         loadSprite();
     }
 
+    /**
+     * animates and moves the player
+     */
     @Override
     public void update() {
         animate();
@@ -168,6 +182,11 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Draws the player in the middle of the screen
+     *
+     * @param g graphics context for drawing
+     */
     @Override
     public void draw(Graphics g) {
         drawHitbox(g);
@@ -318,22 +337,45 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Updates Player's movement status for Up direction
+     *
+     * @param moveUp new status
+     */
     public void setMoveUp(boolean moveUp) {
         this.moveUp = moveUp;
     }
 
+    /**
+     * Updates Player's movement status for Down direction
+     *
+     * @param moveDown new status
+     */
     public void setMoveDown(boolean moveDown) {
         this.moveDown = moveDown;
     }
 
+    /**
+     * Updates Player's movement status for Right direction
+     *
+     * @param moveRight new status
+     */
     public void setMoveRight(boolean moveRight) {
         this.moveRight = moveRight;
     }
 
+    /**
+     * Updates Player's movement status for Left direction
+     *
+     * @param moveLeft new status
+     */
     public void setMoveLeft(boolean moveLeft) {
         this.moveLeft = moveLeft;
     }
 
+    /**
+     * makes the player attack
+     */
     public void setAttacking() {
         if (attackCoolDown <= 0) {
             this.attacking = true;
@@ -341,14 +383,20 @@ public class Player extends Entity {
         }
     }
 
+    /** @return the area where the player is attacking */
     public Rectangle getAttackHitbox() {
         return attackHitbox;
     }
 
+    /** @return Player's hitbox for collision control */
     public Rectangle getMoveHitbox() {
         return moveHitbox;
     }
 
+    /**
+     *
+     * @param item id of the item slot
+     */
     public void useItem(int item) {
         if (item == 1 && hitpoints != maxHP) {
             if (lifePotCount > 0) {
@@ -375,6 +423,13 @@ public class Player extends Entity {
             hitpoints = maxHP;
     }
 
+    /**
+     * If player has room for the given item, it is added to the inventory
+     *
+     * @param type type of item
+     * @return true if item is added, otherwise false
+     * @see entities.Item.ItemType
+     */
     public boolean addItem(Item.ItemType type) {
         switch (type) {
             case LIFEPOT -> {
@@ -402,22 +457,36 @@ public class Player extends Entity {
         return false;
     }
 
+    /**
+     * Updates the player's position (Dungeon/Overworld)
+     *
+     * @param level new level
+     * @see Level
+     */
     public void setLevel(Level level) {
         this.level = level;
     }
 
+    /** @return Player's invincible status */
     public boolean isInvincible() {
         return invincible;
     }
 
+    /**
+     * Change player's invincible status
+     *
+     * @param bool new status
+     */
     public void setInvincible(boolean bool) {
         invincible = bool;
     }
 
+    /** @return Player's attacking status */
     public boolean isAttacking() {
         return attacking;
     }
 
+    /** @return Player's shield status */
     public boolean isShielded() {
         return shielded;
     }
@@ -434,6 +503,13 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * adds given amount of experience to player<p>
+     * if player reached certain amount of exp points,
+     * it levels up
+     *
+     * @param exp exp amount
+     */
     public void addExp(int exp) {
         this.exp += exp;
         if (this.exp >= 100) {
@@ -445,14 +521,17 @@ public class Player extends Entity {
         }
     }
 
+    /** @return player's experience points */
     public int getExp() {
         return exp;
     }
 
+    /** @return player's current hp value */
     public int getHP() {
         return hitpoints;
     }
 
+    /** @return player's maximum hp value */
     public int getMaxHP() {
         return maxHP;
     }

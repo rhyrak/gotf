@@ -10,9 +10,9 @@ package main;
  */
 public class Main {
 
+    /** starts the game */
     public static void main(String[] args) {
         new Game();
-
     }
 
 }

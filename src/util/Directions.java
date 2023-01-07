@@ -6,5 +6,6 @@ package util;
  * @author Selcuk Gencay
  */
 public enum Directions {
+    /** Direction */
     UP, LEFT, RIGHT, DOWN
 }
