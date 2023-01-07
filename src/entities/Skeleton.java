@@ -30,9 +30,9 @@ public class Skeleton extends Entity {
     private int animIndex, animTick;
     private Directions direction;
     private int camOffsetX, camOffsetY;
-    public int actionLockCounter = 0;
-    public int startX, startY;
-    public boolean returning = false;
+    private int actionLockCounter = 0;
+    private int startX, startY;
+    private boolean returning = false;
     private int attackCoolDown = 0;
     private boolean isDead = false;
     private BufferedImage[] healthBar;
