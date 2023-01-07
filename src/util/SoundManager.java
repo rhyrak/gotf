@@ -7,6 +7,13 @@ import java.io.IOException;
 
 import static util.WeatherTime.raining;
 
+/**
+ * SoundManager class manages the audio in the game.
+ * It contains methods for playing or stopping audio clips.
+ * Also provides methods for adjusting the volume.
+ *
+ * @author Batuhan Tuncer
+ */
 public class SoundManager {
     public static Clip attack;
     public static Clip walkingForest;
@@ -41,6 +48,13 @@ public class SoundManager {
     public static FloatControl sound;
     public static Clip playerDead;
 
+    /**
+     * Loads all the clips played in the game
+     *
+     * @throws UnsupportedAudioFileException invalid file format
+     * @throws IOException error during reading
+     * @throws LineUnavailableException error during reading
+     */
     public SoundManager() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 
 
