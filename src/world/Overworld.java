@@ -22,20 +22,18 @@ public class Overworld extends Level {
     private Image[] floor3;
     private Image[] floor4;
     private int camOffsetX = 0, camOffsetY = 0;
-    private Player player;
-    private Rectangle dungeonEntrance;
-    private Playing playing;
+    private final Player player;
+    private final Rectangle dungeonEntrance;
+    private BufferedImage map;
 
     /**
      * inits the tile set and dungeon entrance
      *
-     * @param player for accessing player's position
-     * @param playing for accessing save data
+     * @param player  for accessing player's position
      */
-    public Overworld(Player player, Playing playing) {
+    public Overworld(Player player) {
         this.player = player;
-        this.dungeonEntrance = new Rectangle(1792,2240,192,128);
-        this.playing = playing;
+        this.dungeonEntrance = new Rectangle(1792, 2240, 192, 128);
         initTileSet();
     }
 
@@ -87,23 +85,28 @@ public class Overworld extends Level {
         //this part set up for loops that take the layer, x, and y values to print the single tile we get
         //the layers were taken separately and the elements such as trees and stones
         // that the character should not collide with were counted in different layers with the switch case, so no collision occurred.
-        for (int layer = 0; layer < OverworldData.arr.length; layer++) {
-            for (int y = 0; y < OverworldData.arr[layer].length; y++) {
-                for (int x = 0; x < OverworldData.arr[layer][y].length; x++) {
-                    if (OverworldData.arr[layer][y][x] > 0)
-                        switch (layer) {
-                            case 0 ->
-                                    g.drawImage(floor1[OverworldData.arr[layer][y][x]], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                            case 1 ->
-                                    g.drawImage(floor2[OverworldData.arr[layer][y][x] - 572], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                            case 2 ->
-                                    g.drawImage(floor3[OverworldData.arr[layer][y][x] - 1052], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                            case 3 ->
-                                    g.drawImage(floor4[OverworldData.arr[layer][y][x] - 908], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                        }
+        if (map == null) {
+            map = new BufferedImage(OverworldData.arr[0][0].length*TILE_SIZE,OverworldData.arr[0].length*TILE_SIZE,BufferedImage.TYPE_INT_RGB);
+            Graphics mapG = map.getGraphics();
+            for (int layer = 0; layer < OverworldData.arr.length; layer++) {
+                for (int y = 0; y < OverworldData.arr[layer].length; y++) {
+                    for (int x = 0; x < OverworldData.arr[layer][y].length; x++) {
+                        if (OverworldData.arr[layer][y][x] > 0)
+                            switch (layer) {
+                                case 0 ->
+                                        mapG.drawImage(floor1[OverworldData.arr[layer][y][x]], x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                                case 1 ->
+                                        mapG.drawImage(floor2[OverworldData.arr[layer][y][x] - 572], x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                                case 2 ->
+                                        mapG.drawImage(floor3[OverworldData.arr[layer][y][x] - 1052], x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                                case 3 ->
+                                        mapG.drawImage(floor4[OverworldData.arr[layer][y][x] - 908], x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                            }
+                    }
                 }
             }
         }
+        g.drawImage(map,camOffsetX,camOffsetY,map.getWidth(), map.getHeight(),null);
         if (Game.DEBUG_MODE) {
             g.drawRect(dungeonEntrance.x + camOffsetX, dungeonEntrance.y + camOffsetY, dungeonEntrance.width, dungeonEntrance.height);
         }
@@ -128,7 +131,7 @@ public class Overworld extends Level {
                     canMove = false;
                     break;
                 }
-            }catch (Exception e) {
+            } catch (Exception e) {
                 canMove = false;
             }
 
@@ -138,7 +141,7 @@ public class Overworld extends Level {
     @Override
     public void playerInteract() {
         if (player.getHitbox().intersects(dungeonEntrance))
-            playing.getSaveData().floor = 1;
+            Playing.getSaveData().floor = 1;
     }
 }
 

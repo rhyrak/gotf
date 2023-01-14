@@ -29,7 +29,7 @@ public class Playing extends State {
     private boolean paused = false;
     private static SaveData saveData;
     private Level level;
-    private Color overlay = new Color(0, 0, 0, 100);
+    private final Color overlay = new Color(0, 0, 0, 100);
     private int rainTick;
     private int floorPrev;
     private Rectangle continueBtn, exitBtn, soundSliderBg, soundSlider, musicSliderBg, musicSlider;
@@ -37,7 +37,7 @@ public class Playing extends State {
     private BufferedImage[] continueImg, exitImg;
     private int continueIndex = 0, exitIndex = 0;
     private int mouseX, mouseY;
-    private Game game;
+    private final Game game;
     private boolean soundPressed, musicPressed;
 
     /**
@@ -47,9 +47,9 @@ public class Playing extends State {
     public Playing(SaveData saveData, Game game) {
         this.game = game;
         if (saveData == null)
-            this.saveData = new SaveData();
+            Playing.saveData = new SaveData();
         else
-            this.saveData = saveData;
+            Playing.saveData = saveData;
         initGame();
         initPause();
     }
@@ -75,7 +75,7 @@ public class Playing extends State {
     private void initGame() {
         player = new Player(saveData);
         entityManager = new EntityManager(this, player);
-        level = saveData.floor == 0 ? new Overworld(player, this) : new Dungeon(player, this);
+        level = saveData.floor == 0 ? new Overworld(player) : new Dungeon(player);
         floorPrev = saveData.floor;
         player.setLevel(level);
     }
@@ -138,13 +138,13 @@ public class Playing extends State {
     private void checkSave() {
         if (saveData.floor != floorPrev) {
             if (saveData.floor == 0) { // exit dungeon
-                level = new Overworld(player, this);
+                level = new Overworld(player);
                 player.getHitbox().x = 1874;
                 player.getHitbox().y = 2358;
                 player.getMoveHitbox().x = 1876;
                 player.getMoveHitbox().y = 2390;
             } else if (floorPrev == 0) { // enter dungeon
-                level = new Dungeon(player, this);
+                level = new Dungeon(player);
             } else if (floorPrev < saveData.floor) {
                 player.getHitbox().x = 900;
                 player.getHitbox().y = 2550;

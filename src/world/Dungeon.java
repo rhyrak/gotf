@@ -21,25 +21,23 @@ public class Dungeon extends Level {
     private Image[] floor;
     private Image[] doorLadder;
     private int camOffsetX, camOffsetY;
-    private Player player;
-    private Playing playing;
-    private Rectangle prevFloor, nextFloor;
+    private final Player player;
+    private final Rectangle prevFloor, nextFloor;
+    private BufferedImage map;
 
     /**
      * inits the tile set and repositions the player
      *
-     * @param player for accessing player's position
-     * @param playing for accessing save data
+     * @param player  for accessing player's position
      */
-    public Dungeon(Player player, Playing playing) {
+    public Dungeon(Player player) {
         this.player = player;
         this.player.getHitbox().x = 900;
         this.player.getHitbox().y = 2550;
         this.player.getMoveHitbox().x = 902;
         this.player.getMoveHitbox().y = 2582;
-        this.playing = playing;
-        this.prevFloor = new Rectangle(832,2528,192,192);
-        this.nextFloor = new Rectangle(832,448,192,192);
+        this.prevFloor = new Rectangle(832, 2528, 192, 192);
+        this.nextFloor = new Rectangle(832, 448, 192, 192);
         initTileSet();
     }
 
@@ -74,24 +72,29 @@ public class Dungeon extends Level {
     @Override
     public void draw(Graphics g) {
         //this part set up for loops that take the layer, x, and y values to print the single tile we get
-        for (int layer = 0; layer < DungeonData.arr.length; layer++) {
-            for (int y = 0; y < DungeonData.arr[layer].length; y++) {
-                for (int x = 0; x < DungeonData.arr[layer][y].length; x++) {
-                    if (DungeonData.arr[layer][y][x] > 0)
-                        switch (layer) {
-                            case 0 ->
-                                    g.drawImage(wall, x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                            case 1 ->
-                                    g.drawImage(floor[DungeonData.arr[layer][y][x] - 374], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                            case 2 ->
-                                    g.drawImage(doorLadder[DungeonData.arr[layer][y][x] - 946], x * TILE_SIZE + camOffsetX, y * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
-                        }
+        if (map == null) {
+            map = new BufferedImage(OverworldData.arr[0][0].length * TILE_SIZE, OverworldData.arr[0].length * TILE_SIZE, BufferedImage.TYPE_INT_RGB);
+            Graphics mapG = map.getGraphics();
+            for (int layer = 0; layer < DungeonData.arr.length; layer++) {
+                for (int y = 0; y < DungeonData.arr[layer].length; y++) {
+                    for (int x = 0; x < DungeonData.arr[layer][y].length; x++) {
+                        if (DungeonData.arr[layer][y][x] > 0)
+                            switch (layer) {
+                                case 0 ->
+                                        mapG.drawImage(wall, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                                case 1 ->
+                                        mapG.drawImage(floor[DungeonData.arr[layer][y][x] - 374], x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                                case 2 ->
+                                        mapG.drawImage(doorLadder[DungeonData.arr[layer][y][x] - 946], x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+                            }
+                    }
                 }
             }
         }
-        if (playing.getSaveData().floor != 4) {
-            g.drawImage(doorLadder[38], 14 * TILE_SIZE + camOffsetX, 8 * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE,null);
-            g.drawImage(doorLadder[52], 14 * TILE_SIZE + camOffsetX, 9 * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE,null);
+        g.drawImage(map,camOffsetX,camOffsetY,map.getWidth(), map.getHeight(),null);
+        if (Playing.getSaveData().floor != 4) {
+            g.drawImage(doorLadder[38], 14 * TILE_SIZE + camOffsetX, 8 * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
+            g.drawImage(doorLadder[52], 14 * TILE_SIZE + camOffsetX, 9 * TILE_SIZE + camOffsetY, TILE_SIZE, TILE_SIZE, null);
         }
         if (Game.DEBUG_MODE) {
             g.drawRect(prevFloor.x + camOffsetX, prevFloor.y + camOffsetY, prevFloor.width, prevFloor.height);
@@ -109,16 +112,14 @@ public class Dungeon extends Level {
     @Override
     public boolean canMove(int x, int y) {
         //The area that the character wants to go is determined and prevented from leaving the area.
-        if (x<768 || x>2496 || y>2816 || y<448)
-            return false;
-        return true;
+        return x >= 768 && x <= 2496 && y <= 2816 && y >= 448;
     }
 
     @Override
     public void playerInteract() {
         if (player.getHitbox().intersects(prevFloor))
-            playing.getSaveData().floor--;
-        else if (player.getHitbox().intersects(nextFloor) && playing.getSaveData().floor < 4)
-            playing.getSaveData().floor++;
+            Playing.getSaveData().floor--;
+        else if (player.getHitbox().intersects(nextFloor) && Playing.getSaveData().floor < 4)
+            Playing.getSaveData().floor++;
     }
 }
